@@ -1,0 +1,62 @@
+@prefix lv2:  <http://lv2plug.in/ns/lv2core#>.
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>.
+@prefix doap: <http://usefulinc.com/ns/doap#>.
+@prefix foaf: <http://xmlns.com/foaf/0.1/>.
+@prefix ui: <http://lv2plug.in/ns/extensions/ui#>.
+@prefix urid: <http://lv2plug.in/ns/ext/urid#> .
+@prefix atom: <http://lv2plug.in/ns/ext/atom#> .
+
+<http://lv2plug.in/plugins/noise_factory/wave_draw/gui>
+    a ui:Qt4UI;
+    ui:binary <wave_draw_gui.so>;
+    lv2:requiredFeature urid:map.
+
+
+<http://lv2plug.in/plugins/noise_factory/wave_draw>
+  a lv2:Plugin;
+  doap:name "Wave Draw";
+  doap:maintainer [
+    foaf:name "Clement Guedez";
+    foaf:mbox <mailto:klem.dev@gmail.com>;
+  ];
+  doap:license <http://usefulinc.com/doap/licenses/gpl>;
+  ui:ui <http://lv2plug.in/plugins/noise_factory/wave_draw/gui>;
+
+  lv2:port [
+    a lv2:InputPort, atom:AtomPort ;
+    atom:bufferType atom:Sequence ;
+    atom:supports <http://lv2plug.in/ns/ext/midi#MidiEvent> ;
+    lv2:index 0;
+    lv2:symbol "midi_in";
+    lv2:name "MIDI in";
+  ],
+  
+  [
+    a lv2:OutputPort, lv2:AudioPort;
+    lv2:datatype lv2:float;
+    lv2:index 1;
+    lv2:symbol "output_left";
+    lv2:name "Output Left";
+  ],
+
+  [
+    a lv2:InputPort, atom:AtomPort;
+    atom:bufferType atom:Sequence;
+    atom:supports <http://lv2plug.in/ns/ext/message#Message> ;
+    lv2:index 2;
+    lv2:symbol "wave";
+    lv2:name "Wave Vector";
+  ],
+
+  [
+    a lv2:ControlPort, lv2:InputPort;
+    lv2:index 3;
+    lv2:symbol "vol";
+    lv2:name "Volume";
+    lv2:minimum 0;
+    lv2:maximum 1;
+    lv2:default 0.8;
+   ].
+
+
+

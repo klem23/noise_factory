@@ -1,0 +1,109 @@
+===================
+WHAT
+===================
+
+Generator
+
+	Beat Factory
+		Simple synth that allow to design BEAT (or drumkit kick), heart
+		of the House/Techno music. You can play with the 
+		amplitude(volume) and the frequency enveloppe of the beat.
+		
+	Classic Oscillator
+		The classical but always usefull oscillator with its 
+		4 classical wave (sin/square/saw up/saw down/triangle)
+		Frequency enveloppe and LFO
+		Amplitude enveloppe and LFO
+
+	Wave Drawer
+		The Hertz unit is used to mesure the frequency of a 
+		phenomen that repeat itself and the sound is matter
+		wave that repeat itself, but it can look like quite 
+		anything (even if it will be noise)...
+		So this synth allow you to draw (like paint) the wave
+		you want to repeat to generate sound or more likely
+		noise most of the time.
+		It's Midi pitched.
+
+	Spectrum Drawer
+		This synth allow you to draw (like paint) the spectrum 
+		of the sound you want to generate.
+		It's Midi pitched as it use the keyboard key to pitch
+		this spectrum to the key frequency.
+
+
+Filter
+
+	Recursive Filter
+		Standard Digital Recursive Filter (IIR)
+		Design from
+
+	Convolution Filter
+		This filter allow you to draw (like paint) the spectrum
+		response of your filter. It will generate a kernel with an 
+		inverse FFT that will convolute withe input.
+
+	Spectrum Filter
+		This filter allow you to draw (like paint) the spectrum
+		response of your filter. Also you can shift the frequency
+		of the filter spectrum at any time. 
+		It will use a FFT, multiply the	input signal with the 
+		filter spectrum and use an inverse FFT.
+
+SYNTH
+
+	Classic Synth
+		2 Classical Oscillators + Recursive Filter
+		The classical but usefull synthetizer composed of two
+		oscillators (with enveloppe and LFO) and a digital 
+		filter.
+
+	Wave Factory
+		Wave Draw + Convolution Filter
+		This synthetizer allow you to draw (like paint) the 
+		base wave you want to repeat to generate your sound.
+		It's associated with a filter where you can draw (like
+		paint) the frequency response of you filter.
+		
+
+	Spectrum Factory
+		Spectrum Draw + Spectrum Filter
+		This synthetizer allow to draw (like paint) the spectrum
+		of your instrument and of your filter.
+                It's Midi pitched as it use the keyboard key to pitch
+                this spectrum to the key frequency and you can shift 
+		the frequency of the filter spectrum at any time.
+
+
+FX
+
+	Simple Delay
+		Classic and standard unbreakable delay.
+
+	Loop Delay
+		Delay using random loop for echoes.
+
+
+
+===================
+COMPILE
+===================
+
+Use scons makefile to compile.
+In case of trouble with Qt compilation, go in file :
+/usr/lib/scons/SCons/Tool/qt.py
+and remove line 250 :
+QT_LIB = 'qt', # may be set to qt-mt
+
+There is no such linking in Qt.
+
+
+===================
+WHO
+===================
+
+Clément Guedez <klem.dev@gmail.com>
+
+===================
+MAKE SOME NOISE
+===================

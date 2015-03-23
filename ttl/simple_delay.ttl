@@ -1,0 +1,87 @@
+@prefix lv2:  <http://lv2plug.in/ns/lv2core#>.
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>.
+@prefix doap: <http://usefulinc.com/ns/doap#>.
+@prefix foaf: <http://xmlns.com/foaf/0.1/>.
+
+<http://lv2plug.in/plugins/noise_factory/simple_delay>
+  a lv2:Plugin;
+  doap:maintainer [
+    foaf:name "Clement Guedez";
+    foaf:mbox <mailto:klem.dev@gmail.com>;
+  ];
+  doap:name "Simple Delay";
+  doap:homepage <http://lv2plug.in/plugins/noise_factory>;
+  doap:license <http://usefulinc.com/doap/licenses/gpl>;
+
+  lv2:port [
+    a lv2:InputPort, lv2:AudioPort;
+    lv2:datatype lv2:float;
+    lv2:index 0;
+    lv2:symbol "input";
+    lv2:name "Input";
+  ],
+  
+  [
+    a lv2:OutputPort, lv2:AudioPort;
+    lv2:datatype lv2:float;
+    lv2:index 1;
+    lv2:symbol "output";
+    lv2:name "Output";
+  ],
+
+  [
+    a lv2:ControlPort, lv2:InputPort;
+    lv2:index 2;
+    lv2:symbol "nb_echo";
+    lv2:name "Number of Repeat";
+    lv2:minimum 1;
+    lv2:maximum 5;
+    lv2:default 1;
+    lv2:portProperty lv2:integer;
+  ],
+
+
+  [
+    a lv2:ControlPort, lv2:InputPort;
+    lv2:index 3;
+    lv2:symbol "delay_s";
+    lv2:name "Delay in Second";
+    lv2:minimum 0;
+    lv2:maximum 5;
+    lv2:default 1;
+    lv2:portProperty lv2:integer;
+  ],
+
+  [
+    a lv2:ControlPort, lv2:InputPort;
+    lv2:index 4;
+    lv2:symbol "delay_ms";
+    lv2:name "Delay in Millisecond";
+    lv2:minimum 0;
+    lv2:maximum 999;
+    lv2:default 0;
+    lv2:portProperty lv2:integer;
+  ],
+
+  [
+    a lv2:ControlPort, lv2:InputPort;
+    lv2:datatype lv2:float;
+    lv2:index 5;
+    lv2:symbol "fb";
+    lv2:name "FeedBack";
+    lv2:minimum 0;
+    lv2:maximum 100;
+    lv2:default 50;
+  ],
+
+ [
+    a lv2:ControlPort, lv2:InputPort;
+    lv2:index 6;
+    lv2:symbol "cs";
+    lv2:name "Cut Source";
+    lv2:minimum 0;
+    lv2:maximum 1;
+    lv2:default 0;
+    lv2:portProperty lv2:toggled ;
+ ].
+

@@ -1,0 +1,23 @@
+#!/usr/bin/python
+#top = '../..'
+out = 'build_waf'
+
+#def options(opt):
+#        opt.load('compiler_cxx')
+def configure(cnf):
+        cnf.load('compiler_cxx qt4')
+#	cnf.check(features='cxx qt4', lib=['qwt'], cxxflags=['-g', '-Wall'], ldflags=['-lqwt'], uselib_store='gui_qt')
+
+
+def build(bld):
+        bld(features='cxx cxxprogram qt4',
+                #source       = 'src/gui_new/wave_draw.cpp src/gui_new/wave_picker.cpp src/gui_new/main.cpp',
+                source       = 'wave_draw.cpp wave_picker.cpp main.cpp',
+                #includes     = bld.env.INCLUDES_QTGUI,
+                includes     = "qt4/Qt/ qt4/QtGui/ .",
+                uselib       = "QTCORE QTGUI QWT",
+                lib          = ['qwt'],
+                target       = '../../gui_bin/qt_gui',
+                use          = ['gui_qt']
+        )
+

@@ -1,0 +1,4 @@
+#!/bin/sh
+#gcc -g -o helium helium.c load.c `pkg-config --cflags --libs flac, xml2po, sndfile` -fPIC   
+gcc -Wall -o beat_factory.so beat_factory.c osc.c dynparam.c `pkg-config --cflags --libs lv2core, lv2dynparamplugin1` -lm -fPIC --shared 
+#gcc -o helium.so helium.c  `pkg-config --cflags --libs flac, xml2po, sndfile` -fPIC --shared 
