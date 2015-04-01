@@ -23,7 +23,7 @@
 
 #include "zp_diag_filter.hpp"
 
-#define ZP_URI	"http://lv2plug.in/plugins/noise_factory/recursive_filter";
+#define ZP_URI	"http://github.com/klem23/noise_factory/recursive_filter";
 
 using namespace std;
 

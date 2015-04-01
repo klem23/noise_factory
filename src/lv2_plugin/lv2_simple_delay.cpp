@@ -23,7 +23,7 @@
 
 #include "simple_delay.hpp"
 
-#define SD_URI	"http://lv2plug.in/plugins/noise_factory/simple_delay";
+#define SD_URI	"http://github.com/klem23/noise_factory/simple_delay";
 
 using namespace std;
 

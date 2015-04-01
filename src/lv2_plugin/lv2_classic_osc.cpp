@@ -24,7 +24,7 @@
 
 #include "osc.hpp"
 
-#define OSC_URI	"http://lv2plug.in/plugins/noise_factory/classic_osc";
+#define OSC_URI	"http://github.com/klem23/noise_factory/classic_osc";
 
 using namespace std;
 

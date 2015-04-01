@@ -29,7 +29,7 @@
 #endif
 
 
-#define ZP_URI	"http://lv2plug.in/plugins/noise_factory/conv_filter";
+#define CF_URI	"http://github.com/klem23/noise_factory/conv_filter";
 
 using namespace std;
 
@@ -121,7 +121,7 @@ void run(LV2_Handle instance, uint32_t sample_count){
 void init(void){
 	cfDesc = (LV2_Descriptor*)malloc(sizeof(LV2_Descriptor));
 
-	cfDesc->URI = ZP_URI;
+	cfDesc->URI = CF_URI;
 	cfDesc->activate = NULL;
 	cfDesc->deactivate = NULL;
 	cfDesc->connect_port = connectPort;

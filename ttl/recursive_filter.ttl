@@ -3,14 +3,14 @@
 @prefix doap: <http://usefulinc.com/ns/doap#>.
 @prefix foaf: <http://xmlns.com/foaf/0.1/>.
 
-<http://lv2plug.in/plugins/noise_factory/recursive_filter>
+<http://github.com/klem23/noise_factory/recursive_filter>
   a lv2:Plugin;
   doap:maintainer [
     foaf:name "Clement Guedez";
     foaf:mbox <mailto:klem.dev@gmail.com>;
   ];
   doap:name "Recursive Filter";
-  doap:homepage <http://lv2plug.in/plugins/noise_factory>;
+  doap:homepage <http://github.com/klem23/noise_factory>;
   doap:license <http://usefulinc.com/doap/licenses/gpl>;
 
   lv2:port [

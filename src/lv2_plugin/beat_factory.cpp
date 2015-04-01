@@ -23,7 +23,7 @@
 
 #include "osc.hpp"
 
-#define BF_URI	"http://lv2plug.in/plugins/noise_factory/beat_factory_2";
+#define BF_URI	"http://github.com/klem23/noise_factory/beat_factory_2";
 
 using namespace std;
 

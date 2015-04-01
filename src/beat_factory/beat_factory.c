@@ -31,7 +31,7 @@
 
 #include "beat_factory.h"
 
-#define HE_URI       "http://lv2plug.in/plugins/beat_factory";
+#define HE_URI       "http://github.com/klem23/noise_factory/beat_factory";
 #define HE_MIDI      0
 #define HE_OUTPUT    1
 

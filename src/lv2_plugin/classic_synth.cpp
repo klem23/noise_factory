@@ -26,7 +26,7 @@
 #include "zp_diag_filter.hpp"
 
 
-#define CS_URI	"http://lv2plug.in/plugins/noise_factory/classic_synth";
+#define CS_URI	"http://github.com/klem23/noise_factory/classic_synth";
 
 using namespace std;
 

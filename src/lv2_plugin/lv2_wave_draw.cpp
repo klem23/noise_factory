@@ -29,7 +29,7 @@
 
 #include "wave_gen.hpp"
 
-#define WA_URI	"http://lv2plug.in/plugins/noise_factory/wave_draw";
+#define WA_URI	"http://github.com/klem23/noise_factory/wave_draw";
 
 using namespace std;
 

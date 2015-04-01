@@ -30,7 +30,7 @@
 #endif
 
 
-#define SP_URI	"http://lv2plug.in/plugins/noise_factory/spectrum_draw";
+#define SP_URI	"http://github.com/klem23/noise_factory/spectrum_draw";
 
 using namespace std;
 

@@ -3,14 +3,14 @@
 @prefix doap: <http://usefulinc.com/ns/doap#>.
 @prefix foaf: <http://xmlns.com/foaf/0.1/>.
 
-<http://lv2plug.in/plugins/noise_factory/simple_delay>
+<http://github.com/klem23/noise_factory/simple_delay>
   a lv2:Plugin;
   doap:maintainer [
     foaf:name "Clement Guedez";
     foaf:mbox <mailto:klem.dev@gmail.com>;
   ];
   doap:name "Simple Delay";
-  doap:homepage <http://lv2plug.in/plugins/noise_factory>;
+  doap:homepage <http://github.com/klem23/noise_factory>;
   doap:license <http://usefulinc.com/doap/licenses/gpl>;
 
   lv2:port [

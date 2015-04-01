@@ -31,7 +31,7 @@
 #endif
 
 
-#define SPF_URI	"http://lv2plug.in/plugins/noise_factory/spectrum_filter";
+#define SPF_URI	"http://github.com/klem23/noise_factory/spectrum_filter";
 
 using namespace std;
 

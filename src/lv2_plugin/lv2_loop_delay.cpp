@@ -23,7 +23,7 @@
 
 #include "loop_delay.hpp"
 
-#define LD_URI	"http://lv2plug.in/plugins/noise_factory/loop_delay";
+#define LD_URI	"http://github.com/klem23/noise_factory/loop_delay";
 
 using namespace std;
 

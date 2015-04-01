@@ -5,14 +5,14 @@
 @prefix foaf: <http://xmlns.com/foaf/0.1/>.
 @prefix atom: <http://lv2plug.in/ns/ext/atom#> .
 
-<http://lv2plug.in/plugins/beat_factory>
+<http://github.com/klem23/noise_factory/beat_factory>
   a lv2:Plugin;
   doap:maintainer [
     foaf:name "Clement Guedez";
     foaf:mbox <mailto:klem.dev@gmail.com>;
   ];
   doap:name "Beat Factory";
-  doap:homepage <http://lv2plug.in/plugins/beat_factory>;
+  doap:homepage <http://github.com/klem23/noise_factory>;
   doap:license <http://usefulinc.com/doap/licenses/gpl>;
 
   lv2:port [

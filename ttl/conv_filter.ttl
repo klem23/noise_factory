@@ -5,22 +5,22 @@
 @prefix ui: <http://lv2plug.in/ns/extensions/ui#>.
 @prefix urid: <http://lv2plug.in/ns/ext/urid#> .
 
-<http://lv2plug.in/plugins/noise_factory/conv_filter/gui>
+<http://github.com/klem23/noise_factory/conv_filter/gui>
     a ui:Qt4UI;
     ui:binary <conv_filter_gui.so>;
     lv2:requiredFeature urid:map.
 
 
-<http://lv2plug.in/plugins/noise_factory/conv_filter>
+<http://github.com/klem23/noise_factory/conv_filter>
   a lv2:Plugin;
   doap:maintainer [
     foaf:name "Clement Guedez";
     foaf:mbox <mailto:klem.dev@gmail.com>;
   ];
   doap:name "Convolution Filter";
-  doap:homepage <http://lv2plug.in/plugins/noise_factory>;
+  doap:homepage <http://github.com/klem23/noise_factory>;
   doap:license <http://usefulinc.com/doap/licenses/gpl>;
-  ui:ui <http://lv2plug.in/plugins/noise_factory/conv_filter/gui>;
+  ui:ui <http://github.com/klem23/noise_factory/conv_filter/gui>;
 
   lv2:port [
     a lv2:InputPort, lv2:AudioPort;

@@ -6,18 +6,18 @@
 @prefix pg: <http://lv2plug.in/ns/ext/port-groups#>.
 @prefix atom: <http://lv2plug.in/ns/ext/atom#> .
 
-<http://lv2plug.in/plugins/noise_factory/classic_osc/Freq_Env> 
+<http://github.com/klem23/noise_factory/classic_osc/Freq_Env> 
     a pg:Group;
     lv2:symbol "Frequency Enveloppe".
 
-<http://lv2plug.in/plugins/noise_factory/classic_osc>
+<http://github.com/klem23/noise_factory/classic_osc>
   a lv2:Plugin;
   doap:maintainer [
     foaf:name "Clement Guedez";
     foaf:mbox <mailto:klem.dev@gmail.com>;
   ];
   doap:name "Classic Oscillator";
-  doap:homepage <http://lv2plug.in/plugins/noise_factory>;
+  doap:homepage <http://github.com/klem23/noise_factory>;
   doap:license <http://usefulinc.com/doap/licenses/gpl>;
 
   lv2:port [

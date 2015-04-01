@@ -3,53 +3,53 @@
 @prefix uiext: <http://lv2plugin.in/ns/extensions/ui#>.
 
 
-<http://lv2plug.in/plugins/beat_factory>
+<http://github.com/klem23/noise_factory/beat_factory>
   a lv2:Plugin, lv2:InstrumentPlugin;
   lv2:binary <beat_factory.so>;
   rdfs:seeAlso <beat_factory.ttl>.
 
-<http://lv2plug.in/plugins/noise_factory/classic_osc>
+<http://github.com/klem23/noise_factory/classic_osc>
   a lv2:Plugin, lv2:InstrumentPlugin;
   lv2:binary <classic_osc.so>;
   rdfs:seeAlso <classic_osc.ttl>.
 
-<http://lv2plug.in/plugins/noise_factory/wave_draw>
+<http://github.com/klem23/noise_factory/wave_draw>
   a lv2:Plugin, lv2:InstrumentPlugin;
   lv2:binary <wave_draw.so>;
   rdfs:seeAlso <wave_draw.ttl>.
 
-<http://lv2plug.in/plugins/noise_factory/spectrum_draw>
+<http://github.com/klem23/noise_factory/spectrum_draw>
   a lv2:Plugin, lv2:InstrumentPlugin;
   lv2:binary <spectrum_draw.so>;
   rdfs:seeAlso <spectrum_draw.ttl>.
 
-<http://lv2plug.in/plugins/noise_factory/classic_synth>
+<http://github.com/klem23/noise_factory/classic_synth>
   a lv2:Plugin, lv2:InstrumentPlugin;
   lv2:binary <classic_synth.so>;
   rdfs:seeAlso <classic_synth.ttl>.
 
 
-<http://lv2plug.in/plugins/noise_factory/recursive_filter>
+<http://github.com/klem23/noise_factory/recursive_filter>
   a lv2:Plugin, lv2:FilterPlugin;
   lv2:binary <recursive_filter.so>;
   rdfs:seeAlso <recursive_filter.ttl>.
 
-<http://lv2plug.in/plugins/noise_factory/conv_filter>
+<http://github.com/klem23/noise_factory/conv_filter>
   a lv2:Plugin, lv2:FilterPlugin;
   lv2:binary <conv_filter.so>;
   rdfs:seeAlso <conv_filter.ttl>.
 
-<http://lv2plug.in/plugins/noise_factory/spectrum_filter>
+<http://github.com/klem23/noise_factory/spectrum_filter>
   a lv2:Plugin, lv2:FilterPlugin;
   lv2:binary <spectrum_filter.so>;
   rdfs:seeAlso <spectrum_filter.ttl>.
 
-<http://lv2plug.in/plugins/noise_factory/simple_delay>
+<http://github.com/klem23/noise_factory/simple_delay>
   a lv2:Plugin, lv2:DelayPlugin;
   lv2:binary <simple_delay.so>;
   rdfs:seeAlso <simple_delay.ttl>.
 
-<http://lv2plug.in/plugins/noise_factory/loop_delay>
+<http://github.com/klem23/noise_factory/loop_delay>
   a lv2:Plugin, lv2:DelayPlugin;
   lv2:binary <loop_delay.so>;
   rdfs:seeAlso <loop_delay.ttl>.
