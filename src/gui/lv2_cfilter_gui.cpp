@@ -27,7 +27,7 @@
 #include "wave_draw.hpp"
 
 
-#define CFUI_URI "http://lv2plug.in/plugins/noise_factory/conv_filter/gui";
+#define CFUI_URI "http://github.com/klem23/noise_factory/conv_filter/gui";
 
 using namespace std;
 

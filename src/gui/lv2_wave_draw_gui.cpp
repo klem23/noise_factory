@@ -25,7 +25,7 @@
 
 #include "wave_draw.hpp"
 
-#define WAUI_URI "http://lv2plug.in/plugins/noise_factory/wave_draw/gui";
+#define WAUI_URI "http://github.com/klem23/noise_factory/wave_draw/gui";
 
 using namespace std;
 

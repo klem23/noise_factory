@@ -90,7 +90,7 @@
     lv2:maximum 1;
     lv2:default 0;
     lv2:portProperty lv2:toggled ;
-    pg:inGroup  <http://lv2plug.in/plugins/noise_factory/classic_osc/Freq_Env>;
+    pg:inGroup  <http://github.com/klem23/noise_factory/classic_osc/Freq_Env>;
   ],
 
   [
@@ -101,7 +101,7 @@
     lv2:minimum -1;
     lv2:maximum 1;
     lv2:default 0;
-    pg:inGroup  <http://lv2plug.in/plugins/noise_factory/classic_osc/Freq_Env>;
+    pg:inGroup  <http://github.com/klem23/noise_factory/classic_osc/Freq_Env>;
   ],
 
   [
@@ -112,7 +112,7 @@
     lv2:minimum -1;
     lv2:maximum 1;
     lv2:default 0;
-    pg:inGroup  <http://lv2plug.in/plugins/noise_factory/classic_osc/Freq_Env>;
+    pg:inGroup  <http://github.com/klem23/noise_factory/classic_osc/Freq_Env>;
   ],
 
   [
@@ -123,7 +123,7 @@
     lv2:minimum -1;
     lv2:maximum 1;
     lv2:default 0;
-    pg:inGroup  <http://lv2plug.in/plugins/noise_factory/classic_osc/Freq_Env>;
+    pg:inGroup  <http://github.com/klem23/noise_factory/classic_osc/Freq_Env>;
   ],
 
   [
@@ -134,7 +134,7 @@
     lv2:minimum -1;
     lv2:maximum 1;
     lv2:default 0;
-    pg:inGroup  <http://lv2plug.in/plugins/noise_factory/classic_osc/Freq_Env>;
+    pg:inGroup  <http://github.com/klem23/noise_factory/classic_osc/Freq_Env>;
   ],
 
   [

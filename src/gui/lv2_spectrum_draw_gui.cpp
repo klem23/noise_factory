@@ -25,7 +25,7 @@
 
 #include "wave_draw.hpp"
 
-#define SPUI_URI "http://lv2plug.in/plugins/noise_factory/spectrum_draw/gui";
+#define SPUI_URI "http://github.com/klem23/noise_factory/spectrum_draw/gui";
 
 using namespace std;
 

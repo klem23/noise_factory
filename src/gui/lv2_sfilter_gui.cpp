@@ -25,7 +25,7 @@
 
 #include "wave_draw.hpp"
 
-#define SFUI_URI "http://lv2plug.in/plugins/noise_factory/spectrum_filter/gui";
+#define SFUI_URI "http://github.com/klem23/noise_factory/spectrum_filter/gui";
 
 using namespace std;
 
