@@ -94,6 +94,7 @@ Dependencies:
  - lib samplerate
  - lib fftw
  - Qt
+ - Qwt
 
 Use scons tools to compile.
 
