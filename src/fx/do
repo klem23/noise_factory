@@ -1,2 +1,0 @@
-g++ -Wall -g --shared -o simple_delay.so simple_delay.cpp lv2_simple_delay.cpp
-g++ -Wall -g --shared -o loop_delay.so loop_delay.cpp lv2_loop_delay.cpp
