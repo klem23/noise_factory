@@ -36,7 +36,7 @@ using namespace std;
 
 typedef struct{
 	spectrum_gen* gen;
-	spectrum_fft* fft;
+	spectrum_fft_out* fft;
 	double* buff;
 }spectrum_handle;
 
@@ -125,7 +125,7 @@ LV2_Handle instantiate(const LV2_Descriptor *descriptor,
 	hdl->buff = (double*)fftw_malloc(table_size * sizeof(double));
 	memset(hdl->buff, 0, table_size*sizeof(double));
 	spectre->set_output(hdl->buff);
-	spectrum_fft* spectre_fft = new spectrum_fft(hdl->buff, table_size, true);
+	spectrum_fft_out* spectre_fft = new spectrum_fft_out(hdl->buff, table_size);
 	hdl->gen = spectre;
 	hdl->fft = spectre_fft;
 

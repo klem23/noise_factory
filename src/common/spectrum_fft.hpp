@@ -26,14 +26,14 @@
 using namespace std;
 
 class spectrum_fft{
-	private:
+	protected:
 		double *fft_in;
-		double *fft_out;	
-		float* in; 
+		double *fft_out;
+		float* in;
 		float *out;
 		float coeff;	/* FTT -> FFT-1 => ratio 1/N */
 
-		bool io;		/* True => input => time to freq // False => output => freq to time */
+		//bool io;		/* True => input => time to freq // False => output => freq to time */
 		uint32_t offset, tmp_size;
 		uint32_t table_size;
 
@@ -46,11 +46,37 @@ class spectrum_fft{
 
 
 	public:
-		spectrum_fft(double* spectrum, uint32_t table_lgth, bool in_out);
+		spectrum_fft(double* spectrum, uint32_t table_lgth);
 		~spectrum_fft(void);
 
-		void process(int nb_sample);
 		void set_output(float* ptr);
 		void set_input(float* ptr);
 };
+
+/*time -> freq*/
+class spectrum_fft_in : public spectrum_fft{
+	private:
+
+
+	public:
+		spectrum_fft_in(double* spectrum, uint32_t table_lgth);
+		~spectrum_fft_in(void);
+
+		void process(int nb_sample);
+		void set_input(float* ptr);
+};
+
+/*freq -> time*/
+class spectrum_fft_out : public spectrum_fft{
+	private:
+
+
+	public:
+		spectrum_fft_out(double* spectrum, uint32_t table_lgth);
+		~spectrum_fft_out(void);
+
+		void process(int nb_sample);
+		void set_output(float* ptr);
+};
+
 #endif

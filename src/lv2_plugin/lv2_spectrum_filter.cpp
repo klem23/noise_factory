@@ -37,8 +37,8 @@ using namespace std;
 
 typedef struct{
 	spectrum_filter* filter;
-	spectrum_fft* fft_in;
-	spectrum_fft* fft_out;
+	spectrum_fft_in* fft_in;
+	spectrum_fft_out* fft_out;
 	double* buff_in;
 	double* buff_out;
 }spf_handle;
@@ -135,8 +135,8 @@ LV2_Handle instantiate(const LV2_Descriptor *descriptor,
 	filter->set_input(hdl->buff_in);
 	filter->set_output(hdl->buff_out);
 
-	spectrum_fft* spectre_fft_in = new spectrum_fft(hdl->buff_in, table_size, false);
-	spectrum_fft* spectre_fft_out = new spectrum_fft(hdl->buff_out, table_size, true);
+	spectrum_fft_in* spectre_fft_in = new spectrum_fft_in(hdl->buff_in, table_size);
+	spectrum_fft_out* spectre_fft_out = new spectrum_fft_out(hdl->buff_out, table_size);
 	hdl->filter = filter;
 	hdl->fft_in = spectre_fft_in;
 	hdl->fft_out = spectre_fft_out;

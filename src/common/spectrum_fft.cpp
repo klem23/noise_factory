@@ -23,13 +23,12 @@
 
 #include"spectrum_fft.hpp"
 
-spectrum_fft::spectrum_fft(double* spectrum, uint32_t table_lgth, bool in_out)
-	:fft_in(NULL),fft_out(NULL),in(NULL),out(NULL)
-	//,coeff(sqrtf(table_size))
-	,io(in_out)
-	,offset(0),tmp_size(0),table_size(table_lgth){
+spectrum_fft::spectrum_fft(double* spectrum, uint32_t table_lgth)
+	:fft_in(NULL),in(NULL),fft_out(NULL),out(NULL)
+	,offset(0),tmp_size(0),table_size(table_lgth)
+	,kind(FFTW_DHT){
 
-	coeff = sqrtf(table_size);
+	coeff = sqrtf((float)table_size);
 
 	//flags = FFTW_ESTIMATE | FFTW_PRESERVE_INPUT; 
 	//flags = FFTW_ESTIMATE | FFTW_DESTROY_INPUT; 
@@ -40,56 +39,10 @@ spectrum_fft::spectrum_fft(double* spectrum, uint32_t table_lgth, bool in_out)
 	//flags = FFTW_EXHAUSTIVE | FFTW_PRESERVE_INPUT; 
 	//flags = FFTW_EXHAUSTIVE | FFTW_DESTROY_INPUT; 
 
-	if(spectrum != NULL){
-
-		//spectrum[23] = 1;
-		//spectrum[24] = 0.5;
-		//spectrum[223] = 0.75;
-
-		if(io){
-
-			kind = FFTW_HC2R;
-			//kind = FFTW_DHT;
-			//kind = FFTW_REDFT00;
-			//kind = FFTW_REDFT01;
-			//kind = FFTW_REDFT11;
-			//kind = FFTW_RODFT00;
-			//kind = FFTW_RODFT01;
-			//kind = FFTW_RODFT11;
-
-
-			/*freq -> time*/
-			fft_in = spectrum;	
-			fft_out = (double*)fftw_malloc( table_size *sizeof(double));
-
-		}else{
-
-			kind = FFTW_R2HC;
-			//kind = FFTW_DHT;
-			//kind = FFTW_REDFT00;
-			//kind = FFTW_REDFT10;
-			//kind = FFTW_REDFT11;
-			//kind = FFTW_RODFT00;
-			//kind = FFTW_RODFT10;
-			//kind = FFTW_RODFT11;
-
-			/*time -> freq*/
-			fft_in = (double*)fftw_malloc( table_size *sizeof(double));
-			fft_out = spectrum;
-		}
-		/*planify fft*/
-		fft_plan = fftw_plan_r2r_1d(table_size, fft_in, fft_out, kind, flags);
-		//fft_plan_2 = fftwf_plan_r2r_1d(table_size, in, out, kind, flags);
-	}
 }
 
 spectrum_fft::~spectrum_fft(void){
 	fftw_destroy_plan(fft_plan);
-	if(io){
-		free(fft_out);
-	}else{
-		free(fft_in);
-	}
 }
 
 void spectrum_fft::set_input(float* ptr){
@@ -118,54 +71,115 @@ void spectrum_fft::mem_cast_cpy(double* out, float* in, uint32_t size){
 	}
 }*/
 
-void spectrum_fft::process(int nb_sample){
 
-	if(io){
-		/*freq -> time*/
-		if(out == NULL){
-			return;
-		}
-
-		memset(fft_out, 0, table_size * sizeof(double));
-		memset(out, 0, nb_sample * sizeof(float));
-
-		//apply fft
-		fftw_execute(fft_plan);
-
-		/*VERSION 2*/
-		if(table_size > (uint32_t) nb_sample){
-			mem_cast_cpy(out, fft_out, nb_sample);
-		}else{
-			tmp_size = 0;
-			while(nb_sample - tmp_size > table_size){
-				mem_cast_cpy(out + tmp_size, fft_out, table_size);
-				tmp_size += table_size;	
-			}
-			mem_cast_cpy(out + tmp_size, fft_out, nb_sample - tmp_size);
-		}			
+/*time -> freq*/
+spectrum_fft_in::spectrum_fft_in(double* spectrum, uint32_t table_lgth)
+	:spectrum_fft(spectrum, table_lgth){
 
 
-	}else{
+	kind = FFTW_R2HC;
+	//kind = FFTW_DHT;
+	//kind = FFTW_REDFT00;
+	//kind = FFTW_REDFT10;
+	//kind = FFTW_REDFT11;
+	//kind = FFTW_RODFT00;
+	//kind = FFTW_RODFT10;
+	//kind = FFTW_RODFT11;
+
+	if(spectrum != NULL){
 		/*time -> freq*/
-		if(in == NULL){
-			return;
+		fft_in = (double*)fftw_malloc( table_size *sizeof(double));
+		fft_out = spectrum;
+
+		/*planify fft*/
+		fft_plan = fftw_plan_r2r_1d(table_size, fft_in, fft_out, kind, flags);
+	}
+
+}
+
+spectrum_fft_in::~spectrum_fft_in(){
+	if(fft_in != NULL){
+		free(fft_in);
+	}
+}
+
+void spectrum_fft_in::process(int nb_sample){
+
+	/*time -> freq*/
+	if(in == NULL){
+		return;
+	}
+
+	memset(fft_in, 0, table_size * sizeof(double));
+	memset(fft_out, 0, table_size * sizeof(double));
+
+
+	if(table_size < (uint32_t) nb_sample){
+		for(uint32_t i = 0; i < table_size; i++){
+			fft_in[i] = (double) in[i]/coeff;
 		}
-
-		memset(fft_in, 0, table_size * sizeof(double));
-		memset(fft_out, 0, table_size * sizeof(double));
-
-
-		if(table_size < (uint32_t) nb_sample){
-			for(uint32_t i = 0; i < table_size; i++){
-				fft_in[i] = (double) in[i]/coeff;
-			}
-		}else{
-			for(uint32_t i = 0; i < (uint32_t)nb_sample; i++){
-				fft_in[i] = (double) in[i]/coeff;
-			}
+	}else{
+		for(uint32_t i = 0; i < (uint32_t)nb_sample; i++){
+			fft_in[i] = (double) in[i]/coeff;
 		}
+	}
 
-		//apply fft
-		fftw_execute(fft_plan);
+	//apply fft
+	fftw_execute(fft_plan);
+}
+
+/*freq -> time*/
+spectrum_fft_out::spectrum_fft_out(double* spectrum, uint32_t table_lgth)
+	:spectrum_fft(spectrum, table_lgth){
+
+	kind = FFTW_HC2R;
+	//kind = FFTW_DHT;
+	//kind = FFTW_REDFT00;
+	//kind = FFTW_REDFT01;
+	//kind = FFTW_REDFT11;
+	//kind = FFTW_RODFT00;
+	//kind = FFTW_RODFT01;
+	//kind = FFTW_RODFT11;
+
+	if(spectrum != NULL){
+		/*freq -> time*/
+		fft_in = spectrum;
+		fft_out = (double*)fftw_malloc( table_size *sizeof(double));
+
+		/*planify fft*/
+		fft_plan = fftw_plan_r2r_1d(table_size, fft_in, fft_out, kind, flags);
+	}
+
+}
+
+spectrum_fft_out::~spectrum_fft_out(){
+	if(fft_out != NULL){
+		free(fft_out);
+	}
+}
+
+void spectrum_fft_out::process(int nb_sample){
+
+	/*freq -> time*/
+	if(out == NULL){
+		return;
+	}
+
+	memset(fft_out, 0, table_size * sizeof(double));
+	memset(out, 0, nb_sample * sizeof(float));
+
+	//apply fft
+	fftw_execute(fft_plan);
+
+	/*VERSION 2*/
+	if(table_size > (uint32_t) nb_sample){
+		mem_cast_cpy(out, fft_out, nb_sample);
+	}else{
+		tmp_size = 0;
+		while(nb_sample - tmp_size > table_size){
+			mem_cast_cpy(out + tmp_size, fft_out, table_size);
+			tmp_size += table_size;
+		}
+		mem_cast_cpy(out + tmp_size, fft_out, nb_sample - tmp_size);
 	}
 }
