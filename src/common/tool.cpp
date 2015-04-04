@@ -75,7 +75,7 @@ void smooth_filter(float* in, float* out, int nb_sample){
 		out[i] = in[i];
 	}
 
-	for(uint32_t i = moy; i < nb_sample; i++){
+	for(uint32_t i = moy; i < (uint32_t)nb_sample; i++){
 		tmp = 0;
 		for(uint32_t k = 0; k < moy; k++){
 			tmp += in[i - k];
@@ -93,7 +93,7 @@ void smooth_filter_2(float* buff, int nb_sample){
 			tmp_data[j] = buff[moy - j - 1];
 	}
 
-	for(uint32_t i = moy; i < nb_sample; i++){
+	for(uint32_t i = moy; i < (uint32_t)nb_sample; i++){
 
 		tmp = 0;
 		for(uint32_t k = 1; k <= moy; k++){
@@ -117,7 +117,7 @@ void smooth_filter(float* buff, int nb_sample){
 		tmp_data[j] = buff[j];
 	}
 
-	for(uint32_t i = moy; i < nb_sample; i++){
+	for(uint32_t i = moy; i < (uint32_t)nb_sample; i++){
 		tmp = 0;
 		for(uint32_t k = 0; k < moy; k++){
 			tmp += tmp_data[k];

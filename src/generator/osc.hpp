@@ -56,7 +56,7 @@ private:
 	uint32_t anticlip_time; /*value in sample*/
 	float freq_adj;
 
-	/*uint32_t offset; /*for monophonic use*/
+	/*uint32_t offset; //for monophonic use*/
 
 
 	float *out;

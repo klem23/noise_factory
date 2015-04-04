@@ -24,9 +24,9 @@
 #include"spectrum_fft.hpp"
 
 spectrum_fft::spectrum_fft(double* spectrum, uint32_t table_lgth)
-	:fft_in(NULL),in(NULL),fft_out(NULL),out(NULL)
+	:fft_in(NULL),fft_out(NULL),in(NULL),out(NULL)
 	,offset(0),tmp_size(0),table_size(table_lgth)
-	,kind(FFTW_DHT){
+	,fft_plan(NULL),kind(FFTW_DHT){
 
 	coeff = sqrtf((float)table_size);
 
@@ -72,7 +72,9 @@ void spectrum_fft::mem_cast_cpy(double* out, float* in, uint32_t size){
 }*/
 
 
-/*time -> freq*/
+/*
+ * time -> freq
+ */
 spectrum_fft_in::spectrum_fft_in(double* spectrum, uint32_t table_lgth)
 	:spectrum_fft(spectrum, table_lgth){
 
@@ -128,7 +130,10 @@ void spectrum_fft_in::process(int nb_sample){
 	fftw_execute(fft_plan);
 }
 
-/*freq -> time*/
+
+/*
+ * freq -> time
+ */
 spectrum_fft_out::spectrum_fft_out(double* spectrum, uint32_t table_lgth)
 	:spectrum_fft(spectrum, table_lgth){
 

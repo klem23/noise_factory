@@ -82,7 +82,7 @@ void midi_parser::process_midi_2(int nb_sample){
 	//	cout << "event midi " << dec << data[0] << " bmask " << dec << bmask << endl;
 	//	printf("event midi Ox%x\n", data[0]);
 		switch(bmask){
-			/*note on*//*
+			//note on
 			case 0x90:
 			{
 				note* nt = new note(data[1], event->frames);
@@ -91,7 +91,7 @@ void midi_parser::process_midi_2(int nb_sample){
 				//cout << "note on" << int(data[1]) << " " << event->frames << endl;
 			}
 			break;
-			/*note off*//*
+			//note off
 			case 0x80:
 			{
 				note* nt = new note(data[1], event->frames);
@@ -101,12 +101,12 @@ void midi_parser::process_midi_2(int nb_sample){
 				//cout << "note off" << int(data[1]) << " " << event->frames << endl;
 			}
 			break;
-			/*control change & all note/sound off*//*
+			//control change & all note/sound off
 			case 0xB0:
 				switch(data[1]){
-					/*all note off*//*
+					//all note off
 					case 123:
-					/*all sound off*//*
+					//all sound off
 					case 120:
 						cout << "Test all note/sound off " << endl;
 						note_active.clear();

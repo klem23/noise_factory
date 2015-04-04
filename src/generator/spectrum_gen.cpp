@@ -126,15 +126,15 @@ void spectrum_gen::change_signal(uint32_t x, double y){
 }
 
 void spectrum_gen::change_signal(float* val, int nb){
-	int max = table_size;
-	if(nb < table_size){
+	uint32_t max = table_size;
+	if(nb < (int)table_size){
 		max = nb;
 	}
 
 	/*transpose GUI graph to plugin table*/
 	//graph_adapter::transpose(val, nb, spectrum_table, table_size);
 
-	for(int i = 0; i < max; i++){
+	for(uint32_t i = 0; i < max; i++){
 		spectrum_table[i] = val[i];
 	}
 }
