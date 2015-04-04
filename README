@@ -89,7 +89,15 @@ FX
 COMPILE
 ===================
 
-Use scons makefile to compile.
+Dependencies:
+ - lib osc
+ - lib samplerate
+ - lib fftw
+ - Qt
+
+Use scons tools to compile.
+
+
 In case of trouble with Qt compilation, go in file :
 /usr/lib/scons/SCons/Tool/qt.py
 and remove line 250 :
