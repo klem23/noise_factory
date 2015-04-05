@@ -37,6 +37,7 @@ WaveDraw::WaveDraw(QWidget *parent, uint32_t tab_size, uint8_t gtype /*= WAVE*/)
     this->resize(800, 500);
     QHBoxLayout *lay = new QHBoxLayout();
     QVBoxLayout *vlay = new QVBoxLayout();
+    uint32_t port = 2323;
 
     /*Plot*/
     graph = new QwtPlot();
@@ -66,6 +67,8 @@ WaveDraw::WaveDraw(QWidget *parent, uint32_t tab_size, uint8_t gtype /*= WAVE*/)
         wp = new TimePicker(graph->canvas(), graph, tab_size);
         wp->setBound(-1, 1);
 
+        port = 2323;
+
       }else if(type == SPECTRUM){
 
         graph->setTitle("Draw your spectrum");
@@ -86,6 +89,8 @@ WaveDraw::WaveDraw(QWidget *parent, uint32_t tab_size, uint8_t gtype /*= WAVE*/)
         freq_btn->setValue(5.0);
     	connect(freq_btn, SIGNAL(valueChanged(double)), this, SLOT(send_freq(double)));
         vlay->addWidget(freq_btn);
+
+        port = 2324;
 
       }else if(type == FILTER){
 
@@ -108,6 +113,8 @@ WaveDraw::WaveDraw(QWidget *parent, uint32_t tab_size, uint8_t gtype /*= WAVE*/)
     	connect(freq_btn, SIGNAL(valueChanged(double)), this, SLOT(send_freq(double)));
         vlay->addWidget(freq_btn);
 
+        port = 2325;
+
       }else if(type == CFILTER){
 
         graph->setTitle("Draw your filter spectrum");
@@ -119,6 +126,8 @@ WaveDraw::WaveDraw(QWidget *parent, uint32_t tab_size, uint8_t gtype /*= WAVE*/)
 
         wp = new FreqPicker(graph->canvas(), graph, tab_size, type);
         wp->setBound(0, 1);
+
+        port = 2326;
       }
 
 
@@ -142,7 +151,6 @@ WaveDraw::WaveDraw(QWidget *parent, uint32_t tab_size, uint8_t gtype /*= WAVE*/)
     graph->replot();
 
 #ifdef OSC
-	uint32_t port = 2323;
         char str[12];
         sprintf(str, "%d", port);
         osc_addr = lo_address_new(NULL, str);
@@ -195,7 +203,7 @@ void WaveDraw::send_graph(void){
 #endif
 
 #ifdef LV2_GUI
-        this->lv2_write(lv2_ctrl, 2, wp->getSize(), 0, fgraph);        
+        //this->lv2_write(lv2_ctrl, 2, wp->getSize(), 0, fgraph);
         //this->lv2_write(lv2_ctrl, 2, wp->getSize(), atom_vector_urid, fgraph);
 //      toto = new float;
 //      *toto = 1;

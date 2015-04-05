@@ -63,7 +63,6 @@ class spectrum_fft_in : public spectrum_fft{
 		~spectrum_fft_in(void);
 
 		void process(int nb_sample);
-		void set_input(float* ptr);
 };
 
 /*freq -> time*/
@@ -76,7 +75,6 @@ class spectrum_fft_out : public spectrum_fft{
 		~spectrum_fft_out(void);
 
 		void process(int nb_sample);
-		void set_output(float* ptr);
 };
 
 #endif
