@@ -37,7 +37,32 @@ spectrum_gen::spectrum_gen(uint32_t sampling_rate)
 	fscale = 10;
 	table_size = srate / fscale;
 	//table_size = 1024;
+
+	use_point_nb = 3072; //18KHz max
+	//use_point_nb = 1024;
+	//use_point_nb = 8192;
+
+
+	if(srate == 44100){
+		table_size = 7526;
+		fscale = srate / table_size;
+	}else if(srate == 48000){
+		table_size = 8192;
+		fscale = srate / table_size;
+	}else if(srate == 96000){
+		table_size = 16384;
+		fscale = srate / table_size;
+	}else if(srate == 192000){
+		table_size = 32768;
+		fscale = srate / table_size;
+	}else{
+		cout << "your samplerate is not in standard value 44100 \
+			/4800/96000/192000" << endl;
+	}
+
 	cout << "srate" << srate << " fscale " << fscale << " table_size " << table_size << endl;
+
+
 
 	for(uint8_t i = 0; i < 127; i++){
 		fscale_table[i] = (int)(freq_table[i] * srate / fscale);
@@ -45,7 +70,7 @@ spectrum_gen::spectrum_gen(uint32_t sampling_rate)
 	}
 
 	spectrum_table = new double[table_size]; 
-	spectrum_table_tmp = new double[table_size]; 
+	spectrum_table_tmp = new double[table_size];
 
 	memset(spectrum_table, 0, table_size * sizeof(double));
 	memset(spectrum_table_tmp, 0, table_size * sizeof(double));

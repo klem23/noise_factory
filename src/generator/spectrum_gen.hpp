@@ -34,6 +34,7 @@ class spectrum_gen: public midi_parser{
 
 		uint32_t fscale;
 		uint32_t table_size;
+		uint32_t use_point_nb;
 		uint32_t fscale_table[127];
 		double* out;
 		
