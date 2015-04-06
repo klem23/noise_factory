@@ -67,12 +67,12 @@ spectrum_filter::spectrum_filter(uint32_t s_rate)
 		spectrum[i] = 1;
 		spect_tmp[i] = 1;
 		i++;
-	}while(i < s_size/16);
+	/*}while(i < s_size/16);
 	
 	do{
 		spectrum[i] = 0;
 		spect_tmp[i] = 0;
-		i++;
+		i++;*/
 	}while(i < use_point_nb);	
 
 
@@ -125,18 +125,16 @@ void spectrum_filter::set_output(double* output){
 		d_out = output;
 }
 
-void spectrum_filter::set_vol(float* vol_t){
-	if(vol_t != NULL){
-		if(amp != *vol_t){
-			amp = *vol_t;
+void spectrum_filter::check_param(spf_param* spf_p){
+	if(spf_p->volume != NULL){
+		if(amp != *spf_p->volume){
+			amp = *spf_p->volume;
 		}
 	}
-}
 
-void spectrum_filter::set_freq_shift(float* freq_shift_t){
-	if(freq_shift_t != NULL){
-		if(freq_shift != *freq_shift_t){
-			freq_shift = *freq_shift_t;
+	if(spf_p->freq_shift != NULL){
+		if(freq_shift != *spf_p->freq_shift){
+			freq_shift = *spf_p->freq_shift;
 		}
 	}
 }

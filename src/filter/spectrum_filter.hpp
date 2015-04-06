@@ -21,6 +21,11 @@
 
 #include "filter.hpp"
 
+typedef struct{
+	float* freq_shift;
+	float* volume;
+}spf_param;
+
 class spectrum_filter : public filter{
 private:
 	double* spectrum;
@@ -44,8 +49,7 @@ public:
 	void set_spectrum(float* val, int nb);
 	uint32_t get_table_size();
 
-	void set_vol(float* vol_t);
-	void set_freq_shift(float* freq_shift_t);
+	void check_param(spf_param* spf_p);
 
 	/*set plug*/
 	void set_input(double* input);
