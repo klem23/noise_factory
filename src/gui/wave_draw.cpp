@@ -215,11 +215,15 @@ void WaveDraw::send_graph(void){
 }
 
 void WaveDraw::send_vol(double value){
-	//lv2_send_data
+#ifdef LV2_GUI
+	lv2_send_data(3, value);
+#endif
 }
 
 void WaveDraw::send_freq(double value){
-	//lv2_send_data
+#ifdef LV2_GUI
+	lv2_send_data(2, value);
+#endif
 
 }
 
@@ -227,20 +231,23 @@ void WaveDraw::send_freq(double value){
 #ifdef LV2_GUI
 void WaveDraw::set_lv2_ctrl(LV2UI_Controller lc){
         //if(lc != NULL){
-                lv2_ctrl = lc;
+	lv2_ctrl = lc;
         //}
 }
 
 void WaveDraw::set_lv2_write_fn(LV2UI_Write_Function lw){
         //if(lw != NULL){
-                lv2_write = lw;
+	lv2_write = lw;
         //}
 }
 
 void WaveDraw::lv2_send_data(uint32_t index, double val){
+
          float value = val;
-         if((lv2_write != NULL)&&(lv2_ctrl != NULL))
+         if((lv2_write != NULL)&&(lv2_ctrl != NULL)){
+
                 lv2_write(lv2_ctrl, index, sizeof(float), 0, &value);
+         }
 }
 
 #endif

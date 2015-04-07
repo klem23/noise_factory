@@ -40,6 +40,8 @@ LV2UI_Handle gui_instantiate(const struct _LV2UI_Descriptor* descriptor,
                           const LV2_Feature* const*       features)
 {
     WaveDraw* wd = new WaveDraw(NULL, 4000, SPECTRUM);
+    wd->set_lv2_ctrl(controller);
+    wd->set_lv2_write_fn(write_function);
     wd->show();
     *widget = wd;
 

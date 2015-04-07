@@ -63,8 +63,7 @@ private:
 	LV2UI_Write_Function lv2_write;
 	float* data;
 
-	void set_lv2_ctrl(LV2UI_Controller lc);
-	void set_lv2_write_fn(LV2UI_Write_Function lw);
+
 	void lv2_send_data(uint32_t index, double data);
 #endif
 
@@ -84,6 +83,10 @@ public:
 	void send_vol(double value);
 	void send_freq(double value);
 
+#ifdef LV2_GUI
+	void set_lv2_ctrl(LV2UI_Controller lc);
+	void set_lv2_write_fn(LV2UI_Write_Function lw);
+#endif
 };
 
 #endif // WAVEDRAW_H
