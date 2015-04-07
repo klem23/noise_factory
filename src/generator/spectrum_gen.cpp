@@ -22,11 +22,12 @@
 #include <cstring>
 
 #include "spectrum_gen.hpp"
+#include "graph_tool.hpp"
 
 void spectrum_gen::start_fill_table(void){
-	spectrum_table[23] = 1;
-	//spectrum_table[24] = 1;
-	//spectrum_table[233] = 1;
+	spectrum_table[223] = 1;
+	spectrum_table[233] = 1;
+	spectrum_table[240] = 1;
 }
 
 spectrum_gen::spectrum_gen(uint32_t sampling_rate)
@@ -45,20 +46,18 @@ spectrum_gen::spectrum_gen(uint32_t sampling_rate)
 
 	if(srate == 44100){
 		table_size = 7526;
-		fscale = srate / table_size;
 	}else if(srate == 48000){
 		table_size = 8192;
-		fscale = srate / table_size;
 	}else if(srate == 96000){
 		table_size = 16384;
-		fscale = srate / table_size;
 	}else if(srate == 192000){
 		table_size = 32768;
-		fscale = srate / table_size;
 	}else{
 		cout << "your samplerate is not in standard value 44100 \
 			/4800/96000/192000" << endl;
 	}
+
+	fscale = srate / table_size;
 
 	cout << "srate" << srate << " fscale " << fscale << " table_size " << table_size << endl;
 
@@ -70,10 +69,12 @@ spectrum_gen::spectrum_gen(uint32_t sampling_rate)
 	}
 
 	spectrum_table = new double[table_size]; 
-	spectrum_table_tmp = new double[table_size];
+	spectrum_table_sum = new double[table_size];
+	spectrum_used = new float[use_point_nb];
 
 	memset(spectrum_table, 0, table_size * sizeof(double));
-	memset(spectrum_table_tmp, 0, table_size * sizeof(double));
+	memset(spectrum_table_sum, 0, table_size * sizeof(double));
+	memset(spectrum_used, 0, table_size * sizeof(float));
 
 
 	start_fill_table();
@@ -82,7 +83,8 @@ spectrum_gen::spectrum_gen(uint32_t sampling_rate)
 
 spectrum_gen::~spectrum_gen(void){
 	delete[] spectrum_table;
-	delete[] spectrum_table_tmp;
+	delete[] spectrum_table_sum;
+	delete[] spectrum_used;
 }
 
 void spectrum_gen::set_output(double * ptr){
@@ -101,13 +103,13 @@ void spectrum_gen::process_audio(int nb_sample){
 	}
 
 	memset(out, 0, table_size * sizeof(double));
-	memset(spectrum_table_tmp, 0, table_size * sizeof(double));
+	memset(spectrum_table_sum, 0, table_size * sizeof(double));
 
 	for(it = note_active.begin(); it != note_active.end(); ){
 		//for(int i = 0; i < TABLE_SIZE; i++){
 		for(uint32_t i = 0; i < table_size - fscale_table[it->key]; i++){
 			//spectrum_table_tmp[i] = spectrum_table[i];
-			spectrum_table_tmp[i + fscale_table[it->key]] += spectrum_table[i] * amp;
+			spectrum_table_sum[i + fscale_table[it->key]] += spectrum_table[i] * amp;
 		}
 
 
@@ -118,7 +120,7 @@ void spectrum_gen::process_audio(int nb_sample){
 		}
 	}	
 
-	memcpy(out, spectrum_table_tmp, table_size * sizeof(double));
+	memcpy(out, spectrum_table_sum, table_size * sizeof(double));
 
 }
 /*
@@ -151,16 +153,18 @@ void spectrum_gen::change_signal(uint32_t x, double y){
 }
 
 void spectrum_gen::change_signal(float* val, int nb){
-	uint32_t max = table_size;
+	/*uint32_t max = table_size;
 	if(nb < (int)table_size){
 		max = nb;
-	}
+	}*/
+	memset(spectrum_table, 0, table_size * sizeof(double));
 
 	/*transpose GUI graph to plugin table*/
 	//graph_adapter::transpose(val, nb, spectrum_table, table_size);
+	transpose_graph(val, nb, spectrum_used, use_point_nb);
 
-	for(uint32_t i = 0; i < max; i++){
-		spectrum_table[i] = val[i];
+	for(uint32_t i = 0; i < use_point_nb; i++){
+		spectrum_table[i] = spectrum_used[i];
 	}
 }
 

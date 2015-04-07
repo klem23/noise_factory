@@ -27,12 +27,13 @@
 class spectrum_gen: public midi_parser{
 	private:
 		double *spectrum_table;//edit
-		double *spectrum_table_tmp;
+		double *spectrum_table_sum;
+		float  *spectrum_used;
 
 		float amp;
 		float freq_shift;
 
-		uint32_t fscale;
+		float fscale;
 		uint32_t table_size;
 		uint32_t use_point_nb;
 		uint32_t fscale_table[127];
