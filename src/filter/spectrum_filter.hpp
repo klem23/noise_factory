@@ -31,7 +31,7 @@ private:
 	double* spectrum;
 	float* spect_tmp;
 	uint32_t s_size;
-	uint32_t fscale;
+	float fscale;
 
 	uint32_t use_point_nb;
 

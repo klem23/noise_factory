@@ -28,7 +28,7 @@ spectrum_filter::spectrum_filter(uint32_t s_rate)
 	 d_in(NULL),d_out(NULL)
 	,amp(1),freq_shift(0){
 
-	fscale = 10;
+	//fscale = 10;
 	//fscale = 1;
 	//s_size = srate / fscale;
 	//s_size = 1024;
@@ -49,7 +49,9 @@ spectrum_filter::spectrum_filter(uint32_t s_rate)
 	}else{
 		cout << "your samplerate is not in standard value 44100 \
 			/4800/96000/192000" << endl;
-	}	
+	}
+
+	fscale = srate / s_size;
 
 	cout << "spectrum size for filter : " << s_size << endl;
 
@@ -91,10 +93,23 @@ void spectrum_filter::process(int nb_sample){
 	if(s_size < nb_sample){
 		max = s_size;
 	}
+
 */
+
+	uint32_t decay = (uint32_t)(freq_shift * 10000.0 / fscale);
+	uint32_t j = 0;
 	//for(int i = 0; i < max; i++){
 	for(uint32_t i = 0; i < s_size; i++){
-		d_out[i] = d_in[i] * spectrum[i] * amp;
+		//d_out[i] = d_in[i] * spectrum[i] * amp;
+		if(i + decay < 0){
+			j = 0;
+		}else if(i + decay >= s_size){
+			j = s_size - 1;
+		}else{
+			j = i + decay;
+		}
+
+		d_out[i] = d_in[i] * spectrum[j] * amp;
 	}
 
 	
