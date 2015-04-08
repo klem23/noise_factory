@@ -85,8 +85,8 @@ WaveDraw::WaveDraw(QWidget *parent, uint32_t tab_size, uint8_t gtype /*= WAVE*/)
         freq_label->setAlignment(Qt::AlignCenter);
         vlay->addWidget(freq_label);
         freq_btn = new QwtKnob();
-        freq_btn->setScale(-1.0, 1.0);
-        freq_btn->setValue(5.0);
+        freq_btn->setRange(-1.0, 1.0);
+        freq_btn->setValue(0.0);
     	connect(freq_btn, SIGNAL(valueChanged(double)), this, SLOT(send_freq(double)));
         vlay->addWidget(freq_btn);
 
@@ -108,8 +108,8 @@ WaveDraw::WaveDraw(QWidget *parent, uint32_t tab_size, uint8_t gtype /*= WAVE*/)
         freq_label->setAlignment(Qt::AlignCenter);
         vlay->addWidget(freq_label);
         freq_btn = new QwtKnob();
-        freq_btn->setScale(-1.0, 1.0);
-        freq_btn->setValue(5.0);
+        freq_btn->setRange(-1.0, 1.0);
+        freq_btn->setValue(0.0);
     	connect(freq_btn, SIGNAL(valueChanged(double)), this, SLOT(send_freq(double)));
         vlay->addWidget(freq_btn);
 
@@ -140,8 +140,8 @@ WaveDraw::WaveDraw(QWidget *parent, uint32_t tab_size, uint8_t gtype /*= WAVE*/)
     vol_label->setAlignment(Qt::AlignCenter);
     vlay->addWidget(vol_label);
     vol_btn = new QwtKnob();
-    vol_btn->setScale(0.0, 1.0);
-    vol_btn->setValue(8.0);
+    vol_btn->setRange(0.0, 1.0);
+    vol_btn->setValue(0.8);
     connect(vol_btn, SIGNAL(valueChanged(double)), this, SLOT(send_vol(double)));
     vlay->addWidget(vol_btn);
 
@@ -218,6 +218,10 @@ void WaveDraw::send_vol(double value){
 #ifdef LV2_GUI
 	lv2_send_data(3, value);
 #endif
+
+#ifdef OSC
+	osc_send_data(3, value);
+#endif
 }
 
 void WaveDraw::send_freq(double value){
@@ -225,6 +229,9 @@ void WaveDraw::send_freq(double value){
 	lv2_send_data(2, value);
 #endif
 
+#ifdef OSC
+	osc_send_data(2, value);
+#endif
 }
 
 
@@ -248,6 +255,24 @@ void WaveDraw::lv2_send_data(uint32_t index, double val){
 
                 lv2_write(lv2_ctrl, index, sizeof(float), 0, &value);
          }
+}
+
+#endif
+
+#ifdef OSC
+void WaveDraw::osc_send_data(uint32_t index, double val){
+
+	string path;
+	float value = val;
+
+	if(index == 2) path = "/wave/freq_shift";
+	else if(index == 3) path = "/wave/volume";
+
+	if(lo_send(osc_addr, path.c_str(), "f", value) == -1) {
+			printf("OSC error %d: %s\n", lo_address_errno(osc_addr), lo_address_errstr(osc_addr));
+    }else{
+            printf("OSC message send \n");
+    }
 }
 
 #endif

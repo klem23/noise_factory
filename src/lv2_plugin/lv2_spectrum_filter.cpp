@@ -73,6 +73,20 @@ int signal_change_handler(const char *path, const char *types, lo_arg **argv, in
        return 1;
 }
 
+int freq_change_handler(const char *path, const char *types, lo_arg **argv, int argc,
+                          void *data, void *user_data){
+
+	if(sp.freq_shift != NULL){
+		*sp.freq_shift = argv[0]->f;
+	}
+}
+
+int vol_change_handler(const char *path, const char *types, lo_arg **argv, int argc,
+                          void *data, void *user_data){
+	if(sp.volume != NULL){
+			*sp.volume = argv[0]->f;
+		}
+}
 #endif
 
 
@@ -152,6 +166,8 @@ LV2_Handle instantiate(const LV2_Descriptor *descriptor,
 
         lo_server_thread lost = lo_server_thread_new("2325", NULL);
         lo_server_thread_add_method(lost, "/wave/table", "b", signal_change_handler, filter);
+        lo_server_thread_add_method(lost, "/wave/freq_shift", "f", freq_change_handler, filter);
+        lo_server_thread_add_method(lost, "/wave/volume", "f", vol_change_handler, filter);
 
         lo_server_thread_start(lost);
 #endif

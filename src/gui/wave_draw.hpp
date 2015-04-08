@@ -87,6 +87,10 @@ public:
 	void set_lv2_ctrl(LV2UI_Controller lc);
 	void set_lv2_write_fn(LV2UI_Write_Function lw);
 #endif
+
+#ifdef OSC
+	void osc_send_data(uint32_t index, double data);
+#endif
 };
 
 #endif // WAVEDRAW_H

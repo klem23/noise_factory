@@ -26,7 +26,7 @@
 spectrum_filter::spectrum_filter(uint32_t s_rate)
 	:filter(s_rate),
 	 d_in(NULL),d_out(NULL)
-	,amp(1),freq_shift(0){
+	,amp(1.0),freq_shift(0.0){
 
 	//fscale = 10;
 	//fscale = 1;
