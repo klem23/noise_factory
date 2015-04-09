@@ -98,15 +98,16 @@ void spectrum_filter::process(int nb_sample){
 
 	uint32_t decay = (uint32_t)(freq_shift * 10000.0 / fscale);
 	uint32_t j = 0;
+
 	//for(int i = 0; i < max; i++){
 	for(uint32_t i = 0; i < s_size; i++){
 		//d_out[i] = d_in[i] * spectrum[i] * amp;
-		if(i + decay < 0){
+		if(i - decay < 0){
 			j = 0;
-		}else if(i + decay >= s_size){
+		}else if(i - decay >= s_size){
 			j = s_size - 1;
 		}else{
-			j = i + decay;
+			j = i - decay;
 		}
 
 		d_out[i] = d_in[i] * spectrum[j] * amp;
