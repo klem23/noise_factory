@@ -55,26 +55,28 @@ public:
     uint32_t getSize(void);
 };
 
+
 class TimePicker : public CurvePicker
 {
 private:
-
     void fill_tables();
     void widgetMouseMoveEvent(QMouseEvent *ev);
     void widgetMousePressEvent (QMouseEvent *ev);
+
 public:
     TimePicker(QWidget *canvas, QWidget *plot, uint32_t tab_size);
     ~TimePicker();
 };
 
+
 class FreqPicker : public CurvePicker
 {
 private:
     uint8_t type;
-
     void fill_tables();
     void widgetMouseMoveEvent(QMouseEvent *ev);
     void widgetMousePressEvent (QMouseEvent *ev);
+
 public:
     FreqPicker(QWidget *canvas, QWidget *plot, uint32_t tab_size, uint8_t gtype = SPECTRUM);
     ~FreqPicker();

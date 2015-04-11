@@ -23,15 +23,15 @@
 
 #include "CurvePicker.hpp"
 
+/*
+ * CurvePicker
+ */
 CurvePicker::CurvePicker(QWidget *canvas, QWidget *plot, uint32_t tab_size)
-	:QwtPlotPicker((QwtPlotCanvas*)canvas){
+	:QwtPlotPicker((QwtPlotCanvas*)canvas)
+	,size(tab_size),ymin(0),ymax(1){
 
-    size = tab_size;
     x = new double[size];
     y = new double[size];
-
-    ymin = 0;
-    ymax = 1;
 
     curve = new QwtPlotCurve();
     curve->setRawSamples(x, y, size);
@@ -77,6 +77,10 @@ float* CurvePicker::getGraph(void){
 uint32_t CurvePicker::getSize(void){
 	return size;
 }
+
+/*
+ * TimePicker
+ */
 
 TimePicker::TimePicker(QWidget *canvas, QWidget *plot, uint32_t tab_size)
 	:CurvePicker(canvas, plot, tab_size){
@@ -136,9 +140,14 @@ void TimePicker::fill_tables(){
 
 }
 
+
+/*
+ * FreqPicker
+ */
 FreqPicker::FreqPicker(QWidget *canvas, QWidget *plot, uint32_t tab_size, uint8_t gtype /* = SPECTRUM*/)
-	:CurvePicker(canvas, plot, tab_size){
-	type = gtype;
+	:CurvePicker(canvas, plot, tab_size)
+	,type(gtype){
+
 	fill_tables();
 }
 
