@@ -31,11 +31,11 @@ OSCUI::OSCUI(uint32_t port_t):port(port_t){
 
 
 void OSCUI::osc_send_curve(float* curve, uint32_t size){
-    cout << "#klem test osc size :" << wp->getSize() << endl;
+    cout << "#klem test osc size :" << size << endl;
 
     lo_blob data = lo_blob_new(size*sizeof(float), curve);
     if(lo_send(osc_addr, "/wave/table", "b", data) == -1) {
-            std::cout << "OSC error : " << lo_address_errno(osc_addr) << " : " << lo_address_errstr(osc_addr)) << std::endl;
+            std::cout << "OSC error : " << lo_address_errno(osc_addr) << " : " << lo_address_errstr(osc_addr) << std::endl;
     }else{
             std::cout << "Curve send by OSC message" << std::endl;
     }
@@ -50,8 +50,58 @@ void OSCUI::osc_send_data(uint32_t index, double val){
 	else if(index == 3) path = "/wave/volume";
 
 	if(lo_send(osc_addr, path.c_str(), "f", value) == -1) {
-			std::cout << "OSC error " << lo_address_errno(osc_addr) << " : " << lo_address_errstr(osc_addr));
+			std::cout << "OSC error " << lo_address_errno(osc_addr) << " : " << lo_address_errstr(osc_addr) << std::endl;
     }else{
             std::cout << "OSC message send" << endl;
     }
+}
+
+
+OSCWaveDraw::OSCWaveDraw(QWidget *parent, uint32_t tab_size)
+	:TimeCurveDraw(parent, tab_size), OSCUI(2323){
+
+}
+
+void OSCWaveDraw::send_vol(double value){
+	osc_send_data(3, value);
+}
+
+OSCSpectrumDraw::OSCSpectrumDraw(QWidget *parent, uint32_t tab_size)
+	:FreqCurveDraw(parent, tab_size), OSCUI(2324){
+
+}
+
+void OSCSpectrumDraw::send_vol(double value){
+	osc_send_data(3, value);
+}
+
+void OSCSpectrumDraw::send_freq(double value){
+	osc_send_data(2, value);
+}
+
+OSCSFilterDraw::OSCSFilterDraw(QWidget *parent, uint32_t tab_size)
+	:FreqCurveDraw(parent, tab_size), OSCUI(2324){
+
+}
+
+void OSCSFilterDraw::send_vol(double value){
+	osc_send_data(3, value);
+}
+
+void OSCSFilterDraw::send_freq(double value){
+	osc_send_data(2, value);
+}
+
+
+OSCCFilterDraw::OSCCFilterDraw(QWidget *parent, uint32_t tab_size)
+	:FreqCurveDraw(parent, tab_size), OSCUI(2324){
+
+}
+
+void OSCCFilterDraw::send_vol(double value){
+	osc_send_data(3, value);
+}
+
+void OSCCFilterDraw::send_freq(double value){
+
 }

@@ -22,6 +22,8 @@
 
 #include "lv2/lv2plug.in/ns/extensions/ui/ui.h"
 
+#include "CurveDraw.hpp"
+
 class LV2UI{
 
 private:
@@ -32,13 +34,49 @@ private:
 protected:
 	LV2UI();
 
-	void set_lv2_ctrl(LV2UI_Controller lc);
-	void set_lv2_write_fn(LV2UI_Write_Function lw);
-
 	void lv2_send_curve(float* curve, uint32_t size);
 	void lv2_send_data(uint32_t index, double data);
 
+public:
+	void set_lv2_ctrl(LV2UI_Controller lc);
+	void set_lv2_write_fn(LV2UI_Write_Function lw);
 };
 
+
+class LV2WaveDraw : public TimeCurveDraw, public LV2UI{
+private:
+	void send_vol(double value);
+
+public:
+	LV2WaveDraw(QWidget *parent, uint32_t tab_size);
+
+};
+
+class LV2SpectrumDraw : public FreqCurveDraw, public LV2UI{
+private:
+	void send_vol(double value);
+	void send_freq(double value);
+
+public:
+	LV2SpectrumDraw(QWidget *parent, uint32_t tab_size);
+};
+
+class LV2SFilterDraw : public FreqCurveDraw, public LV2UI{
+private:
+	void send_vol(double value);
+	void send_freq(double value);
+
+public:
+	LV2SFilterDraw(QWidget *parent, uint32_t tab_size);
+};
+
+class LV2CFilterDraw : public FreqCurveDraw, public LV2UI{
+private:
+	void send_vol(double value);
+	void send_freq(double value);
+
+public:
+	LV2CFilterDraw(QWidget *parent, uint32_t tab_size);
+};
 
 #endif // LV2_UI_HPP

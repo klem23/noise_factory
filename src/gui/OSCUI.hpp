@@ -20,8 +20,10 @@
 #ifndef OSC_UI_HPP
 #define OSC_UI_HPP
 
-#include <cstdint>
+#include <stdint.h>
 #include <lo/lo.h>
+
+#include "CurveDraw.hpp"
 
 class OSCUI{
 
@@ -35,5 +37,43 @@ protected:
 	void osc_send_data(uint32_t index, double data);
 
 };
+
+
+class OSCWaveDraw : public TimeCurveDraw, public OSCUI{
+private:
+	void send_vol(double value);
+
+public:
+	OSCWaveDraw(QWidget *parent, uint32_t tab_size);
+
+};
+
+class OSCSpectrumDraw : public FreqCurveDraw, public OSCUI{
+private:
+	void send_vol(double value);
+	void send_freq(double value);
+
+public:
+	OSCSpectrumDraw(QWidget *parent, uint32_t tab_size);
+};
+
+class OSCSFilterDraw : public FreqCurveDraw, public OSCUI{
+private:
+	void send_vol(double value);
+	void send_freq(double value);
+
+public:
+	OSCSFilterDraw(QWidget *parent, uint32_t tab_size);
+};
+
+class OSCCFilterDraw : public FreqCurveDraw, public OSCUI{
+private:
+	void send_vol(double value);
+	void send_freq(double value);
+
+public:
+	OSCCFilterDraw(QWidget *parent, uint32_t tab_size);
+};
+
 
 #endif // OSC_UI_HPP
