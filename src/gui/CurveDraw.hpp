@@ -45,8 +45,12 @@ class CurveDraw : public QWidget
 {
 	Q_OBJECT
 
-private:
+protected:
 	uint8_t type;
+	uint32_t size;
+
+    QHBoxLayout *lay;
+    QVBoxLayout *vlay;
 
 	QwtPlot *graph;
 	CurvePicker *wp;
@@ -54,6 +58,8 @@ private:
 	QPushButton *send_btn;
 	QwtKnob *freq_btn;
 	QwtKnob *vol_btn;
+
+	virtual void send_vol(double value) = 0;
 
 	void mousePressEvent(QMouseEvent *ev);
 	void mouseMoveEvent(QMouseEvent *ev);
@@ -77,11 +83,11 @@ public:
 	CurveDraw(QWidget *parent, uint32_t tab_size, uint8_t gtype = WAVE);
 	~CurveDraw();
 	void draw();
+	void setTitle(QString ttl);
+	void enable_vol_knob(void);
 
-	public slots:
+public slots:
 	void send_graph(void);
-	void send_vol(double value);
-	void send_freq(double value);
 
 #ifdef LV2_GUI
 	void set_lv2_ctrl(LV2UI_Controller lc);
@@ -91,6 +97,24 @@ public:
 #ifdef OSC
 	void osc_send_data(uint32_t index, double data);
 #endif
+};
+
+
+class TimeCurveDraw : public CurveDraw{
+private:
+
+public:
+	TimeCurveDraw(QWidget *parent, uint32_t tab_size);
+};
+
+class FreqCurveDraw : public CurveDraw{
+private:
+	virtual void send_freq(double value) = 0;
+
+public:
+	FreqCurveDraw(QWidget *parent, uint32_t tab_size);
+
+	void enable_freq_shift_knob(void);
 };
 
 #endif // CURVE_DRAW_H
