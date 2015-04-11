@@ -19,7 +19,7 @@
 
 #include <QApplication>
 
-#include "CurveDraw.hpp"
+#include "OSCUI.hpp"
 
 int main(int argc, char *argv[])
 {
@@ -27,8 +27,8 @@ int main(int argc, char *argv[])
     //MainWindow w;
     //w.show();
 
-    CurveDraw *cd = new CurveDraw(NULL, 4000, FILTER);
-    cd->show();
+    OSCSFilterDraw *gui = new OSCSFilterDraw(NULL, 4000);
+    gui->show();
 
     return a.exec();
 }
