@@ -33,14 +33,6 @@
 
 #include "CurvePicker.hpp"
 
-#ifdef LV2_GUI
-        #include "lv2/lv2plug.in/ns/extensions/ui/ui.h"
-#endif
-
-#ifdef OSC
-        #include <lo/lo.h>
-#endif
-
 class CurveDraw : public QWidget
 {
 	Q_OBJECT
@@ -64,21 +56,6 @@ protected:
 	void mousePressEvent(QMouseEvent *ev);
 	void mouseMoveEvent(QMouseEvent *ev);
 
-#ifdef LV2_GUI
-	LV2UI_Controller lv2_ctrl;
-	LV2UI_Write_Function lv2_write;
-	float* data;
-
-
-	void lv2_send_data(uint32_t index, double data);
-#endif
-
-
-#ifdef OSC
-	lo_address osc_addr;
-#endif
-
-
 public:
 	CurveDraw(QWidget *parent, uint32_t tab_size, uint8_t gtype = WAVE);
 	~CurveDraw();
@@ -89,14 +66,6 @@ public:
 public slots:
 	void send_graph(void);
 
-#ifdef LV2_GUI
-	void set_lv2_ctrl(LV2UI_Controller lc);
-	void set_lv2_write_fn(LV2UI_Write_Function lw);
-#endif
-
-#ifdef OSC
-	void osc_send_data(uint32_t index, double data);
-#endif
 };
 
 

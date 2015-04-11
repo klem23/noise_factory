@@ -156,7 +156,7 @@ env_graph.Program('build_scons/gui/wave_draw_gui_sa', common_gui_obj + wave_draw
 spectrum_draw_gui_lv2_src = Split("build_scons/gui/LV2UI.cpp  build_scons/gui/lv2_spectrum_draw_gui.cpp")
 spectrum_draw_gui_lv2_obj = env_graph.SharedObject(spectrum_draw_gui_lv2_src);
 env_graph.SharedLibrary('build_scons/out/spectrum_draw_gui', common_gui_obj + spectrum_draw_gui_lv2_obj)
-spectrum_draw_gui_sa_src = Split("build_scons/gui/OSCUI.cpp build_scons/gui/wave_gmain.cpp")
+spectrum_draw_gui_sa_src = Split("build_scons/gui/OSCUI.cpp build_scons/gui/spectrum_gmain.cpp")
 spectrum_draw_gui_sa_obj = env_graph.SharedObject(spectrum_draw_gui_sa_src);
 env_graph.Program('build_scons/gui/spectrum_draw_gui_sa', common_gui_obj + spectrum_draw_gui_sa_obj)
 
@@ -174,7 +174,7 @@ sfilter_gui_lv2_obj = env_graph.SharedObject(sfilter_gui_lv2_src);
 env_graph.SharedLibrary('build_scons/out/spectrum_filter_gui', common_gui_obj + sfilter_gui_lv2_obj)
 sfilter_gui_sa_src = Split("build_scons/gui/OSCUI.cpp build_scons/gui/sfilter_gmain.cpp")
 sfilter_gui_sa_obj = env_graph.SharedObject(sfilter_gui_sa_src);
-env_graph.Program('build_scons/out/spectrum_filter_gui_sa', common_gui_obj + sfilter_gui_sa_obj)
+env_graph.Program('build_scons/gui/spectrum_filter_gui_sa', common_gui_obj + sfilter_gui_sa_obj)
 
 ##########
 #Bundle

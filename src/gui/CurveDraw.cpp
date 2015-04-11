@@ -54,83 +54,6 @@ CurveDraw::CurveDraw(QWidget *parent, uint32_t tab_size, uint8_t gtype /*= WAVE*
     QSpacerItem *space2 = new QSpacerItem(50, 50);
     vlay->addItem(space2);
 
-    /* Specific init */
-    /*
-    type = gtype;
-
-    if(type == WAVE){
-
-        graph->setTitle("Draw your wave");
-        graph->enableAxis(QwtPlot::xBottom, false);
-        graph->setAxisScale(QwtPlot::yLeft, -1, 1);
-        graph->setAxisTitle(QwtPlot::yLeft, "Amplitude");
-
-        wp = new TimePicker(graph->canvas(), graph, tab_size);
-        wp->setBound(-1, 1);
-
-        port = 2323;
-
-      }else if(type == SPECTRUM){
-
-        graph->setTitle("Draw your spectrum");
-        graph->setAxisScaleEngine(QwtPlot::xBottom, new QwtLog10ScaleEngine());
-        graph->setAxisScale(QwtPlot::xBottom, 100, 20000);
-        graph->setAxisScale(QwtPlot::yLeft, 0, 1);
-        graph->setAxisTitle(QwtPlot::xBottom, "Frequency");
-        graph->setAxisTitle(QwtPlot::yLeft, "Amplitude");
-
-        wp = new FreqPicker(graph->canvas(), graph, tab_size, type);
-        wp->setBound(0, 1);
-
-        QLabel* freq_label = new QLabel("Freq shift");
-        freq_label->setAlignment(Qt::AlignCenter);
-        vlay->addWidget(freq_label);
-        freq_btn = new QwtKnob();
-        freq_btn->setRange(-1.0, 1.0);
-        freq_btn->setValue(0.0);
-    	connect(freq_btn, SIGNAL(valueChanged(double)), this, SLOT(send_freq(double)));
-        vlay->addWidget(freq_btn);
-
-        port = 2324;
-
-      }else if(type == FILTER){
-
-        graph->setTitle("Draw your filter spectrum");
-        graph->setAxisScaleEngine(QwtPlot::xBottom, new QwtLog10ScaleEngine());
-        graph->setAxisScale(QwtPlot::xBottom, 100, 20000);
-        graph->setAxisScale(QwtPlot::yLeft, 0, 1);
-        graph->setAxisTitle(QwtPlot::xBottom, "Frequency");
-        graph->setAxisTitle(QwtPlot::yLeft, "Amplitude");
-
-        wp = new FreqPicker(graph->canvas(), graph, tab_size, type);
-        wp->setBound(0, 1);
-
-        QLabel* freq_label = new QLabel("Freq shift");
-        freq_label->setAlignment(Qt::AlignCenter);
-        vlay->addWidget(freq_label);
-        freq_btn = new QwtKnob();
-        freq_btn->setRange(-1.0, 1.0);
-        freq_btn->setValue(0.0);
-    	connect(freq_btn, SIGNAL(valueChanged(double)), this, SLOT(send_freq(double)));
-        vlay->addWidget(freq_btn);
-
-        port = 2325;
-
-      }else if(type == CFILTER){
-
-        graph->setTitle("Draw your filter spectrum");
-        graph->setAxisScaleEngine(QwtPlot::xBottom, new QwtLog10ScaleEngine());
-        graph->setAxisScale(QwtPlot::xBottom, 100, 20000);
-        graph->setAxisScale(QwtPlot::yLeft, 0, 1);
-        graph->setAxisTitle(QwtPlot::xBottom, "Frequency");
-        graph->setAxisTitle(QwtPlot::yLeft, "Amplitude");
-
-        wp = new FreqPicker(graph->canvas(), graph, tab_size, type);
-        wp->setBound(0, 1);
-
-        port = 2326;
-      }
-*/
 }
 
 void CurveDraw::enable_vol_knob(void){
@@ -187,93 +110,13 @@ void CurveDraw::send_graph(void){
 	//}
 	float* fgraph = wp->getGraph();
 
-#ifdef OSC
-        cout << "#klem test osc size :" << wp->getSize() << endl;
-
-        lo_blob data = lo_blob_new(wp->getSize()*sizeof(float), fgraph);
-        if(lo_send(osc_addr, "/wave/table", "b", data) == -1) {
-                printf("OSC error %d: %s\n", lo_address_errno(osc_addr), lo_address_errstr(osc_addr));
-        }else{
-                printf("OSC message send \n");
-        }
-
-#endif
-
-#ifdef LV2_GUI
-        //this->lv2_write(lv2_ctrl, 2, wp->getSize(), 0, fgraph);
-        //this->lv2_write(lv2_ctrl, 2, wp->getSize(), atom_vector_urid, fgraph);
-//      toto = new float;
-//      *toto = 1;
-//      this->lv2_write(lv2_ctrl, 2, sizeof(float), 0, toto);   
-#endif
+	//inherit
 
 	delete fgraph;
 
 }
 
-/*
-void CurveDraw::send_vol(double value){
-#ifdef LV2_GUI
-	lv2_send_data(3, value);
-#endif
 
-#ifdef OSC
-	osc_send_data(3, value);
-#endif
-}
-
-void CurveDraw::send_freq(double value){
-#ifdef LV2_GUI
-	lv2_send_data(2, value);
-#endif
-
-#ifdef OSC
-	osc_send_data(2, value);
-#endif
-}
-*/
-
-#ifdef LV2_GUI
-void CurveDraw::set_lv2_ctrl(LV2UI_Controller lc){
-        //if(lc != NULL){
-	lv2_ctrl = lc;
-        //}
-}
-
-void CurveDraw::set_lv2_write_fn(LV2UI_Write_Function lw){
-        //if(lw != NULL){
-	lv2_write = lw;
-        //}
-}
-
-void CurveDraw::lv2_send_data(uint32_t index, double val){
-
-         float value = val;
-         if((lv2_write != NULL)&&(lv2_ctrl != NULL)){
-
-                lv2_write(lv2_ctrl, index, sizeof(float), 0, &value);
-         }
-}
-
-#endif
-
-#ifdef OSC
-void CurveDraw::osc_send_data(uint32_t index, double val){
-
-	string path;
-	float value = val;
-
-	if(index == 2) path = "/wave/freq_shift";
-	else if(index == 3) path = "/wave/volume";
-
-	if(lo_send(osc_addr, path.c_str(), "f", value) == -1) {
-			printf("OSC error %d: %s\n", lo_address_errno(osc_addr), lo_address_errstr(osc_addr));
-    }else{
-            printf("OSC message send \n");
-    }
-}
-
-#endif
 
 void CurveDraw::setTitle(QString ttl){
 	graph->setTitle(ttl);
