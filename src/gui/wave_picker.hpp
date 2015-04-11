@@ -33,7 +33,7 @@
 
 using namespace std;
 
-class WavePicker : public QwtPlotPicker
+class CurvePicker : public QwtPlotPicker
 {
 protected:
     QwtPlotCurve *curve;
@@ -46,8 +46,8 @@ protected:
     virtual void widgetMousePressEvent (QMouseEvent *ev) = 0;
 
 public:
-    WavePicker(QWidget *canvas, QWidget *plot, uint32_t tab_size);
-    ~WavePicker();
+    CurvePicker(QWidget *canvas, QWidget *plot, uint32_t tab_size);
+    ~CurvePicker();
     void draw();
     void setBound(double min, double max);
     double getGraph(uint32_t idx);
@@ -55,7 +55,7 @@ public:
     uint32_t getSize(void);
 };
 
-class TimePicker : public WavePicker
+class TimePicker : public CurvePicker
 {
 private:
 
@@ -67,7 +67,7 @@ public:
     ~TimePicker();
 };
 
-class FreqPicker : public WavePicker
+class FreqPicker : public CurvePicker
 {
 private:
     uint8_t type;

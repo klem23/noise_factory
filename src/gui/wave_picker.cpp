@@ -23,7 +23,7 @@
 
 #include "wave_picker.hpp"
 
-WavePicker::WavePicker(QWidget *canvas, QWidget *plot, uint32_t tab_size):QwtPlotPicker((QwtPlotCanvas*)canvas){
+CurvePicker::CurvePicker(QWidget *canvas, QWidget *plot, uint32_t tab_size):QwtPlotPicker((QwtPlotCanvas*)canvas){
 
     size = tab_size;
     x = new double[size];
@@ -37,22 +37,22 @@ WavePicker::WavePicker(QWidget *canvas, QWidget *plot, uint32_t tab_size):QwtPlo
     curve->attach((QwtPlot*)plot);
 }
 
-WavePicker::~WavePicker(){
+CurvePicker::~CurvePicker(){
   delete x;
   delete y;
   delete curve;
 }
 
-void WavePicker::draw(){
+void CurvePicker::draw(){
      curve->setRawSamples(x, y, size);
 }
 
-void WavePicker::setBound(double min, double max){
+void CurvePicker::setBound(double min, double max){
     ymin = min;
     ymax = max;
 }
 
-double WavePicker::getGraph(uint32_t idx){
+double CurvePicker::getGraph(uint32_t idx){
 	if(idx < size){
 		return y[idx];
 	}else{
@@ -60,7 +60,7 @@ double WavePicker::getGraph(uint32_t idx){
 	}
 }
 
-float* WavePicker::getGraph(void){
+float* CurvePicker::getGraph(void){
 	float* out = new float[size];
 
 	if(out != NULL){
@@ -73,11 +73,11 @@ float* WavePicker::getGraph(void){
 	return out;
 }
 
-uint32_t WavePicker::getSize(void){
+uint32_t CurvePicker::getSize(void){
 	return size;
 }
 
-TimePicker::TimePicker(QWidget *canvas, QWidget *plot, uint32_t tab_size):WavePicker(canvas, plot, tab_size){
+TimePicker::TimePicker(QWidget *canvas, QWidget *plot, uint32_t tab_size):CurvePicker(canvas, plot, tab_size){
   fill_tables();
 }
 
@@ -134,7 +134,7 @@ void TimePicker::fill_tables(){
 
 }
 
-FreqPicker::FreqPicker(QWidget *canvas, QWidget *plot, uint32_t tab_size, uint8_t gtype /* = SPECTRUM*/):WavePicker(canvas, plot, tab_size){
+FreqPicker::FreqPicker(QWidget *canvas, QWidget *plot, uint32_t tab_size, uint8_t gtype /* = SPECTRUM*/):CurvePicker(canvas, plot, tab_size){
   type = gtype;
   fill_tables();
 }

@@ -49,7 +49,7 @@ private:
 	uint8_t type;
 
 	QwtPlot *graph;
-	WavePicker *wp;
+	CurvePicker *wp;
 
 	QPushButton *send_btn;
 	QwtKnob *freq_btn;
