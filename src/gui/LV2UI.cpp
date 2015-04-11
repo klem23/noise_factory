@@ -53,14 +53,18 @@ void LV2UI::lv2_send_data(uint32_t index, double val){
 LV2WaveDraw::LV2WaveDraw(QWidget *parent, uint32_t tab_size)
 	:TimeCurveDraw(parent, tab_size), LV2UI(){
 
+	enable_vol_knob();
 }
 void LV2WaveDraw::send_vol(double value){
 	lv2_send_data(3, value);
 }
 
+
 LV2SpectrumDraw::LV2SpectrumDraw(QWidget *parent, uint32_t tab_size)
 	:FreqCurveDraw(parent, tab_size), LV2UI(){
 
+	enable_vol_knob();
+	enable_freq_shift_knob();
 }
 
 void LV2SpectrumDraw::send_vol(double value){
@@ -71,9 +75,12 @@ void LV2SpectrumDraw::send_freq(double value){
 	lv2_send_data(2, value);
 }
 
+
 LV2SFilterDraw::LV2SFilterDraw(QWidget *parent, uint32_t tab_size)
 	:FreqCurveDraw(parent, tab_size), LV2UI(){
 
+	enable_vol_knob();
+	enable_freq_shift_knob();
 }
 
 void LV2SFilterDraw::send_vol(double value){
@@ -84,9 +91,11 @@ void LV2SFilterDraw::send_freq(double value){
 	lv2_send_data(2, value);
 }
 
+
 LV2CFilterDraw::LV2CFilterDraw(QWidget *parent, uint32_t tab_size)
 	:FreqCurveDraw(parent, tab_size), LV2UI(){
 
+	enable_vol_knob();
 }
 
 void LV2CFilterDraw::send_vol(double value){

@@ -60,15 +60,19 @@ void OSCUI::osc_send_data(uint32_t index, double val){
 OSCWaveDraw::OSCWaveDraw(QWidget *parent, uint32_t tab_size)
 	:TimeCurveDraw(parent, tab_size), OSCUI(2323){
 
+	enable_vol_knob();
 }
 
 void OSCWaveDraw::send_vol(double value){
 	osc_send_data(3, value);
 }
 
+
 OSCSpectrumDraw::OSCSpectrumDraw(QWidget *parent, uint32_t tab_size)
 	:FreqCurveDraw(parent, tab_size), OSCUI(2324){
 
+	enable_vol_knob();
+	enable_freq_shift_knob();
 }
 
 void OSCSpectrumDraw::send_vol(double value){
@@ -79,9 +83,12 @@ void OSCSpectrumDraw::send_freq(double value){
 	osc_send_data(2, value);
 }
 
+
 OSCSFilterDraw::OSCSFilterDraw(QWidget *parent, uint32_t tab_size)
 	:FreqCurveDraw(parent, tab_size), OSCUI(2324){
 
+	enable_vol_knob();
+	enable_freq_shift_knob();
 }
 
 void OSCSFilterDraw::send_vol(double value){
@@ -93,9 +100,11 @@ void OSCSFilterDraw::send_freq(double value){
 }
 
 
+
 OSCCFilterDraw::OSCCFilterDraw(QWidget *parent, uint32_t tab_size)
 	:FreqCurveDraw(parent, tab_size), OSCUI(2324){
 
+	enable_vol_knob();
 }
 
 void OSCCFilterDraw::send_vol(double value){
