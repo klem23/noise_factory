@@ -19,17 +19,17 @@
 
 #include "LV2UI.hpp"
 
+LV2UI::LV2UI()
+	:lv2_ctrl(NULL),lv2_write(NULL){
+
+}
 
 void LV2UI::set_lv2_ctrl(LV2UI_Controller lc){
-	//if(lc != NULL){
 	lv2_ctrl = lc;
-	//}
 }
 
 void LV2UI::set_lv2_write_fn(LV2UI_Write_Function lw){
-	//if(lw != NULL){
 	lv2_write = lw;
-	//}
 }
 
 void LV2UI::lv2_send_curve(float* curve, uint32_t size){

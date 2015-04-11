@@ -50,8 +50,8 @@ void OSCUI::osc_send_data(uint32_t index, double val){
 	else if(index == 3) path = "/wave/volume";
 
 	if(lo_send(osc_addr, path.c_str(), "f", value) == -1) {
-			printf("OSC error %d: %s\n", lo_address_errno(osc_addr), lo_address_errstr(osc_addr));
+			std::cout << "OSC error " << lo_address_errno(osc_addr) << " : " << lo_address_errstr(osc_addr));
     }else{
-            printf("OSC message send \n");
+            std::cout << "OSC message send" << endl;
     }
 }
