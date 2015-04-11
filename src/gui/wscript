@@ -12,7 +12,7 @@ def configure(cnf):
 def build(bld):
         bld(features='cxx cxxprogram qt4',
                 #source       = 'src/gui_new/wave_draw.cpp src/gui_new/wave_picker.cpp src/gui_new/main.cpp',
-                source       = 'wave_draw.cpp wave_picker.cpp main.cpp',
+                source       = 'CurveDraw.cpp CurvePicker.cpp main.cpp',
                 #includes     = bld.env.INCLUDES_QTGUI,
                 includes     = "qt4/Qt/ qt4/QtGui/ .",
                 uselib       = "QTCORE QTGUI QWT",

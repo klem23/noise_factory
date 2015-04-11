@@ -90,7 +90,7 @@ def build(bld):
 
 #GUI
 	bld(features='cxx cxxshlib qt4',
-                source       = 'src/gui/wave_picker.cpp src/gui/wave_draw.cpp src/gui/lv2_wave_draw_gui.cpp',
+                source       = 'src/gui/CurvePicker.cpp src/gui/CurveDraw.cpp src/gui/lv2_wave_draw_gui.cpp',
                 target       = 'gui/wave_draw_gui',
 		includes     = 'src/gui/ /usr/local/include qt4/Qt/ qt4/QtGui/',
                 uselib       = "QTCORE QTGUI",
@@ -99,7 +99,7 @@ def build(bld):
         )
 
         bld(features='cxx cxxprogram qt4',
-                source       = 'src/gui/wave_picker.cpp src/gui/wave_draw.cpp src/gui/wave_gmain.cpp',
+                source       = 'src/gui/CurvePicker.cpp src/gui/CurveDraw.cpp src/gui/wave_gmain.cpp',
                 target       = 'gui_bin/wave_gen_gui',
                 includes     = "qt4/Qt/ qt4/QtGui/",
                 uselib       = "QTCORE QTGUI",
@@ -108,7 +108,7 @@ def build(bld):
         )
 
         bld(features='cxx cxxprogram qt4',
-                source       = 'src/gui/wave_picker.cpp src/gui/wave_draw.cpp src/gui/spectrum_gmain.cpp',
+                source       = 'src/gui/CurvePicker.cpp src/gui/CurveDraw.cpp src/gui/spectrum_gmain.cpp',
                 target       = 'gui_bin/spectrum_gen_gui',
                 includes     = "qt4/Qt/ qt4/QtGui/",
                 uselib       = "QTCORE QTGUI",
@@ -117,7 +117,7 @@ def build(bld):
         )
 
         bld(features='cxx cxxprogram qt4',
-                source       = 'src/gui/wave_picker.cpp src/gui/wave_draw.cpp src/gui/sfilter_gmain.cpp',
+                source       = 'src/gui/CurvePicker.cpp src/gui/CurveDraw.cpp src/gui/sfilter_gmain.cpp',
                 target       = 'gui_bin/sfilter_gui',
                 includes     = "qt4/Qt/ qt4/QtGui/",
                 uselib       = "QTCORE QTGUI",
@@ -126,7 +126,7 @@ def build(bld):
         )
 
         bld(features='cxx cxxprogram qt4',
-                source       = 'src/gui/wave_picker.cpp src/gui/wave_draw.cpp src/gui/cfilter_gmain.cpp',
+                source       = 'src/gui/CurvePicker.cpp src/gui/CurveDraw.cpp src/gui/cfilter_gmain.cpp',
                 target       = 'gui_bin/cfilter_gui',
                 includes     = "qt4/Qt/ qt4/QtGui/",
                 uselib       = "QTCORE QTGUI",

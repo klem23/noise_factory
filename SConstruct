@@ -137,7 +137,7 @@ env_graph.Append(LIBS=['QtGui'])
 #Qt ENV end
 #########
 
-common_gui_src = Split("build_scons/gui/wave_picker.cpp build_scons/gui/wave_draw.cpp")
+common_gui_src = Split("build_scons/gui/CurvePicker.cpp build_scons/gui/CurveDraw.cpp")
 common_gui_obj = env_graph.SharedObject(common_gui_src);
 env_graph.Append(LIBS=['qwt'])
 env_graph.Append(LIBS=['lo'])
