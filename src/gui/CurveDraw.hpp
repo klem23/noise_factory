@@ -17,8 +17,8 @@
     along with the Noise Factory.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef WAVEDRAW_H
-#define WAVEDRAW_H
+#ifndef CURVE_DRAW_H
+#define CURVE_DRAW_H
 
 
 #include <stdint.h>
@@ -31,7 +31,7 @@
 #include <qwt/qwt_knob.h>
 #include <qwt/qwt_plot.h>
 
-#include "wave_picker.hpp"
+#include "CurvePicker.hpp"
 
 #ifdef LV2_GUI
         #include "lv2/lv2plug.in/ns/extensions/ui/ui.h"
@@ -41,7 +41,7 @@
         #include <lo/lo.h>
 #endif
 
-class WaveDraw : public QWidget
+class CurveDraw : public QWidget
 {
 	Q_OBJECT
 
@@ -74,8 +74,8 @@ private:
 
 
 public:
-	WaveDraw(QWidget *parent, uint32_t tab_size, uint8_t gtype = WAVE);
-	~WaveDraw();
+	CurveDraw(QWidget *parent, uint32_t tab_size, uint8_t gtype = WAVE);
+	~CurveDraw();
 	void draw();
 
 	public slots:
@@ -93,4 +93,4 @@ public:
 #endif
 };
 
-#endif // WAVEDRAW_H
+#endif // CURVE_DRAW_H

@@ -17,8 +17,8 @@
     along with the Noise Factory.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef WAVE_PICKER_H
-#define WAVE_PICKER_H
+#ifndef CURVE_PICKER_HPP
+#define CURVE_PICKER_HPP
 
 #include <stdint.h>
 
@@ -80,4 +80,4 @@ public:
     ~FreqPicker();
 };
 
-#endif // WAVE_PICKER_H
+#endif // CURVE_PICKER_HPP

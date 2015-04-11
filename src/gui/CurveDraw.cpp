@@ -27,10 +27,11 @@
 #include <qwt/qwt_scale_engine.h>
 #include <qwt/qwt_picker_machine.h>
 
-#include "wave_draw.hpp"
+#include "CurveDraw.hpp"
 
-WaveDraw::WaveDraw(QWidget *parent, uint32_t tab_size, uint8_t gtype /*= WAVE*/):QWidget(parent)
-{
+CurveDraw::CurveDraw(QWidget *parent, uint32_t tab_size, uint8_t gtype /*= WAVE*/)
+	:QWidget(parent){
+
     //parent->resize(800, 500);
     //QSize wsize = parent->size();
     //this->resize(wsize.width() - 10, wsize.height() - 10);
@@ -159,29 +160,29 @@ WaveDraw::WaveDraw(QWidget *parent, uint32_t tab_size, uint8_t gtype /*= WAVE*/)
 
 }
 
-WaveDraw::~WaveDraw()
+CurveDraw::~CurveDraw()
 {
     delete graph;
     delete wp;
 }
 
-void WaveDraw::draw()
+void CurveDraw::draw()
 {
     wp->draw();
     graph->replot();
 }
 
-void WaveDraw::mousePressEvent(QMouseEvent *ev){
+void CurveDraw::mousePressEvent(QMouseEvent *ev){
     ev = ev;
     draw();
 }
 
-void WaveDraw::mouseMoveEvent(QMouseEvent *ev){
+void CurveDraw::mouseMoveEvent(QMouseEvent *ev){
     ev = ev;
     draw();
 }
 
-void WaveDraw::send_graph(void){
+void CurveDraw::send_graph(void){
 
         cout << "#klem test " << endl;;
 	//float fgraph[wp->getSize()];
@@ -214,7 +215,7 @@ void WaveDraw::send_graph(void){
 
 }
 
-void WaveDraw::send_vol(double value){
+void CurveDraw::send_vol(double value){
 #ifdef LV2_GUI
 	lv2_send_data(3, value);
 #endif
@@ -224,7 +225,7 @@ void WaveDraw::send_vol(double value){
 #endif
 }
 
-void WaveDraw::send_freq(double value){
+void CurveDraw::send_freq(double value){
 #ifdef LV2_GUI
 	lv2_send_data(2, value);
 #endif
@@ -236,19 +237,19 @@ void WaveDraw::send_freq(double value){
 
 
 #ifdef LV2_GUI
-void WaveDraw::set_lv2_ctrl(LV2UI_Controller lc){
+void CurveDraw::set_lv2_ctrl(LV2UI_Controller lc){
         //if(lc != NULL){
 	lv2_ctrl = lc;
         //}
 }
 
-void WaveDraw::set_lv2_write_fn(LV2UI_Write_Function lw){
+void CurveDraw::set_lv2_write_fn(LV2UI_Write_Function lw){
         //if(lw != NULL){
 	lv2_write = lw;
         //}
 }
 
-void WaveDraw::lv2_send_data(uint32_t index, double val){
+void CurveDraw::lv2_send_data(uint32_t index, double val){
 
          float value = val;
          if((lv2_write != NULL)&&(lv2_ctrl != NULL)){
@@ -260,7 +261,7 @@ void WaveDraw::lv2_send_data(uint32_t index, double val){
 #endif
 
 #ifdef OSC
-void WaveDraw::osc_send_data(uint32_t index, double val){
+void CurveDraw::osc_send_data(uint32_t index, double val){
 
 	string path;
 	float value = val;

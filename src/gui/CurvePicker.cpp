@@ -21,7 +21,7 @@
 
 #include <QMouseEvent>
 
-#include "wave_picker.hpp"
+#include "CurvePicker.hpp"
 
 CurvePicker::CurvePicker(QWidget *canvas, QWidget *plot, uint32_t tab_size)
 	:QwtPlotPicker((QwtPlotCanvas*)canvas){
