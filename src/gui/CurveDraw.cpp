@@ -306,7 +306,7 @@ FreqCurveDraw::FreqCurveDraw(QWidget *parent, uint32_t tab_size)
 	graph->setAxisTitle(QwtPlot::xBottom, "Frequency");
 	graph->setAxisTitle(QwtPlot::yLeft, "Amplitude");
 
-	wp = new FreqPicker(graph->canvas(), graph, size, SPECTRUM);
+	wp = new FreqPicker(graph->canvas(), graph, size, FILTER);
 	wp->setBound(0, 1);
 
 }
