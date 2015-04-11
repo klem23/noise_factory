@@ -19,7 +19,7 @@
 
 #include <QApplication>
 
-#include "wave_draw.hpp"
+#include "CurveDraw.hpp"
 
 int main(int argc, char *argv[])
 {
@@ -27,8 +27,8 @@ int main(int argc, char *argv[])
     //MainWindow w;
     //w.show();
 
-    WaveDraw *wd = new WaveDraw(NULL, 4000, SPECTRUM);
-    wd->show();
+    CurveDraw *cd = new CurveDraw(NULL, 4000, SPECTRUM);
+    cd->show();
 
     return a.exec();
 }
