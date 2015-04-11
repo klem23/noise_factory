@@ -23,7 +23,8 @@
 #include "lv2/lv2plug.in/ns/ext/urid/urid.h"
 #include "lv2/lv2plug.in/ns/ext/atom/atom.h"
 
-#include "CurveDraw.hpp"
+#include "LV2UI.hpp"
+#include "OSCUI.hpp"
 
 #define WAUI_URI "http://github.com/klem23/noise_factory/wave_draw/gui";
 
@@ -39,11 +40,12 @@ LV2UI_Handle gui_instantiate(const struct _LV2UI_Descriptor* descriptor,
                           LV2UI_Widget*                   widget,
                           const LV2_Feature* const*       features)
 {
-    CurveDraw* cd = new CurveDraw(NULL, 4000);
-    cd->set_lv2_ctrl(controller);
-    cd->set_lv2_write_fn(write_function);
-    cd->show();
-    *widget = cd;
+    LV2WaveDraw* gui = new LV2WaveDraw(NULL, 4000);
+    //OSCWaveDraw* gui = new OSCWaveDraw(NULL, 4000);
+    gui->set_lv2_ctrl(controller);
+    gui->set_lv2_write_fn(write_function);
+    gui->show();
+    *widget = gui;
 
 /*
         LV2_URID_Map* map;
@@ -60,13 +62,14 @@ LV2UI_Handle gui_instantiate(const struct _LV2UI_Descriptor* descriptor,
         }
 */
 
-    return (LV2UI_Handle)cd;
+    return (LV2UI_Handle)gui;
 }
 
 void gui_cleanup(LV2UI_Handle handle)
 {
-	CurveDraw* cd = (CurveDraw*)handle;
-	delete cd;
+	LV2WaveDraw* gui = (LV2WaveDraw*)handle;
+	//OSCWaveDraw* gui = (OSCWaveDraw*)handle;
+	delete gui;
 
 }
 

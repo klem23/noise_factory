@@ -23,7 +23,8 @@
 #include "lv2/lv2plug.in/ns/ext/urid/urid.h"
 #include "lv2/lv2plug.in/ns/ext/atom/atom.h"
 
-#include "CurveDraw.hpp"
+#include "LV2UI.hpp"
+#include "OSCUI.hpp"
 
 #define SFUI_URI "http://github.com/klem23/noise_factory/spectrum_filter/gui";
 
@@ -39,9 +40,10 @@ LV2UI_Handle gui_instantiate(const struct _LV2UI_Descriptor* descriptor,
                           LV2UI_Widget*                   widget,
                           const LV2_Feature* const*       features)
 {
-    CurveDraw* cd = new CurveDraw(NULL, 4000, FILTER);
-    cd->show();
-    *widget = cd;
+    //LV2SFilterDraw* gui = new LV2SFilterDraw(NULL, 4000);
+    OSCSFilterDraw* gui = new OSCSFilterDraw(NULL, 4000);
+    gui->show();
+    *widget = gui;
 
 /*
         LV2_URID_Map* map;
@@ -58,13 +60,14 @@ LV2UI_Handle gui_instantiate(const struct _LV2UI_Descriptor* descriptor,
         }
 */
 
-    return (LV2UI_Handle)cd;
+    return (LV2UI_Handle)gui;
 }
 
 void gui_cleanup(LV2UI_Handle handle)
 {
-	CurveDraw* cd = (CurveDraw*)handle;
-	delete cd;
+	//LV2SFilterDraw* gui = (LV2SFilterDraw*)handle;
+	OSCSFilterDraw* gui = (OSCSFilterDraw*)handle;
+	delete gui;
 
 }
 
