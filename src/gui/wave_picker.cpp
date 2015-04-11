@@ -23,7 +23,8 @@
 
 #include "wave_picker.hpp"
 
-CurvePicker::CurvePicker(QWidget *canvas, QWidget *plot, uint32_t tab_size):QwtPlotPicker((QwtPlotCanvas*)canvas){
+CurvePicker::CurvePicker(QWidget *canvas, QWidget *plot, uint32_t tab_size)
+	:QwtPlotPicker((QwtPlotCanvas*)canvas){
 
     size = tab_size;
     x = new double[size];
@@ -77,8 +78,9 @@ uint32_t CurvePicker::getSize(void){
 	return size;
 }
 
-TimePicker::TimePicker(QWidget *canvas, QWidget *plot, uint32_t tab_size):CurvePicker(canvas, plot, tab_size){
-  fill_tables();
+TimePicker::TimePicker(QWidget *canvas, QWidget *plot, uint32_t tab_size)
+	:CurvePicker(canvas, plot, tab_size){
+	fill_tables();
 }
 
 TimePicker::~TimePicker(){
@@ -134,9 +136,10 @@ void TimePicker::fill_tables(){
 
 }
 
-FreqPicker::FreqPicker(QWidget *canvas, QWidget *plot, uint32_t tab_size, uint8_t gtype /* = SPECTRUM*/):CurvePicker(canvas, plot, tab_size){
-  type = gtype;
-  fill_tables();
+FreqPicker::FreqPicker(QWidget *canvas, QWidget *plot, uint32_t tab_size, uint8_t gtype /* = SPECTRUM*/)
+	:CurvePicker(canvas, plot, tab_size){
+	type = gtype;
+	fill_tables();
 }
 
 
