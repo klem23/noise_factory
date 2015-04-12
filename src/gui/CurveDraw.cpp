@@ -29,7 +29,7 @@
 
 #include "CurveDraw.hpp"
 
-CurveDraw::CurveDraw(QWidget *parent, uint32_t tab_size, uint8_t gtype /*= WAVE*/)
+CurveDraw::CurveDraw(QWidget *parent, uint32_t tab_size)
 	:QWidget(parent), size(tab_size){
 
     //parent->resize(800, 500);
@@ -39,9 +39,14 @@ CurveDraw::CurveDraw(QWidget *parent, uint32_t tab_size, uint8_t gtype /*= WAVE*
     lay = new QHBoxLayout();
     vlay = new QVBoxLayout();
 
+    setLayout(lay);
+
     /*Plot*/
     graph = new QwtPlot();
     lay->addWidget(graph);
+
+    /*controls*/
+    lay->addLayout(vlay);
 
     /*send button*/
     QSpacerItem *space = new QSpacerItem(50, 50);
@@ -53,6 +58,7 @@ CurveDraw::CurveDraw(QWidget *parent, uint32_t tab_size, uint8_t gtype /*= WAVE*
 
     QSpacerItem *space2 = new QSpacerItem(50, 50);
     vlay->addItem(space2);
+
 
 }
 
@@ -71,11 +77,6 @@ void CurveDraw::enable_vol_knob(void){
     vol_btn->setValue(0.8);
     connect(vol_btn, SIGNAL(valueChanged(double)), this, SLOT(send_vol(double)));
     vlay->addWidget(vol_btn);
-
-    /* draw*/
-    setLayout(lay);
-    lay->addLayout(vlay);
-    graph->replot();
 
 }
 
@@ -110,7 +111,7 @@ void CurveDraw::send_graph(void){
 	//}
 	float* fgraph = wp->getGraph();
 
-	//inherit
+	send_graph(fgraph, wp->getSize());
 
 	delete fgraph;
 

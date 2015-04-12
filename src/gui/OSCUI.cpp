@@ -69,12 +69,16 @@ void OSCWaveDraw::send_vol(double value){
 }
 
 
+void OSCWaveDraw::send_graph(float* curve, uint32_t size){
+	osc_send_curve(curve, size);
+}
+
 OSCSpectrumDraw::OSCSpectrumDraw(QWidget *parent, uint32_t tab_size)
 	:FreqCurveDraw(parent, tab_size), OSCUI(2324){
 
 	setTitle("Draw your Spectrum");
-	enable_vol_knob();
 	enable_freq_shift_knob();
+	enable_vol_knob();
 }
 
 void OSCSpectrumDraw::send_vol(double value){
@@ -85,13 +89,18 @@ void OSCSpectrumDraw::send_freq(double value){
 	osc_send_data(2, value);
 }
 
+void OSCSpectrumDraw::send_graph(float* curve, uint32_t size){
+	osc_send_curve(curve, size);
+}
+
+
 
 OSCSFilterDraw::OSCSFilterDraw(QWidget *parent, uint32_t tab_size)
 	:FreqCurveDraw(parent, tab_size), OSCUI(2325){
 
 	setTitle("Draw your Filter's Spectrum");
-	enable_vol_knob();
 	enable_freq_shift_knob();
+	enable_vol_knob();
 }
 
 void OSCSFilterDraw::send_vol(double value){
@@ -102,6 +111,9 @@ void OSCSFilterDraw::send_freq(double value){
 	osc_send_data(2, value);
 }
 
+void OSCSFilterDraw::send_graph(float* curve, uint32_t size){
+	osc_send_curve(curve, size);
+}
 
 
 OSCCFilterDraw::OSCCFilterDraw(QWidget *parent, uint32_t tab_size)
@@ -117,4 +129,8 @@ void OSCCFilterDraw::send_vol(double value){
 
 void OSCCFilterDraw::send_freq(double value){
 
+}
+
+void OSCCFilterDraw::send_graph(float* curve, uint32_t size){
+	osc_send_curve(curve, size);
 }

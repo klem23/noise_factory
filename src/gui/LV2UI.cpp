@@ -60,13 +60,17 @@ void LV2WaveDraw::send_vol(double value){
 	lv2_send_data(3, value);
 }
 
+void LV2WaveDraw::send_graph(float* curve, uint32_t size){
+	lv2_send_curve(curve, size);
+}
+
 
 LV2SpectrumDraw::LV2SpectrumDraw(QWidget *parent, uint32_t tab_size)
 	:FreqCurveDraw(parent, tab_size), LV2UI(){
 
 	setTitle("Draw your Spectrum");
-	enable_vol_knob();
 	enable_freq_shift_knob();
+	enable_vol_knob();
 }
 
 void LV2SpectrumDraw::send_vol(double value){
@@ -77,13 +81,17 @@ void LV2SpectrumDraw::send_freq(double value){
 	lv2_send_data(2, value);
 }
 
+void LV2SpectrumDraw::send_graph(float* curve, uint32_t size){
+	lv2_send_curve(curve, size);
+}
+
 
 LV2SFilterDraw::LV2SFilterDraw(QWidget *parent, uint32_t tab_size)
 	:FreqCurveDraw(parent, tab_size), LV2UI(){
 
 	setTitle("Draw your Filter's Spectrum");
-	enable_vol_knob();
 	enable_freq_shift_knob();
+	enable_vol_knob();
 }
 
 void LV2SFilterDraw::send_vol(double value){
@@ -92,6 +100,10 @@ void LV2SFilterDraw::send_vol(double value){
 
 void LV2SFilterDraw::send_freq(double value){
 	lv2_send_data(2, value);
+}
+
+void LV2SFilterDraw::send_graph(float* curve, uint32_t size){
+	lv2_send_curve(curve, size);
 }
 
 
@@ -110,3 +122,6 @@ void LV2CFilterDraw::send_freq(double value){
 
 }
 
+void LV2CFilterDraw::send_graph(float* curve, uint32_t size){
+	lv2_send_curve(curve, size);
+}

@@ -38,7 +38,6 @@ class CurveDraw : public QWidget
 	Q_OBJECT
 
 protected:
-	uint8_t type;
 	uint32_t size;
 
     QHBoxLayout *lay;
@@ -51,13 +50,14 @@ protected:
 	QwtKnob *freq_btn;
 	QwtKnob *vol_btn;
 
-	virtual void send_vol(double value) = 0;
+
+	virtual void send_graph(float* curve, uint32_t size) = 0;
 
 	void mousePressEvent(QMouseEvent *ev);
 	void mouseMoveEvent(QMouseEvent *ev);
 
 public:
-	CurveDraw(QWidget *parent, uint32_t tab_size, uint8_t gtype = WAVE);
+	CurveDraw(QWidget *parent, uint32_t tab_size);
 	~CurveDraw();
 	void draw();
 	void setTitle(QString ttl);
@@ -65,25 +65,26 @@ public:
 
 public slots:
 	void send_graph(void);
+	virtual void send_vol(double value) = 0;
 
 };
 
 
 class TimeCurveDraw : public CurveDraw{
-private:
 
 public:
 	TimeCurveDraw(QWidget *parent, uint32_t tab_size);
 };
 
 class FreqCurveDraw : public CurveDraw{
-private:
-	virtual void send_freq(double value) = 0;
+	Q_OBJECT
 
 public:
 	FreqCurveDraw(QWidget *parent, uint32_t tab_size);
-
 	void enable_freq_shift_knob(void);
+
+public slots:
+	virtual void send_freq(double value) = 0;
 };
 
 #endif // CURVE_DRAW_H

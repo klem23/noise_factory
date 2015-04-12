@@ -46,6 +46,7 @@ public:
 class LV2WaveDraw : public TimeCurveDraw, public LV2UI{
 private:
 	void send_vol(double value);
+	void send_graph(float* curve, uint32_t size);
 
 public:
 	LV2WaveDraw(QWidget *parent, uint32_t tab_size);
@@ -56,6 +57,7 @@ class LV2SpectrumDraw : public FreqCurveDraw, public LV2UI{
 private:
 	void send_vol(double value);
 	void send_freq(double value);
+	void send_graph(float* curve, uint32_t size);
 
 public:
 	LV2SpectrumDraw(QWidget *parent, uint32_t tab_size);
@@ -65,6 +67,7 @@ class LV2SFilterDraw : public FreqCurveDraw, public LV2UI{
 private:
 	void send_vol(double value);
 	void send_freq(double value);
+	void send_graph(float* curve, uint32_t size);
 
 public:
 	LV2SFilterDraw(QWidget *parent, uint32_t tab_size);
@@ -74,6 +77,7 @@ class LV2CFilterDraw : public FreqCurveDraw, public LV2UI{
 private:
 	void send_vol(double value);
 	void send_freq(double value);
+	void send_graph(float* curve, uint32_t size);
 
 public:
 	LV2CFilterDraw(QWidget *parent, uint32_t tab_size);

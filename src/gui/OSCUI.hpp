@@ -42,6 +42,7 @@ protected:
 class OSCWaveDraw : public TimeCurveDraw, public OSCUI{
 private:
 	void send_vol(double value);
+	void send_graph(float* curve, uint32_t size);
 
 public:
 	OSCWaveDraw(QWidget *parent, uint32_t tab_size);
@@ -52,6 +53,7 @@ class OSCSpectrumDraw : public FreqCurveDraw, public OSCUI{
 private:
 	void send_vol(double value);
 	void send_freq(double value);
+	void send_graph(float* curve, uint32_t size);
 
 public:
 	OSCSpectrumDraw(QWidget *parent, uint32_t tab_size);
@@ -61,6 +63,7 @@ class OSCSFilterDraw : public FreqCurveDraw, public OSCUI{
 private:
 	void send_vol(double value);
 	void send_freq(double value);
+	void send_graph(float* curve, uint32_t size);
 
 public:
 	OSCSFilterDraw(QWidget *parent, uint32_t tab_size);
@@ -70,6 +73,7 @@ class OSCCFilterDraw : public FreqCurveDraw, public OSCUI{
 private:
 	void send_vol(double value);
 	void send_freq(double value);
+	void send_graph(float* curve, uint32_t size);
 
 public:
 	OSCCFilterDraw(QWidget *parent, uint32_t tab_size);
