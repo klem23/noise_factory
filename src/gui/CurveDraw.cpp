@@ -64,10 +64,6 @@ CurveDraw::CurveDraw(QWidget *parent, uint32_t tab_size)
 
 void CurveDraw::enable_vol_knob(void){
 
-    wp->setStateMachine(new QwtPickerClickPointMachine());
-    wp->setTrackerMode(QwtPicker::ActiveOnly);
-    wp->setRubberBand(QwtPicker::CrossRubberBand);
-
     /*Volume knob common to all*/
     QLabel* vol_label = new QLabel("Volume");
     vol_label->setAlignment(Qt::AlignCenter);
@@ -83,12 +79,12 @@ void CurveDraw::enable_vol_knob(void){
 CurveDraw::~CurveDraw()
 {
     delete graph;
-    delete wp;
+    delete cp;
 }
 
 void CurveDraw::draw()
 {
-    wp->draw();
+    cp->draw();
     graph->replot();
 }
 
@@ -109,9 +105,9 @@ void CurveDraw::send_graph(void){
 	//for(int i = 0; i < wp->getSize(); i++){
 	//	fgraph[i] = wp->getGraph(i);
 	//}
-	float* fgraph = wp->getGraph();
+	float* fgraph = cp->getGraph();
 
-	send_graph(fgraph, wp->getSize());
+	send_graph(fgraph, cp->getSize());
 
 	delete fgraph;
 
@@ -133,8 +129,11 @@ TimeCurveDraw::TimeCurveDraw(QWidget *parent, uint32_t tab_size)
 	graph->setAxisScale(QwtPlot::yLeft, -1, 1);
 	graph->setAxisTitle(QwtPlot::yLeft, "Amplitude");
 
-	wp = new TimePicker(graph->canvas(), graph, size);
-	wp->setBound(-1, 1);
+	cp = new TimePicker(graph->canvas(), graph, size);
+	cp->setBound(-1, 1);
+    cp->setStateMachine(new QwtPickerClickPointMachine());
+    cp->setTrackerMode(QwtPicker::ActiveOnly);
+    cp->setRubberBand(QwtPicker::CrossRubberBand);
 }
 
 
@@ -150,8 +149,11 @@ FreqCurveDraw::FreqCurveDraw(QWidget *parent, uint32_t tab_size)
 	graph->setAxisTitle(QwtPlot::xBottom, "Frequency");
 	graph->setAxisTitle(QwtPlot::yLeft, "Amplitude");
 
-	wp = new FreqPicker(graph->canvas(), graph, size, FILTER);
-	wp->setBound(0, 1);
+	cp = new FreqPicker(graph->canvas(), graph, size, FILTER);
+	cp->setBound(0, 1);
+    cp->setStateMachine(new QwtPickerClickPointMachine());
+    cp->setTrackerMode(QwtPicker::ActiveOnly);
+    cp->setRubberBand(QwtPicker::CrossRubberBand);
 
 }
 

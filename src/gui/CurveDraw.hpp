@@ -44,7 +44,7 @@ protected:
     QVBoxLayout *vlay;
 
 	QwtPlot *graph;
-	CurvePicker *wp;
+	CurvePicker *cp;
 
 	QPushButton *send_btn;
 	QwtKnob *freq_btn;
