@@ -51,21 +51,25 @@ env.SharedLibrary('build_scons/out/classic_osc', common_obj + osc_obj)
 #Wave Draw
 env_wd = env.Clone();
 env_wd['CCFLAGS'] = "-g -Wall -DOSC"
-wave_draw_src = Split("build_scons/generator/wave_gen.cpp build_scons/lv2_plugin/lv2_wave_draw.cpp")
+wave_draw_src = Split("build_scons/generator/wave_gen.cpp")
 wave_draw_obj = env_wd.SharedObject(wave_draw_src);
+wave_draw_plugin_src = Split("build_scons/lv2_plugin/lv2_wave_draw.cpp")
+wave_draw_plugin_obj = env_wd.SharedObject(wave_draw_plugin_src);
 env_wd.Append(LIBS=['samplerate'])
 env_wd.Append(LIBS=['lo'])
-env_wd.SharedLibrary('build_scons/out/wave_draw', common_obj + graph_obj + wave_draw_obj)
+env_wd.SharedLibrary('build_scons/out/wave_draw', common_obj + graph_obj + wave_draw_obj + wave_draw_plugin_obj)
 
 #Spectrum Draw
 env_sd = env.Clone();
 env_sd['CCFLAGS'] = "-g -Wall -DOSC"
-spectre_draw_src = Split("build_scons/generator/spectrum_gen.cpp build_scons/lv2_plugin/lv2_spectrum_draw.cpp")
+spectre_draw_src = Split("build_scons/generator/spectrum_gen.cpp")
 spectre_draw_obj = env_sd.SharedObject(spectre_draw_src);
+spectre_draw_plugin_src = Split("build_scons/lv2_plugin/lv2_spectrum_draw.cpp")
+spectre_draw_plugin_obj = env_sd.SharedObject(spectre_draw_plugin_src);
 env_sd.Append(LIBS=['samplerate'])
 env_sd.Append(LIBS=['fftw3'])
 env_sd.Append(LIBS=['lo'])
-env_sd.SharedLibrary('build_scons/out/spectrum_draw', common_obj + graph_obj + fft_obj + spectre_draw_obj)
+env_sd.SharedLibrary('build_scons/out/spectrum_draw', common_obj + graph_obj + fft_obj + spectre_draw_obj + spectre_draw_plugin_obj)
 
 #########
 #FILTER
@@ -80,27 +84,54 @@ env_rf.SharedLibrary('build_scons/out/recursive_filter', recursive_filter_obj)
 #convolution filter
 env_cf = env.Clone();
 env_cf['CCFLAGS'] = "-g -Wall -DOSC"
-conv_filter_src = Split("build_scons/filter/conv_filter.cpp build_scons/lv2_plugin/lv2_conv_filter.cpp")
+conv_filter_src = Split("build_scons/filter/conv_filter.cpp")
 conv_filter_obj = env_cf.SharedObject(conv_filter_src);
+conv_filter_plugin_src = Split("build_scons/lv2_plugin/lv2_conv_filter.cpp")
+conv_filter_plugin_obj = env_cf.SharedObject(conv_filter_plugin_src);
 env_cf.Append(LIBS=['samplerate'])
 env_cf.Append(LIBS=['fftw3'])
 env_cf.Append(LIBS=['lo'])
-env_cf.SharedLibrary('build_scons/out/conv_filter', graph_obj + conv_filter_obj)
+env_cf.SharedLibrary('build_scons/out/conv_filter', graph_obj + conv_filter_obj + conv_filter_plugin_obj)
 
 #spectrum filter
 env_sf = env.Clone();
 env_sf['CCFLAGS'] = "-g -Wall -DOSC"
-spectre_filter_src = Split("build_scons/filter/spectrum_filter.cpp build_scons/lv2_plugin/lv2_spectrum_filter.cpp")
+spectre_filter_src = Split("build_scons/filter/spectrum_filter.cpp")
 spectre_filter_obj = env_sf.SharedObject(spectre_filter_src);
+spectre_filter_plugin_src = Split("build_scons/lv2_plugin/lv2_spectrum_filter.cpp")
+spectre_filter_plugin_obj = env_sf.SharedObject(spectre_filter_plugin_src);
 env_sf.Append(LIBS=['samplerate'])
 env_sf.Append(LIBS=['fftw3'])
 env_sf.Append(LIBS=['lo'])
-env_sf.SharedLibrary('build_scons/out/spectrum_filter', graph_obj + fft_obj + spectre_filter_obj)
+env_sf.SharedLibrary('build_scons/out/spectrum_filter', graph_obj + fft_obj + spectre_filter_obj + spectre_filter_plugin_obj)
 
 
 ########
 #SYNTH
 #######
+
+#classic synth
+
+#wave factory
+env_wf = env.Clone();
+env_wf['CCFLAGS'] = "-g -Wall -DOSC"
+wave_factory_src = Split("build_scons/lv2_plugin/lv2_wave_factory.cpp")
+wave_factory_obj = env_wf.SharedObject(wave_factory_src);
+env_wf.Append(LIBS=['samplerate'])
+env_wf.Append(LIBS=['fftw3'])
+env_wf.Append(LIBS=['lo'])
+env_wf.SharedLibrary('build_scons/out/wave_factory', graph_obj + wave_draw_obj + conv_filter_obj + wave_factory_obj)
+
+#spectrum factory
+env_spf = env.Clone();
+env_spf['CCFLAGS'] = "-g -Wall -DOSC"
+spectrum_factory_src = Split("build_scons/lv2_plugin/lv2_spectrum_factory.cpp")
+spectrum_factory_obj = env_spf.SharedObject(spectrum_factory_src)
+env_spf.Append(LIBS=['samplerate'])
+env_spf.Append(LIBS=['fftw3'])
+env_spf.Append(LIBS=['lo'])
+env_spf.SharedLibrary('build_scons/out/spectrum_factory', graph_obj + spectre_draw_obj + spectre_filter_obj + spectrum_factory_obj)
+
 
 #########
 #FX
