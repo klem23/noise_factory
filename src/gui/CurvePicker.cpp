@@ -144,9 +144,8 @@ void TimePicker::fill_tables(){
 /*
  * FreqPicker
  */
-FreqPicker::FreqPicker(QWidget *canvas, QWidget *plot, uint32_t tab_size, uint8_t gtype /* = SPECTRUM*/)
-	:CurvePicker(canvas, plot, tab_size)
-	,type(gtype){
+FreqPicker::FreqPicker(QWidget *canvas, QWidget *plot, uint32_t tab_size)
+	:CurvePicker(canvas, plot, tab_size){
 
 	fill_tables();
 }
@@ -240,33 +239,34 @@ void FreqPicker::widgetMouseMoveEvent(QMouseEvent *ev){
 
 void FreqPicker::fill_tables(){
 
-  if(type == SPECTRUM){
-      uint32_t i = 0;
+	/*
+	uint32_t i = 0;
 
-      while(i < size){
-          x[i] = i * 5 + 100;
-          y[i] = 0;
-          i++;
-        }
-      y[23] = 1;
-      y[2323] = 1;
 
-    }else{
+	while(i < size){
+		x[i] = i * 5 + 100;
+		y[i] = 0;
+		i++;
+	}
+	y[23] = 1;
+	y[2323] = 1;
 
-      uint32_t i = 0;
+  */
 
-      while(i < size/2){
-          x[i] = i * 5 + 100;
-          y[i] = 1;
-          i++;
-        }
+	uint32_t i = 0;
 
-      while(i < size){
-          x[i] = i * 5 + 100;
-          y[i] = 0;
-          i++;
-        }
-    }
+	while(i < size/2){
+		x[i] = i * 5 + 100;
+		y[i] = 1;
+		i++;
+	}
+
+	while(i < size){
+		x[i] = i * 5 + 100;
+		y[i] = 0;
+		i++;
+	}
+
 }
 
 FreqPicker::~FreqPicker(){

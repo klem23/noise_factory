@@ -72,13 +72,12 @@ public:
 class FreqPicker : public CurvePicker
 {
 private:
-    uint8_t type;
     void fill_tables();
     void widgetMouseMoveEvent(QMouseEvent *ev);
     void widgetMousePressEvent (QMouseEvent *ev);
 
 public:
-    FreqPicker(QWidget *canvas, QWidget *plot, uint32_t tab_size, uint8_t gtype = SPECTRUM);
+    FreqPicker(QWidget *canvas, QWidget *plot, uint32_t tab_size);
     ~FreqPicker();
 };
 
