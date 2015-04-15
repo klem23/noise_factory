@@ -66,4 +66,15 @@ void octaver::set_input(double* output){
 
 void octaver::process(int nb_sample){
 
+	if((d_in == NULL)||(d_out == NULL)){
+		return;
+	}
+
+	memset(d_out, 0, s_size * sizeof(float));
+
+	for(int i = 0; i < s_size - oct_shift; i++){
+		for(int j = 0 ; j < oct_shift; j++){
+			d_out[i + j] = d_in[i / oct_shift];
+		}
+	}
 }

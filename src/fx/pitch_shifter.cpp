@@ -66,4 +66,23 @@ void pitch_shifter::set_output(double* output){
 
 void pitch_shifter::process(int nb_sample){
 
+	if((d_in == NULL)||(d_out == NULL)){
+		return;
+	}
+
+	memset(d_out, 0, s_size * sizeof(float));
+
+	uint32_t decay = freq_shift * 10000.0 / fscale;
+	uint32_t j = 0;
+
+	for(int i = 0; i < s_size; i++){
+		if(i - decay < 0.0){
+			j = 0;
+		}else if(i - decay >= s_size){
+			j = s_size - 1;
+		}else{
+			j = i - decay;
+		}
+		d_out[i] = d_in[j];
+	}
 }
