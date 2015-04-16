@@ -17,7 +17,7 @@
     along with the Noise Factory.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#include "pitch_shifter.cpp"
+#include "pitch_shifter.hpp"
 
 
 pitch_shifter::pitch_shifter(uint32_t s_rate)
@@ -44,8 +44,8 @@ pitch_shifter::pitch_shifter(uint32_t s_rate)
 	}else if(srate == 192000){
 		s_size = 32768;
 	}else{
-		cout << "your samplerate is not in standard value 44100 \
-			/4800/96000/192000" << endl;
+		std::cout << "your samplerate is not in standard value 44100 \
+			/4800/96000/192000" << std::endl;
 	}
 
 	fscale = srate / s_size;
@@ -62,6 +62,10 @@ void pitch_shifter::set_input(double* input){
 
 void pitch_shifter::set_output(double* output){
 	d_out = output;
+}
+
+void pitch_shifter::check_param(ps_param* ps){
+
 }
 
 void pitch_shifter::process(int nb_sample){

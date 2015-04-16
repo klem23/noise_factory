@@ -17,7 +17,12 @@
     along with the Noise Factory.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+#ifndef PITCH_SHIFTER_HPP
+#define PITCH_SHIFTER_HPP
+
 #include <stdint.h>
+#include <cstring>
+#include <iostream>
 
 
 typedef struct{
@@ -41,6 +46,7 @@ private:
 public:
 	pitch_shifter(uint32_t s_rate);
 
+	void check_param(ps_param* ps);
 	void process(int nb_sample);
 
 	/*set plug*/
@@ -50,3 +56,6 @@ public:
 
 
 };
+
+#endif //PITCH_SHIFTER_HPP
+

@@ -16,7 +16,12 @@
     You should have received a copy of the GNU General Public License
     along with the Noise Factory.  If not, see <http://www.gnu.org/licenses/>.
 */
+#ifndef OCT_HPP
+#define OCT_HPP
+
 #include <stdint.h>
+#include <cstring>
+#include <iostream>
 
 typedef struct{
 	float* oct_shift;
@@ -40,6 +45,7 @@ private:
 public:
 	octaver(uint32_t s_rate);
 
+	void check_param(oct_param* op);
 	void process(int nb_sample);
 
 	/*set plug*/
@@ -51,3 +57,5 @@ public:
 
 
 };
+
+#endif //OCT_HPP

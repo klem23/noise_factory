@@ -44,8 +44,8 @@ octaver::octaver(uint32_t s_rate)
 	}else if(srate == 192000){
 		s_size = 32768;
 	}else{
-		cout << "your samplerate is not in standard value 44100 \
-			/4800/96000/192000" << endl;
+		std::cout << "your samplerate is not in standard value 44100 \
+			/4800/96000/192000" << std::endl;
 	}
 
 	fscale = srate / s_size;
@@ -60,8 +60,12 @@ void octaver::set_input(double* input){
 	d_in = input;
 }
 
-void octaver::set_input(double* output){
+void octaver::set_output(double* output){
 	d_out = output;
+}
+
+void octaver::check_param(oct_param* op){
+
 }
 
 void octaver::process(int nb_sample){
