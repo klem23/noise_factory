@@ -149,6 +149,17 @@ loop_delay_src = Split("build_scons/fx/loop_delay.cpp build_scons/lv2_plugin/lv2
 loop_delay_obj = env.SharedObject(loop_delay_src);
 env.SharedLibrary('build_scons/out/loop_delay', loop_delay_obj)
 
+#pitch shifter
+pitch_shifter_src = Split("build_scons/fx/pitch_shifter.cpp build_scons/lv2_plugin/lv2_pitch_shifter.cpp")
+pitch_shifter_obj = env.SharedObject(pitch_shifter_src);
+env.SharedLibrary('build_scons/out/picth_shifter', pitch_shifter_obj + fft_obj)
+
+#octaver
+octaver_src = Split("build_scons/fx/octaver.cpp build_scons/lv2_plugin/lv2_octaver.cpp")
+octaver_obj = env.SharedObject(octaver_src);
+env.SharedLibrary('build_scons/out/octaver', octaver_obj + fft_obj)
+
+
 ########
 #GUI
 ########
