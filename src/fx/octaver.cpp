@@ -17,6 +17,8 @@
     along with the Noise Factory.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+#include <cmath>
+
 #include "octaver.hpp"
 
 
@@ -76,9 +78,11 @@ void octaver::process(int nb_sample){
 
 	memset(d_out, 0, s_size * sizeof(float));
 
-	for(int i = 0; i < s_size - oct_shift; i++){
-		for(int j = 0 ; j < oct_shift; j++){
-			d_out[i + j] = d_in[i / oct_shift];
+	float decay = pow(2, oct_shift);
+	for(int i = 0; i < s_size - decay; i++){
+		for(int j = 0 ; j < decay; j++){
+			d_out[i + j] = d_in[(int)(i / decay)];
 		}
 	}
+
 }
