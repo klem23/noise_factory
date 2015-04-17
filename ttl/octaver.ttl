@@ -1,0 +1,54 @@
+@prefix lv2:  <http://lv2plug.in/ns/lv2core#>.
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>.
+@prefix doap: <http://usefulinc.com/ns/doap#>.
+@prefix foaf: <http://xmlns.com/foaf/0.1/>.
+@prefix urid: <http://lv2plug.in/ns/ext/urid#> .
+
+
+<http://github.com/klem23/noise_factory/octaver>
+  a lv2:Plugin;
+  doap:maintainer [
+    foaf:name "Clement Guedez";
+    foaf:mbox <mailto:klem.dev@gmail.com>;
+  ];
+  doap:name "Octaver";
+  doap:homepage <http://github.com/klem23/noise_factory>;
+  doap:license <http://usefulinc.com/doap/licenses/gpl>;
+
+  lv2:port [
+    a lv2:InputPort, lv2:AudioPort;
+    lv2:datatype lv2:float;
+    lv2:index 0;
+    lv2:symbol "input";
+    lv2:name "Input";
+  ],
+  
+  [
+    a lv2:OutputPort, lv2:AudioPort;
+    lv2:datatype lv2:float;
+    lv2:index 1;
+    lv2:symbol "output";
+    lv2:name "Output";
+  ],
+
+  [
+    a lv2:ControlPort, lv2:InputPort;
+    lv2:index 2;
+    lv2:symbol "oct";
+    lv2:name "Octave Shift";
+    lv2:minimum -8;
+    lv2:maximum 8;
+    lv2:default 0;
+    lv2:portProperty lv2:integer;
+  ],
+
+  [
+    a lv2:ControlPort, lv2:InputPort;
+    lv2:index 3;
+    lv2:symbol "vol";
+    lv2:name "Volume";
+    lv2:minimum 0;
+    lv2:maximum 1;
+    lv2:default 0.8;
+  ].
+
