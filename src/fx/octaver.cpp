@@ -68,6 +68,14 @@ void octaver::set_output(double* output){
 
 void octaver::check_param(oct_param* op){
 
+	if((uint8_t)*(op->oct_shift) != oct_shift){
+		oct_shift = (uint8_t)*(op->oct_shift);
+	}
+
+	if(amp != *op->volume){
+		amp = *op->volume;
+	}
+
 }
 
 void octaver::process(int nb_sample){
@@ -81,7 +89,7 @@ void octaver::process(int nb_sample){
 	float decay = pow(2, oct_shift);
 	for(int i = 0; i < s_size - decay; i++){
 		for(int j = 0 ; j < decay; j++){
-			d_out[i + j] = d_in[(int)(i / decay)];
+			d_out[i + j] = d_in[(int)(i / decay)] * amp;
 		}
 	}
 

@@ -66,6 +66,14 @@ void pitch_shifter::set_output(double* output){
 
 void pitch_shifter::check_param(ps_param* ps){
 
+	if(freq_shift != *ps->freq_shift){
+		freq_shift = *ps->freq_shift;
+	}
+
+	if(amp != *ps->volume){
+		amp = *ps->volume;
+	}
+
 }
 
 void pitch_shifter::process(int nb_sample){
@@ -87,6 +95,6 @@ void pitch_shifter::process(int nb_sample){
 		}else{
 			j = i - decay;
 		}
-		d_out[i] = d_in[j];
+		d_out[i] = d_in[j] * amp;
 	}
 }
