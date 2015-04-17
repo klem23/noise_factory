@@ -150,14 +150,18 @@ loop_delay_obj = env.SharedObject(loop_delay_src);
 env.SharedLibrary('build_scons/out/loop_delay', loop_delay_obj)
 
 #pitch shifter
+env_ps = env.Clone();
 pitch_shifter_src = Split("build_scons/fx/pitch_shifter.cpp build_scons/lv2_plugin/lv2_pitch_shifter.cpp")
 pitch_shifter_obj = env.SharedObject(pitch_shifter_src);
-env.SharedLibrary('build_scons/out/picth_shifter', pitch_shifter_obj + fft_obj)
+env_ps.Append(LIBS=['fftw3'])
+env_ps.SharedLibrary('build_scons/out/pitch_shifter', pitch_shifter_obj + fft_obj)
 
 #octaver
+env_oct = env.Clone();
 octaver_src = Split("build_scons/fx/octaver.cpp build_scons/lv2_plugin/lv2_octaver.cpp")
 octaver_obj = env.SharedObject(octaver_src);
-env.SharedLibrary('build_scons/out/octaver', octaver_obj + fft_obj)
+env_oct.Append(LIBS=['fftw3'])
+env_oct.SharedLibrary('build_scons/out/octaver', octaver_obj + fft_obj)
 
 
 ########
@@ -250,6 +254,11 @@ Command("build_scons/noise_factory.lv2/simple_delay.ttl","ttl/simple_delay.ttl",
 Command("build_scons/noise_factory.lv2/loop_delay.ttl","ttl/loop_delay.ttl",
                          Copy("$TARGET","$SOURCE"))
 
+Command("build_scons/noise_factory.lv2/pitch_shifter.ttl","ttl/pitch_shifter.ttl",
+                         Copy("$TARGET","$SOURCE"))
+Command("build_scons/noise_factory.lv2/octaver.ttl","ttl/octaver.ttl",
+                         Copy("$TARGET","$SOURCE"))
+
 
 #copy lib
 Command("build_scons/noise_factory.lv2/beat_factory.so","build_scons/out/libbeat_factory.so",
@@ -275,6 +284,10 @@ Command("build_scons/noise_factory.lv2/simple_delay.so","build_scons/out/libsimp
 Command("build_scons/noise_factory.lv2/loop_delay.so","build_scons/out/libloop_delay.so",
                          Copy("$TARGET","$SOURCE"))
 
+Command("build_scons/noise_factory.lv2/pitch_shifter.so","build_scons/out/libpitch_shifter.so",
+                         Copy("$TARGET","$SOURCE"))
+Command("build_scons/noise_factory.lv2/octaver.so","build_scons/out/liboctaver.so",
+                         Copy("$TARGET","$SOURCE"))
 
 #copy gui
 Command("build_scons/noise_factory.lv2/wave_draw_gui.so","build_scons/out/libwave_draw_gui.so",
