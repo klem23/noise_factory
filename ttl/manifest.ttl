@@ -53,4 +53,14 @@
   a lv2:Plugin, lv2:DelayPlugin;
   lv2:binary <loop_delay.so>;
   rdfs:seeAlso <loop_delay.ttl>.
+  
+  <http://github.com/klem23/noise_factory/pitch_shifter>
+  a lv2:Plugin, lv2:PitchPlugin;
+  lv2:binary <pitch_shifter.so>;
+  rdfs:seeAlso <pitch_shifter.ttl>.
+
+<http://github.com/klem23/noise_factory/octaver>
+  a lv2:Plugin, lv2:PitchPlugin;
+  lv2:binary <octaver.so>;
+  rdfs:seeAlso <octaver.ttl>.
 
