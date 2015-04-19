@@ -149,7 +149,7 @@ LV2_Handle instantiateBF(const LV2_Descriptor *descriptor,
 void runBF(LV2_Handle instance, uint32_t sample_count){
 
 	//uint8_t midi_type, *events,
-	uint8_t *data;
+	const uint8_t *data;
 	//uint32_t event_count = 0;
 	//LV2_Event* event;
 	int i;

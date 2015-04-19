@@ -79,6 +79,8 @@ int freq_change_handler(const char *path, const char *types, lo_arg **argv, int 
 	if(sp.freq_shift != NULL){
 		*sp.freq_shift = argv[0]->f;
 	}
+
+	return 1;
 }
 
 int vol_change_handler(const char *path, const char *types, lo_arg **argv, int argc,
@@ -86,6 +88,8 @@ int vol_change_handler(const char *path, const char *types, lo_arg **argv, int a
 	if(sp.volume != NULL){
 			*sp.volume = argv[0]->f;
 		}
+
+	return 1;
 }
 #endif
 

@@ -87,7 +87,7 @@ void pitch_shifter::process(int nb_sample){
 	uint32_t decay = freq_shift * 10000.0 / fscale;
 	uint32_t j = 0;
 
-	for(int i = 0; i < s_size; i++){
+	for(uint32_t i = 0; i < s_size; i++){
 		if(i - decay < 0.0){
 			j = 0;
 		}else if(i - decay >= s_size){
