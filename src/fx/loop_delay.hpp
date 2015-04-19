@@ -35,11 +35,12 @@ class echo{
 	private:
 		uint32_t lgth;
 		uint32_t repeat;
+		uint32_t feedback;
 		uint32_t r, w;
 		float* data;
 
 	public:
-		echo(uint32_t length, uint32_t rpt);
+		echo(uint32_t length, uint32_t rpt, uint32_t fdbk);
 		~echo(void);
 
 		void write(float* in, uint32_t size);

@@ -19,6 +19,7 @@
 
 #include <iostream>
 #include <cstring>
+#include <cmath>
 
 #include "loop_delay.hpp"
 
@@ -27,8 +28,8 @@
  * ECHO
  *
  */
-echo::echo(uint32_t length, uint32_t rpt)
-		:lgth(length),repeat(rpt),r(0),w(0)
+echo::echo(uint32_t length, uint32_t rpt, uint32_t fdbk)
+		:lgth(length),repeat(rpt),feedback(fdbk),r(0),w(0)
 		,data(new float[lgth]){
 
 	//data = new float[lgth];
@@ -53,7 +54,7 @@ void echo::write(float* in, uint32_t size){
 void echo::read(float* out, uint32_t size){
 	uint32_t cp_size = 0;
 	uint32_t total_size = 0;
-	//float fb_coeff = pow(feedback/100.0, repeat);
+	float fb_coeff = 100;
 
 	do{
 		if( (lgth - r) >= (size - total_size)){
@@ -62,8 +63,9 @@ void echo::read(float* out, uint32_t size){
 			cp_size = lgth - r;
 		}
 
+		fb_coeff = pow(feedback/100.0, repeat);
 		for(uint32_t i = 0; i < cp_size; i++){
-			*(out + total_size  + i) += *(data + r  + i); //*feedback
+			*(out + total_size  + i) += *(data + r  + i) * fb_coeff;
 		}
 		r += cp_size;
 		total_size += cp_size;
@@ -126,7 +128,7 @@ void loop_delay::process(int nb_sample){
 	/*record echo*/
 	if(current_tap == NULL){
 		delay_shift = (delay_s + delay_ms/1000.0) * s_rate;
-		current_tap = new echo(delay_shift, nb_echo);	
+		current_tap = new echo(delay_shift, nb_echo, feedback);
 	}
 
 	do{
@@ -145,7 +147,7 @@ void loop_delay::process(int nb_sample){
 			current_tap->write(in + nb_write, pos);
 			tap.push_back(current_tap);
 			delay_shift = (delay_s + delay_ms/1000.0) * s_rate;
-			current_tap = new echo(delay_shift, nb_echo);	
+			current_tap = new echo(delay_shift, nb_echo, feedback);
 			nb_write += pos;
 		}
 	}while(nb_write < (uint32_t)nb_sample);
