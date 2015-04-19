@@ -4,7 +4,10 @@
 #Environment & Common Source
 ############################
 #env = Environment();
-env = Environment(CCFLAGS = "-g -Wall");
+env = Environment(CCFLAGS = " -Wall ");
+debug = ARGUMENTS.get('debug', 0)
+if int(debug):
+ env.Append(CCFLAGS = ' -g ')
 env['CPPPATH'] = ['src/beat_factory/', 'src/common/', 'src/generator/',  'src/filter/', 'src/mod/', 'src/fx/', 'src/gui/common/', 'src/gui/LV2/', 'src/gui/OSC/']
 
 VariantDir('build_scons/bf/', 'src/beat_factory/', duplicate=0)
@@ -23,7 +26,7 @@ VariantDir('build_scons/lv2_plugin/', 'src/lv2_plugin/', duplicate=0)
 #Beat Factory
 #############
 env_bf = env.Clone();
-env_bf['CCFLAGS'] = "-g -Wall -std=c99"
+env_bf.Append(CCFLAGS = " -std=c99 ")
 bf_src = Split("build_scons/bf/osc.c build_scons/bf/beat_factory.c")
 env_bf.SharedLibrary('build_scons/out/beat_factory', bf_src)
 
@@ -52,7 +55,7 @@ env.SharedLibrary('build_scons/out/classic_osc', common_obj + osc_obj)
 
 #Wave Draw
 env_wd = env.Clone();
-env_wd['CCFLAGS'] = "-g -Wall -DOSC"
+env_wd.Append(CCFLAGS = " -DOSC ")
 wave_draw_src = Split("build_scons/generator/wave_gen.cpp")
 wave_draw_obj = env_wd.SharedObject(wave_draw_src);
 wave_draw_plugin_src = Split("build_scons/lv2_plugin/lv2_wave_draw.cpp")
@@ -63,7 +66,7 @@ env_wd.SharedLibrary('build_scons/out/wave_draw', common_obj + graph_obj + wave_
 
 #Spectrum Draw
 env_sd = env.Clone();
-env_sd['CCFLAGS'] = "-g -Wall -DOSC"
+env_sd.Append(CCFLAGS = " -DOSC ")
 spectre_draw_src = Split("build_scons/generator/spectrum_gen.cpp")
 spectre_draw_obj = env_sd.SharedObject(spectre_draw_src);
 spectre_draw_plugin_src = Split("build_scons/lv2_plugin/lv2_spectrum_draw.cpp")
@@ -85,7 +88,7 @@ env_rf.SharedLibrary('build_scons/out/recursive_filter', recursive_filter_obj)
 
 #convolution filter
 env_cf = env.Clone();
-env_cf['CCFLAGS'] = "-g -Wall -DOSC"
+env_cf.Append(CCFLAGS = " -DOSC ")
 conv_filter_src = Split("build_scons/filter/conv_filter.cpp")
 conv_filter_obj = env_cf.SharedObject(conv_filter_src);
 conv_filter_plugin_src = Split("build_scons/lv2_plugin/lv2_conv_filter.cpp")
@@ -97,7 +100,7 @@ env_cf.SharedLibrary('build_scons/out/conv_filter', graph_obj + conv_filter_obj 
 
 #spectrum filter
 env_sf = env.Clone();
-env_sf['CCFLAGS'] = "-g -Wall -DOSC"
+env_sf.Append(CCFLAGS = " -DOSC ")
 spectre_filter_src = Split("build_scons/filter/spectrum_filter.cpp")
 spectre_filter_obj = env_sf.SharedObject(spectre_filter_src);
 spectre_filter_plugin_src = Split("build_scons/lv2_plugin/lv2_spectrum_filter.cpp")
@@ -116,7 +119,7 @@ env_sf.SharedLibrary('build_scons/out/spectrum_filter', graph_obj + fft_obj + sp
 
 #wave factory
 env_wf = env.Clone();
-env_wf['CCFLAGS'] = "-g -Wall -DOSC"
+env_wf.Append(CCFLAGS = " -DOSC ")
 wave_factory_src = Split("build_scons/lv2_plugin/lv2_wave_factory.cpp")
 wave_factory_obj = env_wf.SharedObject(wave_factory_src);
 env_wf.Append(LIBS=['samplerate'])
@@ -126,7 +129,7 @@ env_wf.SharedLibrary('build_scons/out/wave_factory', graph_obj + wave_draw_obj +
 
 #spectrum factory
 env_spf = env.Clone();
-env_spf['CCFLAGS'] = "-g -Wall -DOSC"
+env_spf.Append(CCFLAGS = " -DOSC ")
 spectrum_factory_src = Split("build_scons/lv2_plugin/lv2_spectrum_factory.cpp")
 spectrum_factory_obj = env_spf.SharedObject(spectrum_factory_src)
 env_spf.Append(LIBS=['samplerate'])
@@ -170,7 +173,7 @@ env_oct.SharedLibrary('build_scons/out/octaver', octaver_obj + fft_obj)
 
 env_graph = env.Clone();
 #env_graph['CCFLAGS'] = "-g -Wall -DLV2_GUI -DOSC"
-env_graph['CCFLAGS'] = "-g -Wall"
+#env_graph['CCFLAGS'] = "-g -Wall"
 
 #######
 #Qt ENV
