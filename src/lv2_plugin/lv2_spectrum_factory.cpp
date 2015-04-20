@@ -43,6 +43,8 @@ typedef struct{
 	double* buff_2;
 }spectrum_handle;
 
+spf_param spfp;
+
 LV2_Descriptor *spectreDesc = NULL;
 
 
@@ -111,6 +113,12 @@ void connectPort(LV2_Handle instance, uint32_t port, void* data){
 			break;
 		case 3:
 			hdl->gen->set_vol((float*)data);
+			break;
+		case 4:
+			spfp.freq_shift = (float*)data;
+			break;
+		case 5:
+			spfp.volume = (float*)data;
 			break;
 	}
 
@@ -182,6 +190,7 @@ void run(LV2_Handle instance, uint32_t sample_count){
 	memset(hdl->buff_2, 0, table_size*sizeof(double));
 
 	hdl->gen->process(sample_count);
+	hdl->filter->check_param(&spfp);
 	hdl->filter->process(sample_count);
 	hdl->fft->process(sample_count);
 }
