@@ -74,7 +74,7 @@ spectrum_gen::spectrum_gen(uint32_t sampling_rate)
 
 	memset(spectrum_table, 0, table_size * sizeof(double));
 	memset(spectrum_table_sum, 0, table_size * sizeof(double));
-	memset(spectrum_used, 0, table_size * sizeof(float));
+	memset(spectrum_used, 0, use_point_nb * sizeof(float));
 
 
 	start_fill_table();
