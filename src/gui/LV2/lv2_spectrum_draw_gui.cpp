@@ -40,10 +40,10 @@ LV2UI_Handle gui_instantiate(const struct _LV2UI_Descriptor* descriptor,
                           LV2UI_Widget*                   widget,
                           const LV2_Feature* const*       features)
 {
-    LV2SpectrumDraw* gui = new LV2SpectrumDraw(NULL, 4000);
-    //OSCSpectrumDraw* gui = new OSCSpectrumDraw(NULL, 4000);
-    gui->set_lv2_ctrl(controller);
-    gui->set_lv2_write_fn(write_function);
+    //LV2SpectrumDraw* gui = new LV2SpectrumDraw(NULL, 4000);
+    OSCSpectrumDraw* gui = new OSCSpectrumDraw(NULL, 4000);
+    //gui->set_lv2_ctrl(controller);
+    //gui->set_lv2_write_fn(write_function);
     gui->show();
     *widget = gui;
 
