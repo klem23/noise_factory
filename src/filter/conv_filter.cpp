@@ -46,10 +46,11 @@ conv_filter::conv_filter(uint32_t s_rate)
 	do{
 		fft_in[i] = 1;
 		i++;
+	/*
 	}while(i < ksize / 4);
 	do{
 		fft_in[i] = 0;
-		i++;
+		i++;*/
 	}while(i < ksize);
 
 	/*apply FFT*/
