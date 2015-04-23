@@ -34,6 +34,7 @@
 using namespace std;
 
 LV2_Descriptor *cfDesc = NULL;
+float* vol;
 //filter_param fp;
 
 
@@ -54,6 +55,15 @@ int signal_change_handler(const char *path, const char *types, lo_arg **argv, in
         cf->set_spectrum(vec, size);
 
        return 1;
+}
+
+int vol_change_handler(const char *path, const char *types, lo_arg **argv, int argc,
+						void *data, void *user_data){
+	if(vol != NULL){
+		*vol = argv[0]->f;
+	}
+
+	return 1;
 }
 
 #endif
@@ -82,7 +92,7 @@ void connectPort(LV2_Handle instance, uint32_t port, void* data){
 			plugin->set_output((float*)data);
 			break;
 		case 2:
-			plugin->set_vol((float*)data);
+			vol = (float*)data;
 			break;
 	}
 
@@ -100,6 +110,7 @@ LV2_Handle instantiate(const LV2_Descriptor *descriptor,
         /*liblo control*/
         lo_server_thread lost = lo_server_thread_new("2326", NULL);
         lo_server_thread_add_method(lost, "/wave/table", "b", signal_change_handler, cf);
+        lo_server_thread_add_method(lost, "/wave/volume", "f", vol_change_handler, cf);
 
         lo_server_thread_start(lost);
 #endif
@@ -114,6 +125,7 @@ void run(LV2_Handle instance, uint32_t sample_count){
 	conv_filter* plugin = (conv_filter*)instance;
 
 //	plugin->check_param(&fp);
+	plugin->set_vol(vol);
 	plugin->process(sample_count);
 }
 

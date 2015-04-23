@@ -41,7 +41,7 @@ typedef struct{
 }spectrum_handle;
 
 LV2_Descriptor *spectreDesc = NULL;
-
+float* vol;
 
 #ifdef OSC
 lo_server los;
@@ -68,6 +68,14 @@ int signal_change_handler(const char *path, const char *types, lo_arg **argv, in
        return 1;
 }
 
+int vol_change_handler(const char *path, const char *types, lo_arg **argv, int argc,
+						void *data, void *user_data){
+	if(vol != NULL){
+		*vol = argv[0]->f;
+	}
+
+	return 1;
+}
 #endif
 
 
@@ -106,7 +114,7 @@ void connectPort(LV2_Handle instance, uint32_t port, void* data){
 			hdl->gen->set_freq_shift((float*)data);
 			break;
 		case 3:
-			hdl->gen->set_vol((float*)data);
+			vol = (float*)data;
 			break;
 	}
 
@@ -138,6 +146,7 @@ LV2_Handle instantiate(const LV2_Descriptor *descriptor,
 
         lo_server_thread lost = lo_server_thread_new("2324", NULL);
         lo_server_thread_add_method(lost, "/wave/table", "b", signal_change_handler, spectre);
+        lo_server_thread_add_method(lost, "/wave/volume", "f", vol_change_handler, spectre);
 
         lo_server_thread_start(lost);
 #endif
@@ -164,6 +173,7 @@ void run(LV2_Handle instance, uint32_t sample_count){
 	uint32_t table_size = hdl->gen->get_table_size();
 	memset(hdl->buff, 0, table_size*sizeof(double));
 
+	hdl->gen->set_vol(vol);
 	hdl->gen->process(sample_count);
 	hdl->fft->process(sample_count);
 }

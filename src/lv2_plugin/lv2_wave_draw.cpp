@@ -67,6 +67,15 @@ int signal_change_handler(const char *path, const char *types, lo_arg **argv, in
 	return 1;
 }
 
+int vol_change_handler(const char *path, const char *types, lo_arg **argv, int argc,
+						void *data, void *user_data){
+	if(vol != NULL){
+		*vol = argv[0]->f;
+	}
+
+	return 1;
+}
+
 #endif
 
 void cleanup(LV2_Handle instance){
@@ -119,6 +128,7 @@ LV2_Handle instantiate(const LV2_Descriptor *descriptor,
 		pthread_mutex_init(&wmutex, NULL);
         lo_server_thread lost = lo_server_thread_new("2323", NULL);
         lo_server_thread_add_method(lost, "/wave/table", "b", signal_change_handler, wave);
+        lo_server_thread_add_method(lost, "/wave/volume", "f", vol_change_handler, wave);
 
         lo_server_thread_start(lost);
 #endif
