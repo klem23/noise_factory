@@ -74,7 +74,11 @@ void conv_filter::set_spectrum(float* val, int nb){
 	memset(temp_kern, 0, ksize * sizeof(float));
 
 	/*transpose from GUI graph to plugin table*/
-	transpose_graph(val, nb, temp_kern, ksize);
+	if(nb != ksize){
+		transpose_graph(val, nb, temp_kern, ksize);
+	}else{
+		memcpy( temp_kern, val, nb * sizeof(float));
+	}
 
 	for(uint32_t i = 0; i < ksize; i++){
 		fft_in[i] = temp_kern[i];

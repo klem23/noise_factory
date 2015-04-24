@@ -118,8 +118,15 @@ void spectrum_filter::process(int nb_sample){
 
 void spectrum_filter::set_spectrum(float* val, int nb){
 
+	memset(spectrum, 0, s_size * sizeof(double));
+	memset(spect_tmp, 0, use_point_nb * sizeof(float));
+
 	//transpose_graph(val, nb, spect_tmp, s_size);
-	transpose_graph(val, nb, spect_tmp, use_point_nb);
+	if(nb != use_point_nb){
+		transpose_graph(val, nb, spect_tmp, use_point_nb);
+	}else{
+		memcpy( spect_tmp, val, nb * sizeof(float));
+	}
 	//transpose_graph_log_to_linear(val, nb, spect_tmp, use_point_nb);
 	//for(uint32_t i = 0; i < s_size; i++){
 	for(uint32_t i = 0; i < use_point_nb; i++){

@@ -158,10 +158,15 @@ void spectrum_gen::change_signal(float* val, int nb){
 		max = nb;
 	}*/
 	memset(spectrum_table, 0, table_size * sizeof(double));
+	memset(spectrum_used, 0, use_point_nb * sizeof(float));
 
 	/*transpose GUI graph to plugin table*/
 	//graph_adapter::transpose(val, nb, spectrum_table, table_size);
-	transpose_graph(val, nb, spectrum_used, use_point_nb);
+	if(nb != use_point_nb){
+		transpose_graph(val, nb, spectrum_used, use_point_nb);
+	}else{
+		memcpy( spectrum_used, val, nb * sizeof(float));
+	}
 
 	for(uint32_t i = 0; i < use_point_nb; i++){
 		spectrum_table[i] = spectrum_used[i];

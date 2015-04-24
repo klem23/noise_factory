@@ -142,7 +142,13 @@ void wave_gen::change_signal(coord* pos, int nb){
 
 void wave_gen::change_signal(float* val, int nb){
 
-	transpose_graph(val, nb, wave_table[0], wave_table_size[0]);
+	memset(wave_table[0], 0, wave_table_size[0] * sizeof(float));
+
+	if(nb != wave_table_size[0]){
+		transpose_graph(val, nb, wave_table[0], wave_table_size[0]);
+	}else{
+		memcpy( wave_table[0], val, nb * sizeof(float));
+	}
 	recalculate_table();
 
 }
