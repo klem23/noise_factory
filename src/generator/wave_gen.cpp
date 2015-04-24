@@ -131,8 +131,8 @@ void wave_gen::change_signal(uint32_t x, float y){
 	recalculate_table();
 }
 
-void wave_gen::change_signal(coord* pos, int nb){
-	for(int i = 0; i < nb; i++){
+void wave_gen::change_signal(coord* pos, uint32_t nb){
+	for(uint32_t i = 0; i < nb; i++){
 		if( pos[i].x < wave_table_size[0]){
 			wave_table[0][pos[i].x] = pos[i].y;
 		}
@@ -140,7 +140,7 @@ void wave_gen::change_signal(coord* pos, int nb){
 	recalculate_table();
 }
 
-void wave_gen::change_signal(float* val, int nb){
+void wave_gen::change_signal(float* val, uint32_t nb){
 
 	memset(wave_table[0], 0, wave_table_size[0] * sizeof(float));
 

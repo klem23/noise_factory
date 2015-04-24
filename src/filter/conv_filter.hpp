@@ -47,7 +47,7 @@ class conv_filter: public filter{
 		conv_filter(uint32_t s_rate);
 		~conv_filter(void);
 
-		void set_spectrum(float* val, int nb);
+		void set_spectrum(float* val, uint32_t nb);
 		void process(int nb_sample);
 
 		void set_vol(float* vol_t);

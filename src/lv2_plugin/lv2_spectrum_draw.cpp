@@ -55,7 +55,7 @@ int signal_change_handler(const char *path, const char *types, lo_arg **argv, in
         cout << "OSC message receive " << argv[0]->i << argv[0]->f;
         spectrum_gen* sg = (spectrum_gen*)user_data;
         float* vec = (float*)lo_blob_dataptr(argv[0]);
-        int size = lo_blob_datasize(argv[0]) / 4;
+        uint32_t size = lo_blob_datasize(argv[0]) / 4;
         sg->change_signal(vec, size);
 /*
         printf("\nengine\n");

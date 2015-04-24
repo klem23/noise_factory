@@ -60,7 +60,7 @@ int signal_change_handler(const char *path, const char *types, lo_arg **argv, in
         //printf("OSC message receive %d, %f\n", argv[0]->i, argv[0]->f);
         spectrum_filter* spf = (spectrum_filter*)user_data;
         float* vec = (float*)lo_blob_dataptr(argv[0]);
-        int size = lo_blob_datasize(argv[0]) / 4;
+        uint32_t size = lo_blob_datasize(argv[0]) / 4;
         spf->set_spectrum(vec, size);
 /*
         printf("\nengine\n");

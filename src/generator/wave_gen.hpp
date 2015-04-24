@@ -58,8 +58,8 @@ class wave_gen: public midi_parser{
 		void process(int nb_sample);
 
 		void change_signal(uint32_t x, float y);
-		void change_signal(coord* pos, int nb);
-		void change_signal(float* val, int nb);
+		void change_signal(coord* pos, uint32_t nb);
+		void change_signal(float* val, uint32_t nb);
 
 		void set_vol(float* vol_t);
 };

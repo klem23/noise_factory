@@ -46,7 +46,7 @@ public:
 	~spectrum_filter(void);
 
 	void process(int nb_sample);
-	void set_spectrum(float* val, int nb);
+	void set_spectrum(float* val, uint32_t nb);
 	uint32_t get_table_size();
 
 	void check_param(spf_param* spf_p);

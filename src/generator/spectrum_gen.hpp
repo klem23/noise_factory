@@ -54,7 +54,7 @@ class spectrum_gen: public midi_parser{
 		void process(int nb_sample);
 
 		void change_signal(uint32_t x, double y);
-		void change_signal(float* val, int nb);
+		void change_signal(float* val, uint32_t nb);
 
 		uint32_t get_table_size(void);
 

@@ -66,7 +66,7 @@ conv_filter::~conv_filter(void){
 	free(temp_kern);
 }
 
-void conv_filter::set_spectrum(float* val, int nb){
+void conv_filter::set_spectrum(float* val, uint32_t nb){
 
 	//fft process
 	memset(fft_in, 0, ksize * sizeof(double));

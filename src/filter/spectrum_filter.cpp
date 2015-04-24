@@ -116,7 +116,7 @@ void spectrum_filter::process(int nb_sample){
 	
 }
 
-void spectrum_filter::set_spectrum(float* val, int nb){
+void spectrum_filter::set_spectrum(float* val, uint32_t nb){
 
 	memset(spectrum, 0, s_size * sizeof(double));
 	memset(spect_tmp, 0, use_point_nb * sizeof(float));

@@ -152,7 +152,7 @@ void spectrum_gen::change_signal(uint32_t x, double y){
 	spectrum_table[x] = y;
 }
 
-void spectrum_gen::change_signal(float* val, int nb){
+void spectrum_gen::change_signal(float* val, uint32_t nb){
 	/*uint32_t max = table_size;
 	if(nb < (int)table_size){
 		max = nb;
