@@ -77,7 +77,6 @@ OSCSpectrumDraw::OSCSpectrumDraw(QWidget *parent, uint32_t tab_size)
 	:FreqCurveDraw(parent, tab_size), OSCUI(2324){
 
 	setTitle("Draw your Spectrum");
-	enable_freq_shift_knob();
 	enable_vol_knob();
 }
 

@@ -69,7 +69,6 @@ LV2SpectrumDraw::LV2SpectrumDraw(QWidget *parent, uint32_t tab_size)
 	:FreqCurveDraw(parent, tab_size), LV2UI(){
 
 	setTitle("Draw your Spectrum");
-	enable_freq_shift_knob();
 	enable_vol_knob();
 }
 

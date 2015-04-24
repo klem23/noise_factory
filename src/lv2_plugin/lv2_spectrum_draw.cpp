@@ -111,9 +111,6 @@ void connectPort(LV2_Handle instance, uint32_t port, void* data){
 			hdl->fft->set_output((float*)data);
 			break;
 		case 2:
-			hdl->gen->set_freq_shift((float*)data);
-			break;
-		case 3:
 			vol = (float*)data;
 			break;
 	}

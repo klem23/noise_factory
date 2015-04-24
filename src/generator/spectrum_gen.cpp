@@ -32,7 +32,7 @@ void spectrum_gen::start_fill_table(void){
 
 spectrum_gen::spectrum_gen(uint32_t sampling_rate)
 	:midi_parser(sampling_rate)
-	,amp(1),freq_shift(0),out(NULL){
+	,amp(1),out(NULL){
 
 	//fscale = srate / TABLE_SIZE;
 	fscale = 10;
@@ -177,14 +177,6 @@ void spectrum_gen::set_vol(float* vol_t){
 	if(vol_t != NULL){
 		if(amp != *vol_t){
 			amp = *vol_t;
-		}
-	}
-}
-
-void spectrum_gen::set_freq_shift(float* freq_shift_t){
-	if(freq_shift_t != NULL){
-		if(freq_shift != *freq_shift_t){
-			freq_shift = *freq_shift_t;
 		}
 	}
 }

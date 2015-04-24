@@ -31,7 +31,6 @@ class spectrum_gen: public midi_parser{
 		float  *spectrum_used;
 
 		float amp;
-		float freq_shift;
 
 		float fscale;
 		uint32_t table_size;
@@ -60,6 +59,5 @@ class spectrum_gen: public midi_parser{
 		uint32_t get_table_size(void);
 
 		void set_vol(float* vol_t);
-		void set_freq_shift(float* freq_shift_t);
 };
 #endif

@@ -109,15 +109,12 @@ void connectPort(LV2_Handle instance, uint32_t port, void* data){
 			hdl->fft->set_output((float*)data);
 			break;
 		case 2:
-			hdl->gen->set_freq_shift((float*)data);
-			break;
-		case 3:
 			hdl->gen->set_vol((float*)data);
 			break;
-		case 4:
+		case 3:
 			spfp.freq_shift = (float*)data;
 			break;
-		case 5:
+		case 4:
 			spfp.volume = (float*)data;
 			break;
 	}
