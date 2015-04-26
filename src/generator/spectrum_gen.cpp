@@ -39,7 +39,8 @@ spectrum_gen::spectrum_gen(uint32_t sampling_rate)
 	table_size = srate / fscale;
 	//table_size = 1024;
 
-	use_point_nb = 3072; //18KHz max
+	//use_point_nb = 3072; //18KHz max
+	use_point_nb = 4096; //24KHz
 	//use_point_nb = 1024;
 	//use_point_nb = 8192;
 
