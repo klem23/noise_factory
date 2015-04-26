@@ -5,9 +5,12 @@
 ############################
 #env = Environment();
 env = Environment(CCFLAGS = " -Wall ");
+
+#debug
 debug = ARGUMENTS.get('debug', 0)
 if int(debug):
  env.Append(CCFLAGS = ' -g ')
+
 env['CPPPATH'] = ['src/beat_factory/', 'src/common/', 'src/generator/',  'src/filter/', 'src/mod/', 'src/fx/', 'src/gui/common/', 'src/gui/LV2/', 'src/gui/OSC/']
 
 VariantDir('build_scons/bf/', 'src/beat_factory/', duplicate=0)
