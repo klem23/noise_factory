@@ -30,7 +30,8 @@ pitch_shifter::pitch_shifter(uint32_t s_rate)
 	//s_size = srate / fscale;
 	//s_size = 1024;
 	//s_size = 8192;
-	use_point_nb = 3072; //18KHz max
+	//use_point_nb = 3072; //18KHz max
+	use_point_nb = 4096; //24KHz
 	//use_point_nb = 1024;
 	//use_point_nb = 8192;
 
@@ -84,7 +85,7 @@ void pitch_shifter::process(int nb_sample){
 
 	memset(d_out, 0, s_size * sizeof(float));
 
-	uint32_t decay = freq_shift * 10000.0 / fscale;
+	uint32_t decay = freq_shift * 1000.0 / fscale;
 	uint32_t j = 0;
 
 	for(uint32_t i = 0; i < s_size; i++){

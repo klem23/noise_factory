@@ -32,7 +32,8 @@ octaver::octaver(uint32_t s_rate)
 	//s_size = srate / fscale;
 	//s_size = 1024;
 	//s_size = 8192;
-	use_point_nb = 3072; //18KHz max
+	//use_point_nb = 3072; //18KHz max
+	use_point_nb = 4096; //24KHz
 	//use_point_nb = 1024;
 	//use_point_nb = 8192;
 
