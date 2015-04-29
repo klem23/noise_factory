@@ -34,8 +34,8 @@ void cleanup(LV2_Handle instance){
 	osc* osci = (osc*)instance;
 	delete osci;
 
-	if( oscDesc != NULL){
-		//free(oscDesc);
+	if( bfDesc != NULL){
+		//free(bfDesc);
 	}
 }
 
