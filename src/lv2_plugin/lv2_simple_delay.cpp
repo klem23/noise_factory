@@ -34,9 +34,7 @@ void cleanup(LV2_Handle instance){
 	simple_delay* sd = (simple_delay*)instance;
 	delete sd;
 
-	if( sdDesc != NULL){
-		//free(oscDesc);
-	}
+	delete sdDesc;
 }
 
 
@@ -88,7 +86,7 @@ void run(LV2_Handle instance, uint32_t sample_count){
 
 
 void init(void){
-	sdDesc = (LV2_Descriptor*)malloc(sizeof(LV2_Descriptor));
+	sdDesc = new LV2_Descriptor;
 
 	sdDesc->URI = SD_URI;
 	sdDesc->activate = NULL;

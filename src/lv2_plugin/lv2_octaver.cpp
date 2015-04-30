@@ -59,9 +59,8 @@ void cleanup(LV2_Handle instance){
 
 	delete hdl;
 
-	if( octDesc != NULL){
-		//		free(fftfDesc);
-	}
+	delete octDesc;
+
 }
 
 
@@ -129,7 +128,7 @@ void run(LV2_Handle instance, uint32_t sample_count){
 
 
 void init(void){
-	octDesc = (LV2_Descriptor*)malloc(sizeof(LV2_Descriptor));
+	octDesc = new LV2_Descriptor;
 
 	octDesc->URI = OCT_URI;
 	octDesc->activate = NULL;

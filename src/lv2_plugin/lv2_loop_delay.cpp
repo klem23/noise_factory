@@ -34,9 +34,8 @@ void cleanup(LV2_Handle instance){
 	loop_delay* ld = (loop_delay*)instance;
 	delete ld;
 
-	if( ldDesc != NULL){
-		//free(oscDesc);
-	}
+	delete ldDesc;
+
 }
 
 
@@ -88,7 +87,7 @@ void run(LV2_Handle instance, uint32_t sample_count){
 
 
 void init(void){
-	ldDesc = (LV2_Descriptor*)malloc(sizeof(LV2_Descriptor));
+	ldDesc = new LV2_Descriptor;
 
 	ldDesc->URI = LD_URI;
 	ldDesc->activate = NULL;

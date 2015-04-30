@@ -34,9 +34,7 @@ void cleanup(LV2_Handle instance){
 	zp_diag_filter* zp = (zp_diag_filter*)instance;
 	delete zp;
 
-	if( zpDesc != NULL){
-		//free(zpDesc);
-	}
+	delete zpDesc;
 }
 
 
@@ -89,7 +87,7 @@ void run(LV2_Handle instance, uint32_t sample_count){
 
 
 void init(void){
-	zpDesc = (LV2_Descriptor*)malloc(sizeof(LV2_Descriptor));
+	zpDesc = new LV2_Descriptor;
 
 	zpDesc->URI = ZP_URI;
 	zpDesc->activate = NULL;

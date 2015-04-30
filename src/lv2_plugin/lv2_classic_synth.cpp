@@ -50,12 +50,9 @@ void cleanup(LV2_Handle instance){
 	delete filter;
 	delete hdl->buff;
 
-	if( hdl != NULL){
-		free(hdl);
-	}
-	if( csDesc != NULL){
-//		free(csDesc);
-	}
+	delete hdl;
+
+	delete csDesc;
 }
 
 
@@ -83,7 +80,7 @@ LV2_Handle instantiate(const LV2_Descriptor *descriptor,
 			const LV2_Feature * const * features)
 {
 
-	cs_handle* hdl = (cs_handle*)malloc(sizeof(cs_handle));
+	cs_handle* hdl = new cs_handle;
 	osc* osc1 = new osc(s_rate);
 	osc* osc2 = new osc(s_rate);
 	zp_diag_filter* filter = new zp_diag_filter(s_rate, 0);
@@ -134,7 +131,7 @@ void run(LV2_Handle instance, uint32_t nb_sample){
 
 
 void init(void){
-	csDesc = (LV2_Descriptor*)malloc(sizeof(LV2_Descriptor));
+	csDesc = new LV2_Descriptor;
 
 	csDesc->URI = CS_URI;
 	csDesc->activate = NULL;

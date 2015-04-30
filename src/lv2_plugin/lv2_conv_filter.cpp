@@ -75,9 +75,8 @@ void cleanup(LV2_Handle instance){
 	conv_filter* cf = (conv_filter*)instance;
 	delete cf;
 
-	if( cfDesc != NULL){
-		//free(zpDesc);
-	}
+	delete cfDesc;
+
 }
 
 
@@ -131,7 +130,7 @@ void run(LV2_Handle instance, uint32_t sample_count){
 
 
 void init(void){
-	cfDesc = (LV2_Descriptor*)malloc(sizeof(LV2_Descriptor));
+	cfDesc = new LV2_Descriptor;
 
 	cfDesc->URI = CF_URI;
 	cfDesc->activate = NULL;

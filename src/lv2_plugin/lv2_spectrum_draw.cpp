@@ -88,15 +88,11 @@ void cleanup(LV2_Handle instance){
 	if( hdl->buff != NULL){
 		fftw_free(hdl->buff);
 	}
-	if( hdl != NULL){
-		free(hdl);
-	}
+
 
 	delete hdl;
 
-	if( spectreDesc != NULL){
-//		free(spectreDesc);
-	}
+	delete spectreDesc;
 }
 
 
@@ -177,7 +173,7 @@ void run(LV2_Handle instance, uint32_t sample_count){
 
 
 void init(void){
-	spectreDesc = (LV2_Descriptor*)malloc(sizeof(LV2_Descriptor));
+	spectreDesc = new LV2_Descriptor;
 
 	spectreDesc->URI = SP_URI;
 	spectreDesc->activate = NULL;

@@ -59,9 +59,7 @@ void cleanup(LV2_Handle instance){
 
 	delete hdl;
 
-	if( psDesc != NULL){
-		//		free(fftfDesc);
-	}
+	delete psDesc;
 }
 
 
@@ -129,7 +127,7 @@ void run(LV2_Handle instance, uint32_t sample_count){
 
 
 void init(void){
-	psDesc = (LV2_Descriptor*)malloc(sizeof(LV2_Descriptor));
+	psDesc = new LV2_Descriptor;
 
 	psDesc->URI = PS_URI;
 	psDesc->activate = NULL;

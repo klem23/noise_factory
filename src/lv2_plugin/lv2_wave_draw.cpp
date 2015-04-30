@@ -81,13 +81,12 @@ int vol_change_handler(const char *path, const char *types, lo_arg **argv, int a
 void cleanup(LV2_Handle instance){
 	wave_gen* wav = (wave_gen*)instance;
 	delete wav;
+	delete wavDesc;
 
 #ifdef OSC
 	pthread_mutex_destroy(&wmutex);
 #endif
-	if( wavDesc != NULL){
-	//	free(wavDesc);
-	}
+
 }
 
 
@@ -171,7 +170,7 @@ const void *wave_extension(const char *uri){
 }
 
 void init(void){
-	wavDesc = (LV2_Descriptor*)malloc(sizeof(LV2_Descriptor));
+	wavDesc = new LV2_Descriptor;
 
 	wavDesc->URI = WA_URI;
 	wavDesc->activate = NULL;

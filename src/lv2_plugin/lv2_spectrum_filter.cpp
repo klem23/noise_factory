@@ -111,10 +111,7 @@ void cleanup(LV2_Handle instance){
 	}
 
 	delete hdl;
-
-	if( spfDesc != NULL){
-		//		free(fftfDesc);
-	}
+	delete spfDesc;
 }
 
 
@@ -198,7 +195,7 @@ void run(LV2_Handle instance, uint32_t sample_count){
 
 
 void init(void){
-	spfDesc = (LV2_Descriptor*)malloc(sizeof(LV2_Descriptor));
+	spfDesc = new LV2_Descriptor;
 
 	spfDesc->URI = SPF_URI;
 	spfDesc->activate = NULL;

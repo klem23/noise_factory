@@ -35,9 +35,8 @@ void cleanup(LV2_Handle instance){
 	osc* osci = (osc*)instance;
 	delete osci;
 
-	if( oscDesc != NULL){
-		//free(oscDesc);
-	}
+	delete oscDesc;
+
 }
 
 
@@ -156,7 +155,7 @@ void run(LV2_Handle instance, uint32_t sample_count){
 
 
 void init(void){
-	oscDesc = (LV2_Descriptor*)malloc(sizeof(LV2_Descriptor));
+	oscDesc = new LV2_Descriptor;
 
 	oscDesc->URI = OSC_URI;
 	oscDesc->activate = NULL;
