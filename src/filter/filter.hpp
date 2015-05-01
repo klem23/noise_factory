@@ -84,93 +84,21 @@ class filter{
 };
 
 class recursive_filter : public filter{
+	protected:
+		double*	a_coeff;
+		double*  b_coeff;
+
+		double* in_cache;
+		double* out_cache;
+
 	public:
-		float*	a_coeff;
-		float*  b_coeff;
+		recursive_filter(uint32_t s_rate);
+		~recursive_filter(void);
 
-		float* in_cache;
-		float* out_cache;
 
-		recursive_filter(uint32_t s_rate)
-			:filter(s_rate)
-			,a_coeff(NULL),b_coeff(NULL)
-			,in_cache(NULL),out_cache(NULL){
+		void rf_set_order(uint8_t order_t);
+		void process(int nb_sample);
 
-			rf_set_order(2);
-		};
-
-		~recursive_filter(void){
-				delete a_coeff;
-				delete b_coeff;
-				delete in_cache;
-				delete out_cache;
-		};
-
-		void rf_set_order(uint8_t order_t){
-			if(order_t > 0){	
-				order = order_t;
-
-				delete a_coeff;
-				delete b_coeff;
-				delete in_cache;
-				delete out_cache;
-
-				a_coeff = new float[order_t + 1];
-				b_coeff = new float[order_t + 1];
-				in_cache = new float[order_t + 1];
-				out_cache = new float[order_t + 1];
-
-				if((a_coeff != NULL)&&(b_coeff != NULL)){
-					memset(a_coeff, 0, (order_t + 1)*sizeof(float));
-					memset(b_coeff, 0, (order_t + 1)*sizeof(float));
-					memset(in_cache, 0, (order_t + 1)*sizeof(float));
-					memset(out_cache, 0, (order_t + 1)*sizeof(float));
-					//B0 doesn't exist normally
-					b_coeff[0] = 0.0;
-					for(int i = 0; i <= order_t; i++){
-						in_cache[i] = 0.0;
-						out_cache[i] = 0.0;
-					}					
-				}
-			}
-		}
-
-		void process(int nb_sample){
-			memset(out, 0, nb_sample*sizeof(float));
-			//a problem happend when calculing the coefficient
-			if((a_coeff == NULL)||(b_coeff == NULL)||(a_coeff[0] == 0.0)){
-				return;
-			}
-		
-			//calculus from data cache of previous run
-			for(int i = 0; i < order; i++){
-				in_cache[0] = in[i];
-				out_cache[0] = 0;
-
-				for(int j = order; j >= 0 ; j--){
-					out[i] += a_coeff[j] * in_cache[j] + b_coeff[j] * out_cache[j];
-
-					if(j != 0){
-						in_cache[j] = in_cache[j-1];
-						out_cache[j] = out_cache[j-1];
-					}
-				}
-				out_cache[1] = out[i];
-			}
-
-			//real calculus for full run
-			for(int i = order; i < nb_sample; i++){
-				for(int j = 0; j <= order ; j++){
-					out[i] += a_coeff[j] * in[i-j] + b_coeff[j] * out[i-j];
-				}
-			}
-		
-			//caching data for next run
-			for(int i = 1; i <= order; i++){
-				in_cache[i] = in[nb_sample - i];
-				out_cache[i] = out[nb_sample - i];
-			}
-		}
 
 };
 

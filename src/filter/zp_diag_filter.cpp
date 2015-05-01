@@ -18,14 +18,11 @@
 */
 
 #include "zp_diag_filter.hpp"
-#include <cstdio>
+
+#include <iostream>
 
 
 zp_diag_filter::zp_diag_filter(uint32_t s_rate, uint8_t zp_num):recursive_filter(s_rate),rp(0.5){
-
-	rp = 0.5;
-
-	printf("klem zp diag filter\n");
 
 	if(zp_num == 0){
 		zp_nb = order;
@@ -109,7 +106,7 @@ void zp_diag_filter::calcul_diag(void){
 		double pole_real = - cos( M_PI/(zp_nb*2.0) + (i-1.0) * M_PI/zp_nb);
 		double pole_img = sin( M_PI/(zp_nb*2.0) + (i-1.0) * M_PI/zp_nb);
 		pole[i-1] = pole_real + I * pole_img; 
-		printf("pole location R %f, I %f\n", pole_real, pole_img);
+		std::cout << "pole location R " << pole_real << " I " << pole_img << std::endl;
 	} 
 
 }
@@ -124,13 +121,13 @@ void zp_diag_filter::calcul_ellipse(void){
 	double vx = (1.0/zp_nb)*log( (1.0/es) + sqrt( 1.0/(es*es) + 1.0));
 	double kx = (1.0/zp_nb)*log( (1.0/es) + sqrt( 1.0 / (es*es) - 1.0));
 	kx = (exp(kx) + exp(-kx))/2.0;
-	printf("ellipse coeff es %f vx %f kx %f\n", es, vx, kx);
+	std::cout << "ellipse coeff es " << es << " vx " << vx << " kx " << kx << std::endl;
 
 	for(int i = 1; i <= zp_nb/2; i++){
 		double pole_real = creal(pole[i-1])*((exp(vx)-exp(-vx))/2.0)/kx;
 		double pole_img = cimag(pole[i-1])*((exp(vx)+exp(-vx))/2.0)/kx;
 		pole[i-1] = pole_real + I * pole_img;
-		printf("pole location on ellipse R %f, I %f\n", pole_real, pole_img);
+		std::cout << "pole location on ellipse R " << pole_real << " I " << pole_img << std::endl;
 	}
 }
 
@@ -143,7 +140,7 @@ void zp_diag_filter::calcul_z_trans(void){
 	for(int i = 1; i <= zp_nb/2; i++){
 		m = pow(creal(pole[i-1]),2) + pow(cimag(pole[i-1]),2);
 		d = 4.0 - 4.0*creal(pole[i-1])*T + m*T2; 
-		printf("z_trans T %f, T2 %f, m %f, d %f\n", T, T2, m, d);
+		std::cout << "z_trans T " << T << " T2 " << T2 << " m " << m << " d " << d << std::endl;
 
 
 		x0[i-1] = T2/d;
@@ -152,8 +149,8 @@ void zp_diag_filter::calcul_z_trans(void){
 
 		y1[i-1] = (8.0 - 2.0*m*T2) / d;
 		y2[i-1] = (-4.0 - 4.0*creal(pole[i-1])*T - m*T2) / d;
-		printf("run %d: %d pole's filter z_trans x0 %f x1 %f x2 %f y1 %f y2 %f \n",
-					i-1, zp_nb , x0[i-1], x1[i-1], x2[i-1], y1[i-1], y2[i-1]);
+		std::cout << "run " << i-1 << " : " << zp_nb << "pole's filter z_trans x0 "
+				<<  x0[i-1] << " x1 " <<  x1[i-1] << " x2 " << x2[i-1] << " y1 " << y1[i-1] << " y2 " << y2[i-1] << std::endl;
 	}
 }
 
@@ -163,7 +160,7 @@ void zp_diag_filter::calcul_coeff(void){
 	double K;
 
 	double W = 2.0 * M_PI * fc;
-	printf("coeff omega : %f\n", W);
+	std::cout << "coeff omega : " << W << std::endl;
 
 
 	switch(band_type){ 	
@@ -191,9 +188,8 @@ void zp_diag_filter::calcul_coeff(void){
 			b1[i-1] = - b1[i-1];
 		}
 
-		printf("run %d: %d pole's filter coeff a0 %f a1 %f a2 %f b1 %f b2 %f \n",
-					i-1, zp_nb , a0[i-1], a1[i-1], a2[i-1], b1[i-1], b2[i-1]);
-
+		std::cout << "run " << i-1 << " : " << zp_nb << "pole's filter coeff a0 "
+				<<  a0[i-1] << " a1 " <<  a1[i-1] << " a2 " << a2[i-1] << " b1 " << b1[i-1] << " b2 " << b2[i-1] << std::endl;
 	}
 }
 
@@ -257,7 +253,7 @@ void zp_diag_filter::combine_coeff(void){
 	}
 */
 	for(int i = 0; i <= order; i++){
-		printf("resulting coeff a_coeff[%d] = %f ## b_coeff[%d] = %f \n", i, a_coeff[i], i, b_coeff[i]);
+		std::cout << "resulting coeff a_coeff[" << i << "] = " << a_coeff[i] << " ## b_coeff[" << i << "] = " << b_coeff[i] << std::endl;
 	}
 
 	/*normalize gain*/
@@ -288,7 +284,7 @@ void zp_diag_filter::combine_coeff(void){
 	}
 
 	for(int i = 0; i <= order; i++){
-		printf("resulting gain coeff a[%d] = %f ## b[%d] = %f \n", i, a_coeff[i], i, b_coeff[i]);
+		std::cout << "resulting gain coeff a[" << i << "] = " << a_coeff[i] << " ## b[" << i << "] = " << b_coeff[i] << std::endl;
 	}
 }
 
@@ -297,21 +293,21 @@ void zp_diag_filter::set_band_type(uint8_t type){
 
 	f_set_band_type(type);
 
-        calcul_coeff();
-        combine_coeff();		
+	calcul_coeff();
+	combine_coeff();
 }
 
 void zp_diag_filter::set_filter_type(enum filter_type type){
-	
+
 	f_type = type;
 
 	calcul_diag();
 	if(f_type != butterworth){
-                calcul_ellipse();
-        }
-        calcul_z_trans();
-        calcul_coeff();
-        combine_coeff();
+		calcul_ellipse();
+	}
+	calcul_z_trans();
+	calcul_coeff();
+	combine_coeff();
 }
 
 void zp_diag_filter::set_order(uint8_t order_t){
@@ -345,17 +341,17 @@ void zp_diag_filter::set_rp(float rp_p){
 		return;
 	}
 
-        calcul_ellipse();
-        calcul_z_trans();
-        calcul_coeff();
-        combine_coeff();
+	calcul_ellipse();
+	calcul_z_trans();
+	calcul_coeff();
+	combine_coeff();
 }
 
 
 void zp_diag_filter::check_param(filter_param* fp){
 
 
-        if((uint8_t)*(fp->band_type) != band_type){
+	if((uint8_t)*(fp->band_type) != band_type){
 		set_band_type(*(fp->band_type));
 	}
 
@@ -363,16 +359,16 @@ void zp_diag_filter::check_param(filter_param* fp){
 		set_filter_type((enum filter_type)*(fp->filter_type));
 	}
 
-        if((uint8_t)*(fp->order) != order){
+	if((uint8_t)*(fp->order) != order){
 		set_order(*(fp->order));
 	}
-	
-	
-        if((uint32_t)*(fp->cutoff) != (uint32_t)get_fc()){
-                set_fc(*(fp->cutoff));
-        }
 
-        if((uint32_t)*(fp->rp) != (uint32_t)rp){
+
+	if((uint32_t)*(fp->cutoff) != (uint32_t)get_fc()){
+		set_fc(*(fp->cutoff));
+	}
+
+	if((uint32_t)*(fp->rp) != (uint32_t)rp){
 		set_rp(*(fp->rp));
 	}
 
