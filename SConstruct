@@ -52,9 +52,11 @@ fft_src = env.Split("build_scons/common/spectrum_fft.cpp");
 fft_obj = env.SharedObject(fft_src);
 
 #Classic OSC
-classic_osc_src = Split("build_scons/generator/osc.cpp build_scons/mod/env.cpp build_scons/mod/lfo.cpp build_scons/mod/perc.cpp build_scons/lv2_plugin/lv2_classic_osc.cpp")
-osc_obj = env.SharedObject(classic_osc_src);
-env.SharedLibrary('build_scons/out/classic_osc', common_obj + osc_obj)
+osc_src = Split("build_scons/generator/osc.cpp build_scons/mod/env.cpp build_scons/mod/lfo.cpp build_scons/mod/perc.cpp")
+osc_obj = env.SharedObject(osc_src);
+classic_osc_src = Split("build_scons/lv2_plugin/lv2_classic_osc.cpp")
+classic_osc_obj = env.SharedObject(classic_osc_src);
+env.SharedLibrary('build_scons/out/classic_osc', common_obj + osc_obj + classic_osc_obj)
 
 #Wave Draw
 env_wd = env.Clone();
@@ -85,9 +87,11 @@ env_sd.SharedLibrary('build_scons/out/spectrum_draw', common_obj + graph_obj + f
 
 #recursive filter
 env_rf = env.Clone();
-recursive_filter_src = Split("build_scons/filter/zp_diag_filter.cpp build_scons/lv2_plugin/lv2_zp_diag_filter.cpp")
+zpd_filter_src = Split("build_scons/filter/filter.cpp build_scons/filter/zp_diag_filter.cpp")
+zpd_filter_obj = env_rf.SharedObject(zpd_filter_src);
+recursive_filter_src = Split("build_scons/lv2_plugin/lv2_zp_diag_filter.cpp")
 recursive_filter_obj = env_rf.SharedObject(recursive_filter_src);
-env_rf.SharedLibrary('build_scons/out/recursive_filter', recursive_filter_obj)
+env_rf.SharedLibrary('build_scons/out/recursive_filter', zpd_filter_obj + recursive_filter_obj)
 
 #convolution filter
 env_cf = env.Clone();
@@ -119,6 +123,11 @@ env_sf.SharedLibrary('build_scons/out/spectrum_filter', graph_obj + fft_obj + sp
 #######
 
 #classic synth
+env_cs = env.Clone();
+classic_synth_src = Split("build_scons/lv2_plugin/lv2_classic_synth.cpp")
+classic_synth_obj = env_cs.SharedObject(classic_synth_src);
+env_cs.SharedLibrary('build_scons/out/classic_synth', common_obj + osc_obj + zpd_filter_obj + classic_synth_obj)
+
 
 #wave factory
 env_wf = env.Clone();
@@ -237,29 +246,31 @@ env_graph.Program('build_scons/gui/spectrum_filter_gui_sa', common_gui_obj + sfi
 #copy ttl
 Command("build_scons/noise_factory.lv2/manifest.ttl","ttl/manifest.ttl",
                          Copy("$TARGET","$SOURCE"))
-
+#beat factory
 Command("build_scons/noise_factory.lv2/beat_factory.ttl","ttl/beat_factory.ttl",
                          Copy("$TARGET","$SOURCE"))
-
+#generator
 Command("build_scons/noise_factory.lv2/classic_osc.ttl","ttl/classic_osc.ttl",
                          Copy("$TARGET","$SOURCE"))
 Command("build_scons/noise_factory.lv2/wave_draw.ttl","ttl/wave_draw.ttl",
                          Copy("$TARGET","$SOURCE"))
 Command("build_scons/noise_factory.lv2/spectrum_draw.ttl","ttl/spectrum_draw.ttl",
                          Copy("$TARGET","$SOURCE"))
-
+#filter
 Command("build_scons/noise_factory.lv2/recursive_filter.ttl","ttl/recursive_filter.ttl",
                          Copy("$TARGET","$SOURCE"))
 Command("build_scons/noise_factory.lv2/conv_filter.ttl","ttl/conv_filter.ttl",
                          Copy("$TARGET","$SOURCE"))
 Command("build_scons/noise_factory.lv2/spectrum_filter.ttl","ttl/spectrum_filter.ttl",
                          Copy("$TARGET","$SOURCE"))
-
+#synth                         
+Command("build_scons/noise_factory.lv2/classic_synth.ttl","ttl/classic_synth.ttl",
+                         Copy("$TARGET","$SOURCE"))                      
+#FX
 Command("build_scons/noise_factory.lv2/simple_delay.ttl","ttl/simple_delay.ttl",
                          Copy("$TARGET","$SOURCE"))
 Command("build_scons/noise_factory.lv2/loop_delay.ttl","ttl/loop_delay.ttl",
                          Copy("$TARGET","$SOURCE"))
-
 Command("build_scons/noise_factory.lv2/pitch_shifter.ttl","ttl/pitch_shifter.ttl",
                          Copy("$TARGET","$SOURCE"))
 Command("build_scons/noise_factory.lv2/octaver.ttl","ttl/octaver.ttl",
@@ -267,24 +278,27 @@ Command("build_scons/noise_factory.lv2/octaver.ttl","ttl/octaver.ttl",
 
 
 #copy lib
+#beat factory
 Command("build_scons/noise_factory.lv2/beat_factory.so","build_scons/out/libbeat_factory.so",
                          Copy("$TARGET","$SOURCE"))
+#generator
 Command("build_scons/noise_factory.lv2/classic_osc.so","build_scons/out/libclassic_osc.so",
                          Copy("$TARGET","$SOURCE"))
 Command("build_scons/noise_factory.lv2/wave_draw.so","build_scons/out/libwave_draw.so",
                          Copy("$TARGET","$SOURCE"))
 Command("build_scons/noise_factory.lv2/spectrum_draw.so","build_scons/out/libspectrum_draw.so",
                          Copy("$TARGET","$SOURCE"))
-
-
+#filter
 Command("build_scons/noise_factory.lv2/recursive_filter.so","build_scons/out/librecursive_filter.so",
                          Copy("$TARGET","$SOURCE"))
 Command("build_scons/noise_factory.lv2/conv_filter.so","build_scons/out/libconv_filter.so",
                          Copy("$TARGET","$SOURCE"))
 Command("build_scons/noise_factory.lv2/spectrum_filter.so","build_scons/out/libspectrum_filter.so",
                          Copy("$TARGET","$SOURCE"))
-
-
+#synth
+Command("build_scons/noise_factory.lv2/classic_synth.so","build_scons/out/libclassic_synth.so",
+                         Copy("$TARGET","$SOURCE"))
+#FX
 Command("build_scons/noise_factory.lv2/simple_delay.so","build_scons/out/libsimple_delay.so",
                          Copy("$TARGET","$SOURCE"))
 Command("build_scons/noise_factory.lv2/loop_delay.so","build_scons/out/libloop_delay.so",
