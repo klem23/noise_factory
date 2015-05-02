@@ -86,10 +86,6 @@ void cleanup(LV2_Handle instance){
 	if( hdl->buff_1 != NULL) fftw_free(hdl->buff_1);
 	if( hdl->buff_2 != NULL) fftw_free(hdl->buff_2);
 
-	if( hdl != NULL){
-		free(hdl);
-	}
-
 	delete hdl;
 	delete spectreDesc;
 }

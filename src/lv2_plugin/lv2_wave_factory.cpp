@@ -85,6 +85,8 @@ void cleanup(LV2_Handle instance){
 #ifdef OSC
 	pthread_mutex_destroy(&wmutex);
 #endif
+
+	delete hdl;
 	delete wavDesc;
 }
 

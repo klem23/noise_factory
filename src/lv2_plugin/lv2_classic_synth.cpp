@@ -31,24 +31,25 @@
 using namespace std;
 
 typedef struct{
-	osc* gen1;
-	osc* gen2;
+	osc* osc1;
+	osc* osc2;
 	zp_diag_filter* filter;
 	float* buff;
 }cs_handle;
+
+osc_param op1_t;
+osc_param op2_t;
+filter_param fp;
 
 LV2_Descriptor *csDesc = NULL;
 
 void cleanup(LV2_Handle instance){
 	cs_handle* hdl = (cs_handle*)instance;
-	osc* osc1 = hdl->gen1;
-	osc* osc2 = hdl->gen2;
-	zp_diag_filter* filter = hdl->filter;
 
-	delete osc1;
-	delete osc2;
-	delete filter;
-	delete hdl->buff;
+	delete hdl->osc1;
+	delete hdl->osc2;
+	delete hdl->filter;
+	delete[] hdl->buff;
 
 	delete hdl;
 
@@ -58,17 +59,14 @@ void cleanup(LV2_Handle instance){
 
 void connectPort(LV2_Handle instance, uint32_t port, void* data){
 	cs_handle* hdl = (cs_handle*)instance;
-	osc* osc1 = hdl->gen1;
-	osc* osc2 = hdl->gen2;
-	zp_diag_filter* filter = hdl->filter;
 
 	switch(port){
 		case 0:
-			osc1->set_input((float*)data);
-			osc2->set_input((float*)data);
+			hdl->osc1->set_input((float*)data);
+			hdl->osc2->set_input((float*)data);
 			break;
 		case 1:
-			filter->set_output((float*)data);
+			hdl->filter->set_output((float*)data);
 			break;
 	}
 
@@ -85,17 +83,17 @@ LV2_Handle instantiate(const LV2_Descriptor *descriptor,
 	osc* osc2 = new osc(s_rate);
 	zp_diag_filter* filter = new zp_diag_filter(s_rate, 0);
 
-	hdl->gen1 = osc1;
-	hdl->gen2 = osc2;
+	hdl->osc1 = osc1;
+	hdl->osc2 = osc2;
 	hdl->filter = filter;
 	hdl->buff = NULL;
 
      	for (int i = 0; features[i]; ++i) {
                 if (!strcmp(features[i]->URI, LV2_URID__map)) {
                         LV2_URID_Map* map = (LV2_URID_Map*)features[i]->data;
-                        hdl->gen1->set_midi_uri(
+                        hdl->osc1->set_midi_uri(
                                 map->map(map->handle, LV2_MIDI__MidiEvent));
-                        hdl->gen2->set_midi_uri(
+                        hdl->osc2->set_midi_uri(
                                 map->map(map->handle, LV2_MIDI__MidiEvent));
                         break;
                 }
@@ -107,26 +105,24 @@ LV2_Handle instantiate(const LV2_Descriptor *descriptor,
 
 void run(LV2_Handle instance, uint32_t nb_sample){
 	cs_handle* hdl = (cs_handle*)instance;
-	osc* osc1 = hdl->gen1;
-	osc* osc2 = hdl->gen2;
-	zp_diag_filter* filter = hdl->filter;
 
 	if(hdl->buff == NULL){
 		hdl->buff = new float[nb_sample];
-		osc1->set_output(hdl->buff);
-		osc2->set_output(hdl->buff);
-		filter->set_input(hdl->buff);
+		hdl->osc1->set_output(hdl->buff);
+		hdl->osc2->set_output(hdl->buff);
+		hdl->filter->set_input(hdl->buff);
 	}
 
 	//clean buffer for connecting the two module
 	memset(hdl->buff, 0, nb_sample*sizeof(float));
 
-	//osc1->check_param(&wp);
-	//osc2->check_param(&wp);
-	//filter->check_param(&fp);
-	osc1->process(nb_sample);
-	osc2->process(nb_sample);
-	filter->process(nb_sample);
+	hdl->osc1->check_param(&op1_t);
+	hdl->osc2->check_param(&op2_t);
+	hdl->filter->check_param(&fp);
+
+	hdl->osc1->process(nb_sample);
+	hdl->osc2->process(nb_sample);
+	hdl->filter->process(nb_sample);
 }
 
 
