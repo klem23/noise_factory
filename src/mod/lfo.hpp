@@ -22,7 +22,7 @@
 
 #include "mod.hpp"
 
-#define FREQ_LOW  1.00
+#define FREQ_LOW  0.1
 
 typedef struct{
 	float* active;

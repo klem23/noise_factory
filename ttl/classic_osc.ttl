@@ -164,7 +164,7 @@
     lv2:index 13;
     lv2:symbol "fl_freq";
     lv2:name "FL Frequency";
-    lv2:minimum 1;
+    lv2:minimum 0.1;
     lv2:maximum 50;
     lv2:default 1;
   ],
@@ -257,7 +257,7 @@
     lv2:index 22;
     lv2:symbol "al_freq";
     lv2:name "AL Frequency";
-    lv2:minimum 1;
+    lv2:minimum 0.1;
     lv2:maximum 50;
     lv2:default 1;
   ],
