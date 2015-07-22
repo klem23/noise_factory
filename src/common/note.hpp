@@ -35,8 +35,10 @@ public:
 	uint32_t release_offset;
 	bool toDelete;
 
-	note(void):key(64), offset(0), start_offset(0),stop_offset(0), release_offset(0), toDelete(false){}
-	note(uint8_t key, uint32_t so):key(key), offset(0), start_offset(so),stop_offset(0), release_offset(0), toDelete(false) {}
+	uint32_t relative_offset;
+
+	note(void):key(64), offset(0), start_offset(0),stop_offset(0), release_offset(0), toDelete(false), relative_offset(0){}
+	note(uint8_t key, uint32_t so):key(key), offset(0), start_offset(so),stop_offset(0), release_offset(0), toDelete(false), relative_offset(0){}
 	~note(void){}
 
 

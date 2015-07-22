@@ -190,19 +190,32 @@ void osc::sinus(note* nt, uint32_t nb_sample){
 	release_mod(nt, &end, nb_sample);
 	modulation(nt, nb_sample);
 
+	uint32_t period[nb_sample];
+	for(uint32_t k = i; k < nb_sample; k++){
+                period[k] = (uint32_t) (1.0 / (freq_table[nt->key] * freq_adj * freq_mod_buff[k]));
+        }
+
+
 	//process audio data
-	uint32_t j = nt->offset;
+	//uint32_t j = nt->offset;
+	uint32_t j = nt->relative_offset;
+	//uint32_t j = nt->offset % (uint32_t)(1.0 / freq_table[nt->key]);
 	while(i < end){
 		//out[i] += amp * sinf( 2.0 * M_PI * freq_table[nt->key] * j + phase);
 		//out[i] += amp * amp_mod_buff[i] * sinf( 2.0 * M_PI * ( freq + freq_table[nt->key] + freq_mod_buff[i] ) * j + phase);
 		out[i] += amp * amp_mod_buff[i] * sinf( 2.0 * M_PI * freq_adj * freq_mod_buff[i] * freq_table[nt->key] * j + phase);
 		i++;
 		j++;
+                if(j > period[i]){
+                        j = 0;
+		}
 	}
 
 
 	nt->start_offset = 0;
-	nt->offset = j;
+	//nt->offset = j;
+	nt->offset += end - nt->start_offset;
+	nt->relative_offset = j + 1;
 }
 
 /* SQUARE */
@@ -217,11 +230,13 @@ void osc::square(note* nt, uint32_t nb_sample){
 
 	//process audio data
 	uint32_t period[nb_sample];
-	for(uint32_t k = 0; k < nb_sample; k++){
+	for(uint32_t k = i; k < nb_sample; k++){
 		period[k] = (uint32_t) (1.0 / (freq_table[nt->key] * freq_adj * freq_mod_buff[k]));
-	}
+}
 
-	uint32_t j = nt->offset % period[0];
+	//uint32_t j = nt->offset % period[i];
+	//uint32_t j = nt->offset % (uint32_t)(1.0 / freq_table[nt->key]);
+	uint32_t j = nt->relative_offset;
 	while(i < end){
 		if(j > period[i]){
 			j = 0;
@@ -238,6 +253,7 @@ void osc::square(note* nt, uint32_t nb_sample){
 
 	nt->start_offset = 0;
 	nt->offset += end - nt->start_offset;
+	nt->relative_offset = j + 1;
 }
 
 /* SAW_UP */
@@ -255,7 +271,10 @@ void osc::saw_up(note* nt, uint32_t nb_sample){
 	for(uint32_t k = i; k < nb_sample; k++){
 		period[k] = (uint32_t) (1.0 / (freq_table[nt->key] * freq_adj * freq_mod_buff[k]));
 	}
-	uint32_t j = nt->offset % period[i];
+
+	//uint32_t j = nt->offset % period[i];
+	//uint32_t j = nt->offset % (uint32_t)(1.0 / freq_table[nt->key]);
+	uint32_t j = nt->relative_offset;
 	//if(j = 0) j += period/4 for starting at 0;
 	while( i < end ){
 		if(j >= period[i]){
@@ -271,6 +290,7 @@ void osc::saw_up(note* nt, uint32_t nb_sample){
 
 	nt->start_offset = 0;
 	nt->offset += end - nt->start_offset;
+	nt->relative_offset = j + 1;
 }
 
 
@@ -290,7 +310,9 @@ void osc::saw_down(note* nt, uint32_t nb_sample){
 		period[k] = (uint32_t) (1.0 / (freq_table[nt->key] * freq_adj * freq_mod_buff[k]));
 	}
 
-	uint32_t j = nt->offset % period[i];
+	//uint32_t j = nt->offset % period[i];
+	//uint32_t j = nt->offset % (uint32_t)(1.0 / freq_table[nt->key]);
+	uint32_t j = nt->relative_offset;
 	//if(j = 0) j += period/4 for starting at 0;
 	while( i < end ){
 		if(j >= period[i]){
@@ -306,6 +328,7 @@ void osc::saw_down(note* nt, uint32_t nb_sample){
 
 	nt->start_offset = 0;
 	nt->offset += end - nt->start_offset ;
+	nt->relative_offset = j + 1;
 }
 
 /* TRIANGLE */
@@ -348,7 +371,8 @@ void osc::triangle(note* nt, uint32_t nb_sample){
 		period[k] = (uint32_t) (1.0 / (freq_table[nt->key] * freq_adj * freq_mod_buff[k]));
 	}
 
-	uint32_t j = nt->offset % period[i];
+	//uint32_t j = nt->offset % period[i];
+	uint32_t j = nt->relative_offset;
 	//if(j = 0) j += period/4 for starting at 0;
 	while( i < end ){
 		if(j >= period[i]){
@@ -371,6 +395,7 @@ void osc::triangle(note* nt, uint32_t nb_sample){
 
 	nt->start_offset = 0;
 	nt->offset += end - nt->start_offset;
+	nt->relative_offset = j + 1;
 }
 
 
