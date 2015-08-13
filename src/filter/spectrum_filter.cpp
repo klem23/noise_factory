@@ -97,7 +97,7 @@ void spectrum_filter::process(int nb_sample){
 
 */
 
-	uint32_t decay = (uint32_t)(freq_shift * 10000.0 / fscale);
+	uint32_t decay = (uint32_t)(freq_shift * 1000.0 / fscale);
 	uint32_t j = 0;
 
 	//for(int i = 0; i < max; i++){

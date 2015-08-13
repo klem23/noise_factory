@@ -163,7 +163,7 @@ void FreqCurveDraw::enable_freq_shift_knob(void){
     freq_label->setAlignment(Qt::AlignCenter);
     vlay->addWidget(freq_label);
     freq_btn = new QwtKnob();
-    freq_btn->setRange(-1.0, 1.0);
+    freq_btn->setRange(-10.0, 10.0);
     freq_btn->setValue(0.0);
 	connect(freq_btn, SIGNAL(valueChanged(double)), this, SLOT(send_freq(double)));
     vlay->addWidget(freq_btn);
