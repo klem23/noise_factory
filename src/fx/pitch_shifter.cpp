@@ -23,7 +23,7 @@
 pitch_shifter::pitch_shifter(uint32_t s_rate)
 	:srate(s_rate)
 	,d_in(NULL), d_out(NULL)
-	,amp(1.0), freq_shift(0.0){
+	,amp(1.0), freq_shift(0.0), freq_shift_khz(0.0){
 
 	//fscale = 10;
 	//fscale = 1;
@@ -49,6 +49,8 @@ pitch_shifter::pitch_shifter(uint32_t s_rate)
 			/4800/96000/192000" << std::endl;
 	}
 
+	//s_size = 1024;
+
 	fscale = srate / s_size;
 
 }
@@ -71,6 +73,10 @@ void pitch_shifter::check_param(ps_param* ps){
 		freq_shift = *ps->freq_shift;
 	}
 
+	if(freq_shift_khz != *ps->freq_shift_khz){
+		freq_shift_khz = *ps->freq_shift_khz;
+	}
+
 	if(amp != *ps->volume){
 		amp = *ps->volume;
 	}
@@ -85,17 +91,31 @@ void pitch_shifter::process(int nb_sample){
 
 	memset(d_out, 0, s_size * sizeof(float));
 
-	uint32_t decay = freq_shift * 1000.0 / fscale;
+	//int32_t decay = (int32_t)(freq_shift * 1000.0 / fscale);
+	int32_t decay = (int32_t)((freq_shift_khz * 1000.0 + freq_shift * 10.0) / fscale);
 	uint32_t j = 0;
 
-	for(uint32_t i = 0; i < s_size; i++){
-		if(i - decay < 0.0){
+	//audible spectrum
+	for(uint32_t i = 0; i < s_size/2; i++){
+		if(i - decay <= 0){
 			j = 0;
-		}else if(i - decay >= s_size){
-			j = s_size - 1;
+		}else if(i - decay >= s_size/2){
+			j = s_size/2 - 1;
 		}else{
 			j = i - decay;
 		}
+		d_out[i] = d_in[j] * amp;
+	}
+	
+	//spectrum aliasing
+	for(uint32_t i = s_size/2; i < s_size; i++){
+		if(i + decay >= s_size){
+			j = s_size -1;
+		}else if(i + decay <= s_size/2){
+			j = s_size/2;
+		}else{
+			j = i + decay;
+		}	
 		d_out[i] = d_in[j] * amp;
 	}
 }

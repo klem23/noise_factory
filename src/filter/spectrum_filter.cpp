@@ -114,7 +114,29 @@ void spectrum_filter::process(int nb_sample){
 		d_out[i] = d_in[i] * spectrum[j] * amp;
 	}
 
+	for(uint32_t i = 0; i < s_size / 2; i++){
+		if(i - decay <= 0){
+			j = 0;
+		}else if(i - decay >= s_size){
+			j = s_size - 1;
+		}else{
+			j = i - decay;
+		}
 	
+		d_out[i] = d_in[i] * spectrum[j] * amp;
+	}
+
+	for(uint32_t i = s_size - 1; i > s_size / 2; i--){
+		if(i + decay >= s_size){
+			j = s_size - 1;
+		}else if(i + decay <= s_size){
+			j = s_size/2;
+		}else{
+			j = i + decay;	
+		}
+
+		d_out[i] = d_in[i] * spectrum[j] * amp;
+	}
 }
 
 void spectrum_filter::set_spectrum(float* val, uint32_t nb){
@@ -129,9 +151,21 @@ void spectrum_filter::set_spectrum(float* val, uint32_t nb){
 		memcpy( spect_tmp, val, nb * sizeof(float));
 	}
 	//transpose_graph_log_to_linear(val, nb, spect_tmp, use_point_nb);
+	uint32_t limit = 0;	
+	if(use_point_nb < s_size / 2){
+		limit = use_point_nb;
+	}else{
+		limit = s_size / 2;
+	}
+
 	//for(uint32_t i = 0; i < s_size; i++){
-	for(uint32_t i = 0; i < use_point_nb; i++){
+	for(uint32_t i = 0; i < limit; i++){
 		spectrum[i] = spect_tmp[i];
+	}
+	uint32_t j = 0;
+	for(uint32_t i = s_size - 1; i > s_size - limit - 2; i--){
+		spectrum[i] = spect_tmp[j];
+		j++;
 	}
 }
 

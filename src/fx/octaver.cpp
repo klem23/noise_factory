@@ -51,6 +51,8 @@ octaver::octaver(uint32_t s_rate)
 			/4800/96000/192000" << std::endl;
 	}
 
+	//s_size = 1024;
+
 	fscale = srate / s_size;
 
 }
@@ -87,11 +89,38 @@ void octaver::process(int nb_sample){
 
 	memset(d_out, 0, s_size * sizeof(float));
 
-	float decay = pow(2, oct_shift);
+	float decay = powf(2, oct_shift);
 	for(int i = 0; i < s_size - decay; i++){
 		for(int j = 0 ; j < decay; j++){
-			d_out[i + j] = d_in[(int)(i / decay)] * amp;
+			d_out[i + j] = d_in[(int)((float)i / decay)] * amp;
 		}
 	}
 
+	uint32_t k = 0;
+	//audible spectrum
+	for(uint32_t i = 0; i < s_size/2; i++){
+		for(int j = 0 ; j < decay; j++){
+			if((float)i * decay >= s_size/2){
+				k = s_size/2;
+			}else{
+				k = (uint32_t)((float)i / decay);
+			}
+			//d_out[i + j] = d_in[(int)((float)i / decay)] * amp;
+			d_out[i + j] = d_in[k] * amp;
+		}
+	}
+	//spectrum aliasing
+	for(uint32_t i = s_size/2; i < s_size - decay; i++){
+		for(int j = 0 ; j < decay; j++){
+			if((float)i * decay >= s_size){
+				k = s_size - 1;
+			}else if((float)i * decay <= s_size/2){
+				k = s_size/2;
+			}else{
+				k = (uint32_t)((float)i * decay);
+			}
+			//d_out[i + j] = d_in[(int)((float)i * decay)] * amp;
+			d_out[i + j] = d_in[k] * amp;
+		}
+	}
 }

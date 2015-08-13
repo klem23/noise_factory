@@ -169,8 +169,20 @@ void spectrum_gen::change_signal(float* val, uint32_t nb){
 		memcpy( spectrum_used, val, nb * sizeof(float));
 	}
 
-	for(uint32_t i = 0; i < use_point_nb; i++){
+	uint32_t limit = 0;
+	if( use_point_nb < table_size / 2){
+		limit = use_point_nb;
+	}else{
+		limit = table_size / 2;
+	}
+
+	for(uint32_t i = 0; i < limit; i++){
 		spectrum_table[i] = spectrum_used[i];
+	}
+	uint32_t j = 0;
+	for(uint32_t i = table_size - 1; i >= limit; i--){
+		spectrum_table[i] = spectrum_used[j];
+		j++;
 	}
 }
 
