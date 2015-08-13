@@ -27,6 +27,7 @@
 
 typedef struct{
 	float* freq_shift;
+	float* freq_shift_khz;
 	float* volume;
 }ps_param;
 
@@ -42,6 +43,7 @@ private:
 
 	float amp;
 	float freq_shift;
+	float freq_shift_khz;
 
 public:
 	pitch_shifter(uint32_t s_rate);

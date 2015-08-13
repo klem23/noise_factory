@@ -77,6 +77,9 @@ void connectPort(LV2_Handle instance, uint32_t port, void* data){
 			psp.freq_shift = (float*)data;
 			break;
 		case 3:
+			psp.freq_shift_khz = (float*)data;
+			break;
+		case 4:
 			psp.volume = (float*)data;
 			break;
 	}
