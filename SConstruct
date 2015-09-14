@@ -58,6 +58,12 @@ classic_osc_src = Split("build_scons/lv2_plugin/lv2_classic_osc.cpp")
 classic_osc_obj = env.SharedObject(classic_osc_src);
 env.SharedLibrary('build_scons/out/classic_osc', common_obj + osc_obj + classic_osc_obj)
 
+#Beat Factory Tuned 
+bft_src = Split("build_scons/lv2_plugin/lv2_beat_factory_tuned.cpp")
+bft_obj = env.SharedObject(bft_src);
+env.SharedLibrary('build_scons/out/beat_factory_tuned', common_obj + osc_obj + bft_obj)
+
+
 #Wave Draw
 env_wd = env.Clone();
 env_wd.Append(CCFLAGS = " -DOSC ")
@@ -249,6 +255,10 @@ Command("build_scons/noise_factory.lv2/manifest.ttl","ttl/manifest.ttl",
 #beat factory
 Command("build_scons/noise_factory.lv2/beat_factory.ttl","ttl/beat_factory.ttl",
                          Copy("$TARGET","$SOURCE"))
+
+Command("build_scons/noise_factory.lv2/beat_factory_tuned.ttl","ttl/beat_factory_tuned.ttl",
+                         Copy("$TARGET","$SOURCE"))
+
 #generator
 Command("build_scons/noise_factory.lv2/classic_osc.ttl","ttl/classic_osc.ttl",
                          Copy("$TARGET","$SOURCE"))
@@ -281,6 +291,10 @@ Command("build_scons/noise_factory.lv2/octaver.ttl","ttl/octaver.ttl",
 #beat factory
 Command("build_scons/noise_factory.lv2/beat_factory.so","build_scons/out/libbeat_factory.so",
                          Copy("$TARGET","$SOURCE"))
+
+Command("build_scons/noise_factory.lv2/beat_factory_tuned.so","build_scons/out/libbeat_factory_tuned.so",
+                         Copy("$TARGET","$SOURCE"))
+
 #generator
 Command("build_scons/noise_factory.lv2/classic_osc.so","build_scons/out/libclassic_osc.so",
                          Copy("$TARGET","$SOURCE"))

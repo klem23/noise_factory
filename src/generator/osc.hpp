@@ -39,6 +39,7 @@ typedef struct{
 	lfo_param fl;
 	env_param ae;
 	lfo_param al;
+	perc_param pe;
 }osc_param;
 
 

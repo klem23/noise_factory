@@ -93,6 +93,7 @@ void osc::check_param(osc_param *op){
 	freq_lfo->check_param(&(op->fl));
 	amp_env->check_param(&(op->ae));
 	amp_lfo->check_param(&(op->al));
+	perc_env->check_param(&(op->pe));
 
 }
 

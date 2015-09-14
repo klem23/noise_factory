@@ -122,6 +122,18 @@ void connectPort(LV2_Handle instance, uint32_t port, void* data){
 		case 23:
 			op_t.al.amt = (float*)data;
 			break;
+                case 24:
+                        op_t.pe.active = (float*)data;
+                        break;
+                case 25:
+                        op_t.pe.fe = (float*)data;
+                        break;
+                case 26:
+                        op_t.pe.ae = (float*)data;
+                        break;
+                case 27:
+                        op_t.pe.fs = (float*)data;
+                        break;
 	}
 
 }

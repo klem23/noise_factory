@@ -6,17 +6,13 @@
 @prefix pg: <http://lv2plug.in/ns/ext/port-groups#>.
 @prefix atom: <http://lv2plug.in/ns/ext/atom#> .
 
-<http://github.com/klem23/noise_factory/classic_osc/Freq_Env> 
-    a pg:Group;
-    lv2:symbol "Frequency Enveloppe".
-
-<http://github.com/klem23/noise_factory/classic_osc>
+<http://github.com/klem23/noise_factory/beat_factory_tuned>
   a lv2:Plugin;
   doap:maintainer [
     foaf:name "Clement Guedez";
     foaf:mbox <mailto:klem.dev@gmail.com>;
   ];
-  doap:name "Classic Oscillator";
+  doap:name "Beat Factory Tuned";
   doap:homepage <http://github.com/klem23/noise_factory>;
   doap:license <http://usefulinc.com/doap/licenses/gpl>;
 
@@ -78,9 +74,6 @@
     lv2:default 0.8;
   ],
 
-
-
-
   [
     a lv2:ControlPort, lv2:InputPort;
     lv2:index 6;
@@ -90,7 +83,6 @@
     lv2:maximum 1;
     lv2:default 0;
     lv2:portProperty lv2:toggled ;
-    pg:inGroup  <http://github.com/klem23/noise_factory/classic_osc/Freq_Env>;
   ],
 
   [
@@ -101,7 +93,6 @@
     lv2:minimum -1;
     lv2:maximum 1;
     lv2:default 0;
-    pg:inGroup  <http://github.com/klem23/noise_factory/classic_osc/Freq_Env>;
   ],
 
   [
@@ -112,7 +103,6 @@
     lv2:minimum -1;
     lv2:maximum 1;
     lv2:default 0;
-    pg:inGroup  <http://github.com/klem23/noise_factory/classic_osc/Freq_Env>;
   ],
 
   [
@@ -123,7 +113,6 @@
     lv2:minimum -1;
     lv2:maximum 1;
     lv2:default 0;
-    pg:inGroup  <http://github.com/klem23/noise_factory/classic_osc/Freq_Env>;
   ],
 
   [
@@ -134,7 +123,6 @@
     lv2:minimum -1;
     lv2:maximum 1;
     lv2:default 0;
-    pg:inGroup  <http://github.com/klem23/noise_factory/classic_osc/Freq_Env>;
   ],
 
   [
