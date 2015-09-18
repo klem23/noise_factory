@@ -18,6 +18,7 @@
 */
 
 #include <cstdlib>
+#include <cstring>
 #include <iostream>
 #include <lv2.h>
 
@@ -147,6 +148,18 @@ LV2_Handle instantiate(const LV2_Descriptor *descriptor,
 			const LV2_Feature * const * features)
 {
 	osc* osci = new osc(s_rate);
+
+        for (int i = 0; features[i]; ++i) {
+        	if (!strcmp(features[i]->URI, LV2_URID__map)) {
+                	LV2_URID_Map* map = (LV2_URID_Map*)features[i]->data;
+                        osci->set_midi_uri(
+                                        map->map(map->handle, LV2_MIDI__MidiEvent));
+                        break;
+                }
+        }
+
+
+
 
 	return (LV2_Handle)osci;
 }

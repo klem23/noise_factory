@@ -18,6 +18,7 @@
 */
 
 #include <cmath>
+#include <iostream>
 
 #include "perc.hpp"
 
@@ -62,9 +63,10 @@ void perc::process(float* freq_out, float* amp_out, note* nt, uint32_t stop){
 	float freq_tmp;
 
 	while(i < stop){
-		freq_tmp = expf( - j * freq_coeff) * (-freq_sweep) - freq_sweep ;
-		freq_out[i] *= pow(2, freq_tmp);
-		amp_out[i] *= expf( -j  * amp_coeff);
+		//freq_tmp = expf( - j * freq_coeff) * (-freq_sweep) - freq_sweep ;
+		//freq_out[i] *= pow(2, freq_tmp);
+		freq_out[i] *= expf( - (float)j * freq_coeff);
+		amp_out[i] *= expf( - (float)j  * amp_coeff);
 		i++;
 		j++;
 	}
