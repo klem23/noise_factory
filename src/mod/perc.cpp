@@ -25,7 +25,7 @@
 
 perc::perc(uint32_t s_rate)
 	:mod(s_rate, 1)
-	,freq_env(0.2),amp_env(0.2),freq_sweep(100){
+	,freq_env(0.2),amp_env(0.2),freq_sweep(0.5){
 
 }
 
@@ -59,13 +59,17 @@ void perc::process(float* freq_out, float* amp_out, note* nt, uint32_t stop){
 	float freq_coeff = 1.0/(freq_env * srate);
 	float amp_coeff = 1.0/(amp_env * srate);
 
-	/*freq_sweep -2 -> 0*/
+	/*freq_sweep 0.1 -> 5 * origin freq */
 	float freq_tmp;
 
 	while(i < stop){
 		//freq_tmp = expf( - j * freq_coeff) * (-freq_sweep) - freq_sweep ;
-		//freq_out[i] *= pow(2, freq_tmp);
-		freq_out[i] *= expf( - (float)j * freq_coeff);
+		//freq_out[i] *= expf( - (float)j * freq_coeff); // + pow(2, freq_tmp) ;
+		if(freq_sweep < 1){
+			freq_out[i] *= expf( - (float)j * freq_coeff) * (1 - freq_sweep) + freq_sweep ;
+		}else if(freq_sweep > 1){
+			freq_out[i] *= - expf( - (float)j * freq_coeff) * freq_sweep + (1 + freq_sweep) ;
+		}
 		amp_out[i] *= expf( - (float)j  * amp_coeff);
 		i++;
 		j++;
