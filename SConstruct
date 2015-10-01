@@ -63,6 +63,11 @@ bft_src = Split("build_scons/lv2_plugin/lv2_beat_factory_tuned.cpp")
 bft_obj = env.SharedObject(bft_src);
 env.SharedLibrary('build_scons/out/beat_factory_tuned', common_obj + osc_obj + bft_obj)
 
+#DUB SIREN
+sir_src = Split("build_scons/lv2_plugin/lv2_siren.cpp")
+sir_obj = env.SharedObject(sir_src);
+env.SharedLibrary('build_scons/out/siren', common_obj + osc_obj + sir_obj)
+
 
 #Wave Draw
 env_wd = env.Clone();
@@ -262,6 +267,8 @@ Command("build_scons/noise_factory.lv2/beat_factory_tuned.ttl","ttl/beat_factory
 #generator
 Command("build_scons/noise_factory.lv2/classic_osc.ttl","ttl/classic_osc.ttl",
                          Copy("$TARGET","$SOURCE"))
+Command("build_scons/noise_factory.lv2/siren.ttl","ttl/siren.ttl",
+                         Copy("$TARGET","$SOURCE"))
 Command("build_scons/noise_factory.lv2/wave_draw.ttl","ttl/wave_draw.ttl",
                          Copy("$TARGET","$SOURCE"))
 Command("build_scons/noise_factory.lv2/spectrum_draw.ttl","ttl/spectrum_draw.ttl",
@@ -297,6 +304,8 @@ Command("build_scons/noise_factory.lv2/beat_factory_tuned.so","build_scons/out/l
 
 #generator
 Command("build_scons/noise_factory.lv2/classic_osc.so","build_scons/out/libclassic_osc.so",
+                         Copy("$TARGET","$SOURCE"))
+Command("build_scons/noise_factory.lv2/siren.so","build_scons/out/libsiren.so",
                          Copy("$TARGET","$SOURCE"))
 Command("build_scons/noise_factory.lv2/wave_draw.so","build_scons/out/libwave_draw.so",
                          Copy("$TARGET","$SOURCE"))

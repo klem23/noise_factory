@@ -159,6 +159,10 @@ void osc::release_mod(note* nt, uint32_t* end, uint32_t nb_sample){
 	}
 }
 
+//Dummy function needed in siren
+void osc::freq_interceptor(float* freq_mod_buff, int nb_sample){
+	return;
+}
 
 /*modulation process in modulation buffer for osc run*/
 void osc::modulation(note* nt, uint32_t nb_sample){
@@ -178,6 +182,9 @@ void osc::modulation(note* nt, uint32_t nb_sample){
 	if(perc_env->isActive()){
 		perc_env->process(freq_mod_buff, amp_mod_buff, nt, nb_sample);
 	}
+
+	freq_interceptor(freq_mod_buff, nb_sample);
+	
 }
 
 /* SINUS */

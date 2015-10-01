@@ -83,6 +83,9 @@ private:
 
 	void process_audio(int nb_sample);
 
+	//Dummy function needed in siren
+	void freq_interceptor(float* freq_mod_buff, int nb_sample);
+
 public:
 	osc(uint32_t s_rate = 44100);
 	//osc(uint32_t s_rate = 44100, uint8_t type_t, float freq_t, float phase_t, float amp_t);
