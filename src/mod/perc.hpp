@@ -27,18 +27,21 @@
 using namespace std;
 
 typedef struct {
-	float *active;
+	float *factive;
 	float *fe;
-	float *ae;
 	float *fs;
+	float *aactive;
+	float *ae;
 }perc_param;
 
 class perc : public mod{
 
 private:
+	bool  factive;
 	float freq_env;
-	float amp_env;
 	float freq_sweep;
+	bool  aactive;
+	float amp_env;
 
 public:
 	perc(uint32_t s_rate);

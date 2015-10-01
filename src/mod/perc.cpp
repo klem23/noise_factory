@@ -32,12 +32,23 @@ perc::perc(uint32_t s_rate)
 
 void perc::check_param(perc_param* pp){
 
-	if(*pp->active){
+	if(*pp->factive || *pp->aactive){
 		activate();
 	}else{
 		deactivate();
 	}
 
+	if(*pp->factive){
+		factive = true;
+	}else{
+		factive = false;
+	}
+
+	if(*pp->aactive){
+		aactive = true;
+	}else{
+		aactive = false;
+	}
 
 	if(*pp->fe != freq_env){
 		freq_env = *pp->fe;
@@ -65,12 +76,15 @@ void perc::process(float* freq_out, float* amp_out, note* nt, uint32_t stop){
 	while(i < stop){
 		//freq_tmp = expf( - j * freq_coeff) * (-freq_sweep) - freq_sweep ;
 		//freq_out[i] *= expf( - (float)j * freq_coeff); // + pow(2, freq_tmp) ;
-		if(freq_sweep < 1){
-			freq_out[i] *= expf( - (float)j * freq_coeff) * (1 - freq_sweep) + freq_sweep ;
-		}else if(freq_sweep > 1){
-			freq_out[i] *= - expf( - (float)j * freq_coeff) * freq_sweep + (1 + freq_sweep) ;
+		if(factive){
+			if(freq_sweep < 1){
+				freq_out[i] *= expf( - (float)j * freq_coeff) * (1 - freq_sweep) + freq_sweep ;
+			}else if(freq_sweep > 1){
+				freq_out[i] *= - expf( - (float)j * freq_coeff) * freq_sweep + (1 + freq_sweep) ;
+			}
 		}
-		amp_out[i] *= expf( - (float)j  * amp_coeff);
+
+		if(aactive) amp_out[i] *= expf( - (float)j  * amp_coeff);
 		i++;
 		j++;
 	}
