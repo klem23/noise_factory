@@ -13,6 +13,12 @@
   lv2:binary <beat_factory_tuned.so>;
   rdfs:seeAlso <beat_factory_tuned.ttl>.
 
+<http://github.com/klem23/noise_factory/siren>
+  a lv2:Plugin, lv2:InstrumentPlugin;
+  lv2:binary <siren.so>;
+  rdfs:seeAlso <siren.ttl>.
+
+
 <http://github.com/klem23/noise_factory/classic_osc>
   a lv2:Plugin, lv2:InstrumentPlugin;
   lv2:binary <classic_osc.so>;

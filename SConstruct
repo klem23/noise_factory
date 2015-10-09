@@ -64,7 +64,7 @@ bft_obj = env.SharedObject(bft_src);
 env.SharedLibrary('build_scons/out/beat_factory_tuned', common_obj + osc_obj + bft_obj)
 
 #DUB SIREN
-sir_src = Split("build_scons/lv2_plugin/lv2_siren.cpp")
+sir_src = Split("build_scons/lv2_plugin/lv2_siren.cpp build_scons/generator/siren.cpp")
 sir_obj = env.SharedObject(sir_src);
 env.SharedLibrary('build_scons/out/siren', common_obj + osc_obj + sir_obj)
 

@@ -34,16 +34,18 @@ typedef struct {
 	float* time_down;
 	float* freq_down;
 	float* vol;
+	bool   pitched;
 }si_param;
 
 class siren : public osc{
 private:
 
-	uint32_t time_up;
-	float 	 freq_up;
-	uint32_t time_down;
-	float    freq_down;
-	float	 vol;
+	float time_up;
+	float freq_up;
+	float time_down;
+	float freq_down;
+	float vol;
+	bool  pitched;
 
 	void note_interceptor(void);
 	void freq_interceptor(float* freq_mod_buff, int nb_sample);

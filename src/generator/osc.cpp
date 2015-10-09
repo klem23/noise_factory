@@ -97,7 +97,10 @@ void osc::check_param(osc_param *op){
 
 }
 
-
+//Dummy function for DUB SIREN
+void osc::freq_interceptor(float* freq_mod_buff, int nb_sample){
+	return;
+}
 
 /*PRIVATE*/
 
@@ -157,11 +160,6 @@ void osc::release_mod(note* nt, uint32_t* end, uint32_t nb_sample){
 			nt->stop_offset = 1;
 		}
 	}
-}
-
-//Dummy function needed in siren
-void osc::freq_interceptor(float* freq_mod_buff, int nb_sample){
-	return;
 }
 
 /*modulation process in modulation buffer for osc run*/

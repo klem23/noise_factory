@@ -81,10 +81,11 @@ private:
 	void release_mod(note* nt, uint32_t* end, uint32_t nb_sample);
 	void modulation(note* nt, uint32_t nb_sample);
 
-	void process_audio(int nb_sample);
-
 	//Dummy function needed in siren
-	void freq_interceptor(float* freq_mod_buff, int nb_sample);
+	virtual void freq_interceptor(float* freq_mod_buff, int nb_sample);
+
+protected:
+	void process_audio(int nb_sample);
 
 public:
 	osc(uint32_t s_rate = 44100);
