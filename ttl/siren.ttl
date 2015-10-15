@@ -102,8 +102,8 @@
     lv2:symbol "freq_up";
     lv2:name "Frequency Up";
     lv2:minimum 0;
-    lv2:maximum 15000;
-    lv2:default 500;
+    lv2:maximum 3000;
+    lv2:default 1000;
   ],
 
   [
@@ -122,7 +122,7 @@
     lv2:symbol "freq_down";
     lv2:name "Frequency down";
     lv2:minimum 0;
-    lv2:maximum 15000;
+    lv2:maximum 1000;
     lv2:default 500;
   ],
 
