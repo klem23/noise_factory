@@ -32,6 +32,9 @@ perc::perc(uint32_t s_rate)
 
 void perc::check_param(perc_param* pp){
 
+	if(pp->factive == NULL) return;
+
+
 	if(*pp->factive || *pp->aactive){
 		activate();
 	}else{

@@ -75,6 +75,8 @@ LV2_Handle instantiate(const LV2_Descriptor *descriptor,
 {
 	loop_delay* ld = new loop_delay(s_rate);
 
+	memset(&ldp, 0, sizeof(loop_delay_param));
+
 	return (LV2_Handle)ld;
 }
 

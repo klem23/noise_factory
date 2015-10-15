@@ -44,6 +44,8 @@ env::~env(void){
 void env::check_param(env_param* ep){
 	bool refresh = false;
 
+	if(ep->active == NULL) return;
+
 
 	if(*ep->active){
 		activate();

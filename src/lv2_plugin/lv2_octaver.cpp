@@ -89,6 +89,7 @@ LV2_Handle instantiate(const LV2_Descriptor *descriptor,
 			double s_rate, const char* path, 
 			const LV2_Feature * const * features)
 {
+	memset(&octp, 0, sizeof(oct_param));
 
 	oct_handle* hdl = new oct_handle;
 	octaver* oct = new octaver(s_rate);

@@ -78,6 +78,11 @@ LV2_Handle instantiate(const LV2_Descriptor *descriptor,
 			const LV2_Feature * const * features)
 {
 
+	memset(&op1_t, 0, sizeof(osc_param));
+	memset(&op2_t, 0, sizeof(osc_param));
+	memset(&fp_t, 0, sizeof(filter_param));
+
+
 	cs_handle* hdl = new cs_handle;
 	osc* osc1 = new osc(s_rate);
 	osc* osc2 = new osc(s_rate);

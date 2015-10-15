@@ -91,6 +91,7 @@ LV2_Handle instantiate(const LV2_Descriptor *descriptor,
 			double s_rate, const char* path, 
 			const LV2_Feature * const * features)
 {
+	memset(&psp, 0, sizeof(ps_param));
 
 	ps_handle* hdl = new ps_handle;
 	pitch_shifter* ps = new pitch_shifter(s_rate);

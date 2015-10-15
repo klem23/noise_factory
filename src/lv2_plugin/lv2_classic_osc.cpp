@@ -148,6 +148,8 @@ LV2_Handle instantiate(const LV2_Descriptor *descriptor,
 {
 	osc* osci = new osc(s_rate);
 
+	memset(&op_t, 0, sizeof(osc_param));
+
 	for (int i = 0; features[i]; ++i) {
 		if (!strcmp(features[i]->URI, LV2_URID__map)) {
 			LV2_URID_Map* map = (LV2_URID_Map*)features[i]->data;

@@ -65,21 +65,21 @@ void connectPort(LV2_Handle instance, uint32_t port, void* data){
 		case 5:
 			op_t.amp = (float*)data;
 			break;
-		/*freq env*/
+		/*siren param*/
 		case 6:
-			op_t.fe.active = (float*)data;
+			sp_t.pitched = (float*)data;
 			break;
 		case 7:
-			op_t.fe.AA = (float*)data;
+			sp_t.time_up = (float*)data;
 			break;
 		case 8:
-			op_t.fe.DD = (float*)data;
+			sp_t.freq_up = (float*)data;
 			break;
 		case 9:
-			op_t.fe.SS = (float*)data;
+			sp_t.time_down = (float*)data;
 			break;
 		case 10:
-			op_t.fe.RR = (float*)data;
+			sp_t.freq_down = (float*)data;
 			break;
 		/*freq lfo*/
 		case 11:
@@ -148,6 +148,10 @@ LV2_Handle instantiate(const LV2_Descriptor *descriptor,
 		const LV2_Feature * const * features)
 {
 	siren* sir = new siren(s_rate);
+
+	memset(&sp_t, 0, sizeof(si_param));
+	memset(&op_t, 0, sizeof(osc_param));
+
 
 	for (int i = 0; features[i]; ++i) {
 		if (!strcmp(features[i]->URI, LV2_URID__map)) {

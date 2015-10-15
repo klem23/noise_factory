@@ -157,6 +157,8 @@ void lfo::calc(void){
 void lfo::check_param(lfo_param* lp){
 	bool refresh = false;
 
+	if(lp->active == NULL) return;
+
 	if(*lp->active){
 		activate();
 	}else{
