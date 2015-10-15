@@ -90,7 +90,7 @@ protected:
 public:
 	osc(uint32_t s_rate = 44100);
 	//osc(uint32_t s_rate = 44100, uint8_t type_t, float freq_t, float phase_t, float amp_t);
-	~osc(void);
+	virtual ~osc(void);
 
 	void process(int nb_sample);
 	void set_output(float* ptr);
