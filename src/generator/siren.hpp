@@ -29,23 +29,21 @@
 
 
 typedef struct {
+	float*  pitched;
 	float* time_up;
 	float* freq_up;
 	float* time_down;
 	float* freq_down;
-	float* vol;
-	bool   pitched;
 }si_param;
 
 class siren : public osc{
 private:
 
+	bool  pitched;
 	float time_up;
 	float freq_up;
 	float time_down;
 	float freq_down;
-	float vol;
-	bool  pitched;
 
 	void note_interceptor(void);
 	void freq_interceptor(float* freq_mod_buff, int nb_sample);
@@ -53,7 +51,7 @@ private:
 public:
 
 	siren(uint32_t sampling_rate);		
-	~siren(void);		
+	virtual ~siren(void) {};		
 
 	void si_check_param(si_param* spi, osc_param* op);
 	void process(int nb_sample);
