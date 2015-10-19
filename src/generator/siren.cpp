@@ -5,7 +5,9 @@
 siren::siren(uint32_t sampling_rate)
 	:osc(sampling_rate), pitched(true)
 	,time_up(5.2) ,freq_up(1000)
-	,time_down(3.3), freq_down(200){
+	,time_down(3.3), freq_down(200)
+	,exp(false), exp_coeff(0.2){
+
 }
 
 /*
@@ -40,26 +42,19 @@ void siren::freq_interceptor(float* freq_mod_buff, int nb_sample){
 
 	for(uint32_t i = it->start_offset ; i < nb_sample ; i++){
 		float off_idx = i + it->offset - it->start_offset;	
+		/*if(exp){
+			off_idx = expf( - 1.0 / (off_idx * exp_coeff * srate + 1));	
+		}*/
 		if( off_idx / (float)srate < time_up){
-			if(pitched){
-				freq_mod_buff[i] *= off_idx * freq_up / ( den * time_up) + 1.0 ;
-			} else {
-				freq_mod_buff[i] *= off_idx * freq_up / ( den * time_up);
-			}
+			freq_mod_buff[i] *= off_idx * freq_up / ( den * time_up);
 		}else if( off_idx / (float)srate < time_up + time_down){
-			if(pitched){
-				freq_mod_buff[i] *= ((time_down + time_up) * (float)srate - off_idx) * (freq_up - freq_down) / (den * time_down) + freq_down * (float)srate / den + 1.0;
-			} else {
-				freq_mod_buff[i] *= ((time_down + time_up) * (float)srate - off_idx) * (freq_up - freq_down) / (den * time_down) + freq_down * (float)srate / den;
-			}
+			freq_mod_buff[i] *= ((time_down + time_up) * (float)srate - off_idx) * (freq_up - freq_down) / (den * time_down) + freq_down * (float)srate / den;
 		}else{
-			if(pitched){
-				freq_mod_buff[i] *= freq_down * (float)srate / den + 1.0;
-			}else{
-				freq_mod_buff[i] *= freq_down * (float)srate / den;
-
-			}
+			freq_mod_buff[i] *= freq_down * (float)srate / den;
 			it->stop_offset = 1;
+		}
+		if(pitched){
+				freq_mod_buff[i] += 1.0;
 		}
 	}
 
