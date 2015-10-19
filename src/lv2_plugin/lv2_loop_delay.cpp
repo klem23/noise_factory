@@ -18,6 +18,7 @@
 */
 
 #include <cstdlib> 
+#include <cstring> 
 #include <iostream> 
 #include <lv2.h>
 
