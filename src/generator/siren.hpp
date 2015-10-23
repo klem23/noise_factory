@@ -30,6 +30,7 @@
 
 typedef struct {
 	float*  pitched;
+	float* use_note_off;
 	float* time_up;
 	float* freq_up;
 	float* time_down;
@@ -42,6 +43,7 @@ class siren : public osc{
 private:
 
 	bool  pitched;
+	bool  use_note_off;
 	float time_up;
 	float freq_up;
 	float time_down;

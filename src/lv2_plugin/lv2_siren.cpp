@@ -70,72 +70,81 @@ void connectPort(LV2_Handle instance, uint32_t port, void* data){
 			sp_t.pitched = (float*)data;
 			break;
 		case 7:
-			sp_t.time_up = (float*)data;
+			sp_t.use_note_off = (float*)data;
 			break;
 		case 8:
-			sp_t.freq_up = (float*)data;
+			sp_t.time_up = (float*)data;
 			break;
 		case 9:
-			sp_t.time_down = (float*)data;
+			sp_t.freq_up = (float*)data;
 			break;
 		case 10:
+			sp_t.time_down = (float*)data;
+			break;
+		case 11:
 			sp_t.freq_down = (float*)data;
 			break;
-		/*freq lfo*/
-		case 11:
-			op_t.fl.active = (float*)data;
-			break;
 		case 12:
-			op_t.fl.type = (float*)data;
+			sp_t.exp = (float*)data;
 			break;
 		case 13:
+			sp_t.exp_coeff = (float*)data;
+			break;
+		/*freq lfo*/
+		case 14:
+			op_t.fl.active = (float*)data;
+			break;
+		case 15:
+			op_t.fl.type = (float*)data;
+			break;
+		case 16:
 			op_t.fl.freq = (float*)data;
 			break;
-		case 14:
+		case 17:
 			op_t.fl.amt = (float*)data;
 			break;
 		/*amp env*/
-		case 15:
+		case 18:
 			op_t.ae.active = (float*)data;
 			break;
-		case 16:
+		case 19:
 			op_t.ae.AA = (float*)data;
 			break;
-		case 17:
+		case 20:
 			op_t.ae.DD = (float*)data;
 			break;
-		case 18:
+		case 21:
 			op_t.ae.SS = (float*)data;
 			break;
-		case 19:
+		case 22:
 			op_t.ae.RR = (float*)data;
 			break;
 		/*amp lfo*/
-		case 20:
+		case 23:
 			op_t.al.active = (float*)data;
 			break;
-		case 21:
+		case 24:
 			op_t.al.type = (float*)data;
 			break;
-		case 22:
+		case 25:
 			op_t.al.freq = (float*)data;
 			break;
-		case 23:
+		case 26:
 			op_t.al.amt = (float*)data;
 			break;
-                case 24:
+                case 27:
                         op_t.pe.factive = (float*)data;
                         break;
-                case 25:
+                case 28:
                         op_t.pe.fe = (float*)data;
                         break;
-                case 26:
+                case 29:
                         op_t.pe.fs = (float*)data;
                         break;
-                case 27:
+                case 30:
                         op_t.pe.aactive = (float*)data;
                         break;
-                case 28:
+                case 31:
                         op_t.pe.ae = (float*)data;
                         break;
 	}
