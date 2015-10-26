@@ -54,7 +54,7 @@ void siren::freq_interceptor(float* freq_mod_buff, int nb_sample){
 		}else if( off_idx / (float)srate < time_up + time_down){
 			if(exp){
 				//freq_mod_buff[i] *= expf( (time_up * (float)srate - off_idx) / ((time_down) * (float)srate * 0.5 ))  * (freq_up - freq_down) * (float)srate / den + freq_down * (float)srate / den;
-				freq_mod_buff[i] *= ( 1.0 -  expf( - time_up * (float)srate * exp_coeff /  off_idx  ))  * (freq_up - freq_down) * (float)srate / den + freq_down * (float)srate / den;
+				freq_mod_buff[i] *= ( 1.0 -  expf( - (time_up + time_down) * (float)srate * exp_coeff  /  (off_idx + 1.0 - time_up * (float)srate) ))  * (freq_up - freq_down) * (float)srate / den + freq_down * (float)srate / den;
 			}else{
 				freq_mod_buff[i] *= ((time_down + time_up) * (float)srate - off_idx) * (freq_up - freq_down) / (den * time_down) + freq_down * (float)srate / den;
 			}
