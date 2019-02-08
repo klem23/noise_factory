@@ -13,7 +13,7 @@
     foaf:name "Clement Guedez";
     foaf:mbox <mailto:klem.dev@gmail.com>;
   ];
-  doap:name "DUB SIREN";
+  doap:name "DUB MERMAID";
   doap:homepage <http://github.com/klem23/noise_factory>;
   doap:license <http://usefulinc.com/doap/licenses/gpl>;
 
@@ -37,10 +37,10 @@
   [
     a lv2:ControlPort, lv2:InputPort;
     lv2:index 2;
-    lv2:symbol "wave";
-    lv2:name "Wave Select";
+    lv2:symbol "kmod";
+    lv2:name "Keyboard Mode";
     lv2:minimum 0;
-    lv2:maximum 4;
+    lv2:maximum 2;
     lv2:default 0;
     lv2:portProperty lv2:integer;
   ],
@@ -48,132 +48,40 @@
   [
     a lv2:ControlPort, lv2:InputPort;
     lv2:index 3;
-    lv2:symbol "freq_shift";
-    lv2:name "Frequency Shift";
-    lv2:minimum -1;
+    lv2:symbol "kpitch";
+    lv2:name "Use KeyBoard Pitch";
+    lv2:minimum 0;
     lv2:maximum 1;
     lv2:default 0;
+    lv2:portProperty lv2:toggled ;
   ],
 
   [
     a lv2:ControlPort, lv2:InputPort;
     lv2:index 4;
-    lv2:symbol "phase_shift";
-    lv2:name "Phase Shift";
-    lv2:minimum -1;
-    lv2:maximum 1;
+    lv2:symbol "osc_wave";
+    lv2:name "VCO Wave Select";
+    lv2:minimum 0;
+    lv2:maximum 4;
     lv2:default 0;
+    lv2:portProperty lv2:integer;
   ],
 
   [
     a lv2:ControlPort, lv2:InputPort;
     lv2:index 5;
-    lv2:symbol "amp";
-    lv2:name "Volume";
-    lv2:minimum 0;
-    lv2:maximum 1;
-    lv2:default 0.8;
-  ],
-
-  [ 
-    a lv2:ControlPort, lv2:InputPort;
-    lv2:index 6;
-    lv2:symbol "pitched";
-    lv2:name "Use Keyboard Pitch";
-    lv2:minimum 0;
-    lv2:maximum 1;
-    lv2:default 0;
-    lv2:portProperty lv2:toggled ;
-  ],
-
-  [
-    a lv2:ControlPort, lv2:InputPort;
-    lv2:index 7;
-    lv2:symbol "use_note_off";
-    lv2:name "Use Note Off";
-    lv2:minimum 0;
-    lv2:maximum 1;
-    lv2:default 0;
-    lv2:portProperty lv2:toggled ;
-  ],
-
-  [
-    a lv2:ControlPort, lv2:InputPort;
-    lv2:index 8;
-    lv2:symbol "time_up";
-    lv2:name "Time Up Freq";
-    lv2:minimum 0;
-    lv2:maximum 10;
-    lv2:default 4;
-  ],
-
-  [
-    a lv2:ControlPort, lv2:InputPort;
-    lv2:index 9;
-    lv2:symbol "freq_up";
-    lv2:name "Frequency Up";
-    lv2:minimum 0;
+    lv2:symbol "pitch";
+    lv2:name "Pitch";
+    lv2:minimum 90;
     lv2:maximum 3000;
-    lv2:default 1000;
-  ],
-
-  [
-    a lv2:ControlPort, lv2:InputPort;
-    lv2:index 10;
-    lv2:symbol "time_down";
-    lv2:name "Time Down Freq";
-    lv2:minimum 0;
-    lv2:maximum 10;
-    lv2:default 4;
-  ],
-
-  [
-    a lv2:ControlPort, lv2:InputPort;
-    lv2:index 11;
-    lv2:symbol "freq_down";
-    lv2:name "Frequency down";
-    lv2:minimum 0;
-    lv2:maximum 1000;
     lv2:default 500;
   ],
 
   [
     a lv2:ControlPort, lv2:InputPort;
-    lv2:index 12;
-    lv2:symbol "exp";
-    lv2:name "Use logarithmic scale";
-    lv2:minimum 0;
-    lv2:maximum 1;
-    lv2:default 1;
-    lv2:portProperty lv2:toggled ;
-  ],
-
-  [
-    a lv2:ControlPort, lv2:InputPort;
-    lv2:index 13;
-    lv2:symbol "exp_coeff";
-    lv2:name "Logarithmic Scale Coefficient";
-    lv2:minimum 0.01;
-    lv2:maximum 0.5;
-    lv2:default 0.1;
-  ],
-
-  [
-    a lv2:ControlPort, lv2:InputPort;
-    lv2:index 14;
-    lv2:symbol "fl_active";
-    lv2:name "Frequency LFO On/Off";
-    lv2:minimum 0;
-    lv2:maximum 1;
-    lv2:default 0;
-    lv2:portProperty lv2:toggled ;
-  ],
-
-  [
-    a lv2:ControlPort, lv2:InputPort;
-    lv2:index 15;
-    lv2:symbol "fl_type";
-    lv2:name "FL wave type";
+    lv2:index 6;
+    lv2:symbol "lfo_wave";
+    lv2:name "LFO Wave Select";
     lv2:minimum 0;
     lv2:maximum 4;
     lv2:default 0;
@@ -182,113 +90,40 @@
 
   [
     a lv2:ControlPort, lv2:InputPort;
-    lv2:index 16;
-    lv2:symbol "fl_freq";
-    lv2:name "FL Frequency";
+    lv2:index 7;
+    lv2:symbol "lfo_freq";
+    lv2:name "LFO Frequency";
     lv2:minimum 0.1;
     lv2:maximum 20;
-    lv2:default 1;
+    lv2:default 1.0;
+  ],
+
+  [ 
+    a lv2:ControlPort, lv2:InputPort;
+    lv2:index 8;
+    lv2:symbol "lfo_amt";
+    lv2:name "LFO Depth";
+    lv2:minimum 0;
+    lv2:maximum 1;
+    lv2:default 0.5;
   ],
 
   [
     a lv2:ControlPort, lv2:InputPort;
-    lv2:index 17;
-    lv2:symbol "fl_amt";
-    lv2:name "FL AMT";
+    lv2:index 9;
+    lv2:symbol "decay";
+    lv2:name "Decay time";
     lv2:minimum 0;
-    lv2:maximum 1;
-    lv2:default 1;
-  ],
-
-  [
-    a lv2:ControlPort, lv2:InputPort;
-    lv2:index 18;
-    lv2:symbol "ae_active";
-    lv2:name "Amplitude Enveloppe On/Off";
-    lv2:minimum 0;
-    lv2:maximum 1;
-    lv2:default 0;
-    lv2:portProperty lv2:toggled ;
-  ],
-
-  [
-    a lv2:ControlPort, lv2:InputPort;
-    lv2:index 19;
-    lv2:symbol "ae_A";
-    lv2:name "AE Attack";
-    lv2:minimum 0;
-    lv2:maximum 1;
+    lv2:maximum 10;
     lv2:default 0;
   ],
 
   [
     a lv2:ControlPort, lv2:InputPort;
-    lv2:index 20;
-    lv2:symbol "ae_D";
-    lv2:name "AE Decay";
+    lv2:index 10;
+    lv2:symbol "vol";
+    lv2:name "Volume";
     lv2:minimum 0;
     lv2:maximum 1;
-    lv2:default 0;
-  ],
-
-  [
-    a lv2:ControlPort, lv2:InputPort;
-    lv2:index 21;
-    lv2:symbol "ae_S";
-    lv2:name "AE Sustain";
-    lv2:minimum 0;
-    lv2:maximum 1;
-    lv2:default 1;
-  ],
-
-  [
-    a lv2:ControlPort, lv2:InputPort;
-    lv2:index 22;
-    lv2:symbol "ae_R";
-    lv2:name "AE Release";
-    lv2:minimum 0;
-    lv2:maximum 1;
-    lv2:default 0;
-  ],
-
-  [
-    a lv2:ControlPort, lv2:InputPort;
-    lv2:index 23;
-    lv2:symbol "al_active";
-    lv2:name "Amplitude LFO On/Off";
-    lv2:minimum 0;
-    lv2:maximum 1;
-    lv2:default 0;
-    lv2:portProperty lv2:toggled ;
-  ],
-
- [
-    a lv2:ControlPort, lv2:InputPort;
-    lv2:index 24;
-    lv2:symbol "al_type";
-    lv2:name "AL wave type";
-    lv2:minimum 0;
-    lv2:maximum 4;
-    lv2:default 0;
-    lv2:portProperty lv2:integer;
-  ],
-
- [
-    a lv2:ControlPort, lv2:InputPort;
-    lv2:index 25;
-    lv2:symbol "al_freq";
-    lv2:name "AL Frequency";
-    lv2:minimum 0.1;
-    lv2:maximum 20;
-    lv2:default 1;
-  ],
-
- [
-    a lv2:ControlPort, lv2:InputPort;
-    lv2:index 26;
-    lv2:symbol "al_amt";
-    lv2:name "AL AMT";
-    lv2:minimum 0;
-    lv2:maximum 1;
-    lv2:default 1;
+    lv2:default 0.8;
   ].

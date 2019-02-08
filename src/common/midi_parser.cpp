@@ -165,7 +165,7 @@ void midi_parser::process_midi(int nb_sample){
 							/*all sound off*/
 						case 120:
 							cout << "Test all note/sound off " << endl;
-							note_active.clear();
+							//note_active.clear();
 							break;
 						default:
 							cout << "Control Change: " << data[1] << endl;

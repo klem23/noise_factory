@@ -52,101 +52,35 @@ void connectPort(LV2_Handle instance, uint32_t port, void* data){
 		case 1:
 			plugin->set_output((float*)data);
 			break;
-		/*OSC*/
+		/*control param*/
 		case 2:
-			op_t.type = (float*)data;
+			sp_t.kmod = (float*)data;
 			break;
 		case 3:
-			op_t.freq = (float*)data;
+			sp_t.kpitch = (float*)data;
 			break;
 		case 4:
-			op_t.phase = (float*)data;
+			op_t.type = (float*)data; /* OSC */
 			break;
 		case 5:
-			op_t.amp = (float*)data;
+			sp_t.pitch = (float*)data;
 			break;
-		/*siren param*/
 		case 6:
-			sp_t.pitched = (float*)data;
+			op_t.fl.type = (float*)data; /* OSC*/
 			break;
 		case 7:
-			sp_t.use_note_off = (float*)data;
+			op_t.fl.freq = (float*)data; /* OSC */
 			break;
 		case 8:
-			sp_t.time_up = (float*)data;
+			op_t.fl.amt = (float*)data; /* OSC */
 			break;
 		case 9:
-			sp_t.freq_up = (float*)data;
+			op_t.ae.RR = (float*)data; /* OSC */
 			break;
 		case 10:
-			sp_t.time_down = (float*)data;
+			op_t.amp = (float*)data; /* OSC */
 			break;
-		case 11:
-			sp_t.freq_down = (float*)data;
-			break;
-		case 12:
-			sp_t.exp = (float*)data;
-			break;
-		case 13:
-			sp_t.exp_coeff = (float*)data;
-			break;
-		/*freq lfo*/
-		case 14:
-			op_t.fl.active = (float*)data;
-			break;
-		case 15:
-			op_t.fl.type = (float*)data;
-			break;
-		case 16:
-			op_t.fl.freq = (float*)data;
-			break;
-		case 17:
-			op_t.fl.amt = (float*)data;
-			break;
-		/*amp env*/
-		case 18:
-			op_t.ae.active = (float*)data;
-			break;
-		case 19:
-			op_t.ae.AA = (float*)data;
-			break;
-		case 20:
-			op_t.ae.DD = (float*)data;
-			break;
-		case 21:
-			op_t.ae.SS = (float*)data;
-			break;
-		case 22:
-			op_t.ae.RR = (float*)data;
-			break;
-		/*amp lfo*/
-		case 23:
-			op_t.al.active = (float*)data;
-			break;
-		case 24:
-			op_t.al.type = (float*)data;
-			break;
-		case 25:
-			op_t.al.freq = (float*)data;
-			break;
-		case 26:
-			op_t.al.amt = (float*)data;
-			break;
-                case 27:
-                        op_t.pe.factive = (float*)data;
-                        break;
-                case 28:
-                        op_t.pe.fe = (float*)data;
-                        break;
-                case 29:
-                        op_t.pe.fs = (float*)data;
-                        break;
-                case 30:
-                        op_t.pe.aactive = (float*)data;
-                        break;
-                case 31:
-                        op_t.pe.ae = (float*)data;
-                        break;
+
 	}
 
 }
@@ -160,6 +94,26 @@ LV2_Handle instantiate(const LV2_Descriptor *descriptor,
 
 	memset(&sp_t, 0, sizeof(si_param));
 	memset(&op_t, 0, sizeof(osc_param));
+
+
+	op_t.freq = new float;
+	*op_t.freq = 0;
+	op_t.phase = new float;
+	*op_t.phase = 0;
+
+	op_t.fl.active = new float;
+
+	op_t.ae.active = new float;
+	op_t.ae.AA = new float;
+	*op_t.ae.AA = 0;
+	op_t.ae.DD = new float;
+	*op_t.ae.DD = 0;
+	op_t.ae.SS = new float;
+	*op_t.ae.SS = 1.0;
+	op_t.ae.amt = new float;
+	*op_t.ae.amt = 0;
+
+
 
 
 	for (int i = 0; features[i]; ++i) {

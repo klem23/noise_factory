@@ -28,28 +28,40 @@
 #include "osc.hpp"
 
 
-typedef struct {
-	float*  pitched;
-	float* use_note_off;
-	float* time_up;
-	float* freq_up;
-	float* time_down;
-	float* freq_down;
-	float* exp;
-	float* exp_coeff;
+#define ATTACK_TIME	1
+
+
+typedef enum{
+	TONE,
+	SWITCH,
+	ALARM
+}key_mod;
+
+
+//key mode : tone / switch / alarm
+//use key pitch
+//wave  (osc)
+//pitch
+//lfo wave  (osc)
+//lfo speed (osc)
+//lfo depth (osc)
+//decay	float (osc)
+//vol float  (osc)
+
+typedef struct{
+	float* kmod;
+	float* kpitch;
+	float* pitch;
 }si_param;
+
+
 
 class siren : public osc{
 private:
 
-	bool  pitched;
-	bool  use_note_off;
-	float time_up;
-	float freq_up;
-	float time_down;
-	float freq_down;
-	bool  exp;
-	float exp_coeff;
+	key_mod kmod;
+	bool	kpitch;
+	float	pitch;
 
 	void note_interceptor(void);
 	void freq_interceptor(float* freq_mod_buff, int nb_sample);
