@@ -44,7 +44,7 @@ typedef struct{
 
 
 class osc : public midi_parser{
-private:
+protected:
 
 	/*parameter*/
 	uint8_t type;
