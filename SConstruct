@@ -4,7 +4,7 @@
 #Environment & Common Source
 ############################
 #env = Environment();
-env = Environment(CCFLAGS = " -Wall ");
+env = Environment(CCFLAGS = " -Wall -std=c++0x -fPIC");
 
 #debug
 debug = ARGUMENTS.get('debug', 0)
@@ -202,19 +202,21 @@ env_graph = env.Clone();
 #Qt ENV
 env_graph.Tool('qt');
 #env_heg['QTDIR'] = '/usr/lib/qt/'
-env_graph['QT_CPPPATH'] = ['/usr/include/qt4/',
-                        '/usr/include/qt4/Qt/',
-                        '/usr/include/qt4/QtCore/',
-                        '/usr/include/qt4/QtGui/']
-env_graph['QT_MOC'] = '/usr/bin/moc-qt4'
-env_graph.Append(LIBS=['QtCore'])
-env_graph.Append(LIBS=['QtGui'])
+env_graph['QT_CPPPATH'] = ['/usr/include/x86_64-linux-gnu/qt5/',
+                        '/usr/include/x86_64-linux-gnu/qt5/Qt/',
+                        '/usr/include/x86_64-linux-gnu/qt5/QtCore/',
+                        '/usr/include/x86_64-linux-gnu/qt5/QtWidgets/',
+                        '/usr/include/x86_64-linux-gnu/qt5/QtGui/']
+env_graph['QT_MOC'] = '/usr/bin/moc'
+env_graph.Append(LIBS=['Qt5Core'])
+env_graph.Append(LIBS=['Qt5Gui'])
+env_graph.Append(LIBS=['Qt5Widgets'])
 #Qt ENV end
 #########
 
 common_gui_src = Split("build_scons/gui/common/CurvePicker.cpp build_scons/gui/common/CurveDraw.cpp")
 common_gui_obj = env_graph.SharedObject(common_gui_src);
-env_graph.Append(LIBS=['qwt'])
+env_graph.Append(LIBS=['qwt-qt5'])
 env_graph.Append(LIBS=['lo'])
 
 #Wave Draw GUI
