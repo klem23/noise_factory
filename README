@@ -2,55 +2,26 @@
 WHAT
 ===================
 
-Generator
-
-	Beat Factory
-		Simple synth that allow to design BEAT (or drumkit kick), heart
-		of the House/Techno music. You can play with the 
-		amplitude(volume) and the frequency enveloppe of the beat.
-		
-	Classic Oscillator
-		The classical but always usefull oscillator with its 
-		4 classical wave (sin/square/saw up/saw down/triangle)
-		Frequency enveloppe and LFO
-		Amplitude enveloppe and LFO
-
-	Wave Drawer
-		The Hertz unit is used to mesure the frequency of a 
-		phenomen that repeat itself and the sound is matter
-		wave that repeat itself, but it can look like quite 
-		anything (even if it will be noise)...
-		So this synth allow you to draw (like paint) the wave
-		you want to repeat to generate sound or more likely
-		noise most of the time.
-		It's Midi pitched.
-
-	Spectrum Drawer
-		This synth allow you to draw (like paint) the spectrum 
-		of the sound you want to generate.
-		It's Midi pitched as it use the keyboard key to pitch
-		this spectrum to the key frequency.
-
-
-Filter
-
-	Recursive Filter
-		Standard Digital Recursive Filter (IIR)
-		Design from
-
-	Convolution Filter
-		This filter allow you to draw (like paint) the spectrum
-		response of your filter. It will generate a kernel with an 
-		inverse FFT that will convolute withe input.
-
-	Spectrum Filter
-		This filter allow you to draw (like paint) the spectrum
-		response of your filter. Also you can shift the frequency
-		of the filter spectrum at any time. 
-		It will use a FFT, multiply the	input signal with the 
-		filter spectrum and use an inverse FFT.
-
 SYNTH
+
+       Beat Factory
+                Simple synth that allow to design BEAT (or drumkit kick), heart
+                of the House/Techno music. You can play with the
+                amplitude(volume) and the frequency enveloppe of the beat.
+
+
+       Beat Factory Tuned
+		Same as Beat Factory but keyboard pitch is taken in account.
+		It could have been an option in Beat Factory, but my code 
+		design decide another way.....
+
+	Dub Mermaid
+		Classic Dub Siren with big LFO and several keyboard mode
+		Keyboard mode 0 : tone mode : classic synth behaviour
+		Keyboard mode 1 : switch mode : on/off mode with each
+						key press
+		Keyboard mode 2 : alarm mode : standard alarm pitching
+						(rise, sustain, drop)
 
 	Classic Synth
 		2 Classical Oscillators + Recursive Filter
@@ -75,6 +46,7 @@ SYNTH
 		the frequency of the filter spectrum at any time.
 
 
+
 FX
 
 	Simple Delay
@@ -82,6 +54,52 @@ FX
 
 	Loop Delay
 		Delay using random loop for echoes.
+
+
+
+Generator
+
+        Classic Oscillator
+                The classical but always usefull oscillator with its
+                4 classical wave (sin/square/saw up/saw down/triangle)
+                Frequency enveloppe and LFO
+                Amplitude enveloppe and LFO
+
+        Wave Drawer
+                The Hertz unit is used to mesure the frequency of a
+                phenomen that repeat itself and the sound is matter
+                wave that repeat itself, but it can look like quite
+                anything (even if it will be noise)...
+                So this synth allow you to draw (like paint) the wave
+                you want to repeat to generate sound or more likely
+                noise most of the time.
+                It's Midi pitched.
+
+        Spectrum Drawer
+                This synth allow you to draw (like paint) the spectrum
+                of the sound you want to generate.
+                It's Midi pitched as it use the keyboard key to pitch
+                this spectrum to the key frequency.
+
+
+
+Filter
+
+        Recursive Filter
+                Standard Digital Recursive Filter (IIR)
+                Design from
+
+        Convolution Filter
+                This filter allow you to draw (like paint) the spectrum
+                response of your filter. It will generate a kernel with an
+                inverse FFT that will convolute withe input.
+
+        Spectrum Filter
+                This filter allow you to draw (like paint) the spectrum
+                response of your filter. Also you can shift the frequency
+                of the filter spectrum at any time.
+                It will use a FFT, multiply the input signal with the
+                filter spectrum and use an inverse FFT.
 
 
 
