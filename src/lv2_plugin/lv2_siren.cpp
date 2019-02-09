@@ -23,6 +23,7 @@
 #include <lv2.h>
 
 #include "siren.hpp"
+#include "simple_delay.hpp"
 
 #define SIREN_URI	"http://github.com/klem23/noise_factory/siren";
 
@@ -31,10 +32,20 @@ using namespace std;
 LV2_Descriptor *siDesc = NULL;
 si_param sp_t;
 osc_param op_t;
+simple_delay_param sdp_t;
+
+typedef struct{
+	siren*		si;
+	simple_delay*	sd;
+	float*		buff;
+}dubsiren;
 
 void cleanup(LV2_Handle instance){
-	siren* si = (siren*)instance;
-	delete si;
+	dubsiren* ds = (dubsiren*)instance;
+	delete ds->si;
+	delete ds->sd;
+	delete[] ds->buff;
+	delete ds;
 
 	delete siDesc;
 
@@ -42,15 +53,15 @@ void cleanup(LV2_Handle instance){
 
 
 void connectPort(LV2_Handle instance, uint32_t port, void* data){
-	siren* plugin = (siren*)instance;
+	dubsiren* plugin = (dubsiren*)instance;
 
 	switch(port){
 		/*basic I/O*/
 		case 0:
-			plugin->set_input((float*)data);
+			plugin->si->set_input((float*)data);
 			break;
 		case 1:
-			plugin->set_output((float*)data);
+			plugin->sd->set_output((float*)data);
 			break;
 		/*control param*/
 		case 2:
@@ -80,7 +91,18 @@ void connectPort(LV2_Handle instance, uint32_t port, void* data){
 		case 10:
 			op_t.amp = (float*)data; /* OSC */
 			break;
-
+		case 11:
+			sdp_t.nbe = (float*)data; /*SIMPLE DELAY*/
+			break;
+		case 12:
+			sdp_t.ds = (float*)data; /*SIMPLE DELAY*/
+			break;
+		case 13:
+			sdp_t.dms = (float*)data; /*SIMPLE DELAY*/
+			break;
+		case 14:
+			sdp_t.fb = (float*)data; /*SIMPLE DELAY*/
+			break;
 	}
 
 }
@@ -90,10 +112,14 @@ LV2_Handle instantiate(const LV2_Descriptor *descriptor,
 		double s_rate, const char* path,
 		const LV2_Feature * const * features)
 {
-	siren* sir = new siren(s_rate);
+	dubsiren* ds = new dubsiren;
+	ds->si = new siren(s_rate);
+	ds->sd = new simple_delay(s_rate);
+	ds->buff = nullptr;
 
 	memset(&sp_t, 0, sizeof(si_param));
 	memset(&op_t, 0, sizeof(osc_param));
+	memset(&sdp_t, 0, sizeof(simple_delay_param));
 
 
 	op_t.freq = new float;
@@ -111,29 +137,42 @@ LV2_Handle instantiate(const LV2_Descriptor *descriptor,
 	op_t.ae.SS = new float;
 	*op_t.ae.SS = 1.0;
 	op_t.ae.amt = new float;
-	*op_t.ae.amt = 0;
+	*op_t.ae.amt = 0.0;
 
-
+	sdp_t.cs = new float;
+	*sdp_t.cs = 0.0;
 
 
 	for (int i = 0; features[i]; ++i) {
 		if (!strcmp(features[i]->URI, LV2_URID__map)) {
 			LV2_URID_Map* map = (LV2_URID_Map*)features[i]->data;
-			sir->set_midi_uri(
+			ds->si->set_midi_uri(
 					map->map(map->handle, LV2_MIDI__MidiEvent));
 			break;
 		}
 	}
 
 
-	return (LV2_Handle)sir;
+	return (LV2_Handle)ds;
 }
 
 
 void run(LV2_Handle instance, uint32_t sample_count){
-	siren* plugin = (siren*)instance;
-	plugin->si_check_param(&sp_t, &op_t);
-	plugin->process(sample_count);
+	dubsiren* plugin = (dubsiren*)instance;
+
+
+       if(plugin->buff == nullptr){
+                plugin->buff = new float[sample_count];
+                plugin->si->set_output(plugin->buff);
+                plugin->sd->set_input(plugin->buff);
+        }
+
+
+	plugin->si->si_check_param(&sp_t, &op_t);
+	plugin->si->process(sample_count);
+	
+	plugin->sd->check_param(&sdp_t);
+	plugin->sd->process(sample_count);
 }
 
 
