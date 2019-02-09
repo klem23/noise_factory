@@ -84,13 +84,10 @@ LV2_Handle instantiate(const LV2_Descriptor *descriptor,
 
 
 	cs_handle* hdl = new cs_handle;
-	osc* osc1 = new osc(s_rate);
-	osc* osc2 = new osc(s_rate);
-	zp_diag_filter* filter = new zp_diag_filter(s_rate, 0);
+	hdl->osc1 = new osc(s_rate);
+	hdl->osc2 = new osc(s_rate);
+	hdl->filter = new zp_diag_filter(s_rate, 0);
 
-	hdl->osc1 = osc1;
-	hdl->osc2 = osc2;
-	hdl->filter = filter;
 	hdl->buff = NULL;
 
      	for (int i = 0; features[i]; ++i) {

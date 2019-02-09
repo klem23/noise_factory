@@ -53,8 +53,8 @@ protected:
 	float amp;
 
 
-	uint32_t release_time; /*value in sample*/
-	uint32_t anticlip_time; /*value in sample*/
+	uint64_t release_time; /*value in sample*/
+	uint64_t anticlip_time; /*value in sample*/
 	float freq_adj;
 
 	/*uint32_t offset; //for monophonic use*/
